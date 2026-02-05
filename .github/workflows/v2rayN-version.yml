@@ -1,0 +1,53 @@
+name: v2rayN version
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/v2rayN-version.yml'
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    env:
+      V2RAYN_VERSION: 7.18.0
+    steps:
+    - name: Check version
+      run: |
+        set -e
+        sudo apt-get update > /dev/null
+        sudo apt-get install -y wget unzip wine &> /dev/null
+        echo -e "\033[32m-------------------------------- v2rayN ${V2RAYN_VERSION} --------------------------------\033[0m"
+        wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
+        unzip -q v2rayN-windows-64-desktop.zip
+        mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
+        echo -e "\033[32mv2rayN-windows-64-desktop:\033[0m"
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v:\033[0m"
+        wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v 2> /dev/null
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:\033[0m"
+        wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> /dev/null
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version:\033[0m"
+        wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version 2> /dev/null
+        echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+        wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64.zip
+        unzip -q v2rayN-windows-64.zip
+        echo -e "\033[32mv2rayN-windows-64:\033[0m"
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo.exe -v:\033[0m"
+        wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo.exe -v 2> /dev/null
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version:\033[0m"
+        wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version 2> /dev/null
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version:\033[0m"
+        wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version 2> /dev/null
+        echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+        wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-linux-64.zip
+        unzip -q v2rayN-linux-64.zip
+        echo -e "\033[32mv2rayN-linux-64:\033[0m"
+        chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo
+        echo -e "\033[32m${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v:\033[0m"
+        ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v 2> /dev/null
+        chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box
+        echo -e "\033[32m${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box version:\033[0m"
+        ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box version 2> /dev/null
+        chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray
+        echo -e "\033[32m${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray version:\033[0m"
+        ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray version 2> /dev/null
