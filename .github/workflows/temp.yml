@@ -1,0 +1,15 @@
+name: temp
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/temp.yml'
+
+jobs:
+  temp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: temp
+      run: |
+        date
