@@ -16,7 +16,7 @@ jobs:
   ubuntu-gcc-output:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: ubuntu gcc ${{ env.GCC_VERSION }}
         run: |
           set -e
@@ -70,7 +70,7 @@ jobs:
   ubuntu-gcc-dump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: ubuntu gcc ${{ env.GCC_VERSION }}
         run: |
           set -e
@@ -161,7 +161,7 @@ jobs:
   ubuntu-clang-output:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: ubuntu clang ${{ env.CLANG_VERSION }}
         run: |
           set -e
@@ -204,7 +204,7 @@ jobs:
   ubuntu-clang-dump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: ubuntu clang ${{ env.CLANG_VERSION }}
         run: |
           set -e
@@ -284,7 +284,7 @@ jobs:
   macos-gcc-output:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: macos default gcc
         run: |
           set -e
@@ -318,7 +318,7 @@ jobs:
   macos-gcc-dump:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: macos default gcc
         run: |
           set -e
@@ -383,7 +383,7 @@ jobs:
   macos-clang-output:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: macos clang ${{ env.CLANG_VERSION }}
         run: |
           set -e
@@ -421,7 +421,7 @@ jobs:
   macos-clang-dump:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: macos clang ${{ env.CLANG_VERSION }}
         run: |
           set -e
