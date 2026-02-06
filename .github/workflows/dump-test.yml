@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - '.github/workflows/dump-test.yml'
+      - 'sort-gcc.cpp'
+      - 'sort-general.cpp'
 
 env:
   GCC_VERSION: 15.2.0
