@@ -13,3 +13,4 @@ jobs:
     - name: temp
       run: |
         date
+        df -h
