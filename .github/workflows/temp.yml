@@ -73,5 +73,5 @@ jobs:
         }
         BLINK_LUA
         } && \
-        source ~/.bash_alias && \
+        source ~/.bashrc && \
         nvim -c 'q'
