@@ -17,8 +17,6 @@ jobs:
         df -h
         sudo apt-get update && \
         sudo apt-get install -y python3-venv && \
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        brew install tree-sitter@0.25
         mkdir ~/tools && \
         cd ~/tools && \
         wget -q https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
@@ -76,5 +74,5 @@ jobs:
         }
         BLINK_LUA
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c 'lua vim.defer_fn(function() vim.cmd("q") end, 300000)'
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c 'lua vim.defer_fn(function() vim.cmd("q") end, 600000)'
 
