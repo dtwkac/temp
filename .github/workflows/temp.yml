@@ -73,4 +73,5 @@ jobs:
         }
         BLINK_LUA
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c 'lua vim.defer_fn(function() vim.cmd("q") end, 300000)'
+
