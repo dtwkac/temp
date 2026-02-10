@@ -12,10 +12,13 @@ jobs:
     steps:
     - name: temp
       run: |
+        set -e
         date
         df -h
         sudo apt-get update && \
         sudo apt-get install -y python3-venv && \
+        # Ubuntu/Debian
+        sudo apt install -y tree-sitter-cli && \
         mkdir ~/tools && \
         cd ~/tools && \
         wget -q https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
