@@ -73,5 +73,4 @@ jobs:
         }
         BLINK_LUA
         } && \
-        source ~/.bashrc && \
-        nvim -c 'q'
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c 'q'
