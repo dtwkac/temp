@@ -20,6 +20,7 @@ jobs:
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
         tar -zxf nvim-linux-x86_64.tar.gz && \
         rm nvim-linux-x86_64.tar.gz && \
+        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc && \
         git clone https://github.com/LazyVim/starter ~/.config/nvim && \
         {
         cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
@@ -115,4 +116,5 @@ jobs:
         }
         LSP
         } && \
+        cd
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "Lazy sync" -c "qa"
