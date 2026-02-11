@@ -114,4 +114,5 @@ jobs:
           },
         }
         LSP
-        }
+        } && \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "Lazy sync" -c "qa"
