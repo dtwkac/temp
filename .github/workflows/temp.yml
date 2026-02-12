@@ -120,7 +120,7 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim-linux-x86_64/bin/nvim --headless \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim --headless \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua require('mason-registry').refresh(function()
             local mr = require('mason-registry')
