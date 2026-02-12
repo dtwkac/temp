@@ -120,5 +120,5 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "lua require('lazy').sync({wait = true})" -c "sleep 2" -c "qa" && \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "lua require('lazy').sync({wait = true})" -c "sleep 200" -c "qa" && \
         echo $?
