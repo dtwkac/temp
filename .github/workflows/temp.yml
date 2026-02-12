@@ -120,26 +120,29 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim --headless \
-          -c "lua require('lazy').sync({wait = true})" \
-          -c "lua
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "lua require('lazy').sync({wait = true})" \
+         -c "lua
             local mr = require('mason-registry')
-            mr.refresh(function()
-              local function wait()
-                local installing = false
-                for _, pkg in ipairs(mr.get_installed_packages()) do
-                  if pkg:is_installing() then
-                    installing = true
-                    break
-                  end
-                end
-                if installing then
-                  vim.defer_fn(wait, 500)
-                else
-                  vim.cmd('qa')
+            local function smart_quit()
+              local installing = false
+              -- 检查是否有任何包正在安装
+              for _, pkg in ipairs(mr.get_all_packages()) do
+                if pkg:is_installing() then
+                  installing = true
+                  break
                 end
               end
-              wait()
-            end)
-          "
+    
+              if installing then
+                -- 如果还在装，1秒后再检查
+                vim.defer_fn(smart_quit, 1000)
+              else
+                -- 全装完了，停1秒处理残留字符，然后退出
+                vim.defer_fn(function() vim.cmd('qa') end, 1000)
+              end
+            end
+    
+            -- 在 Mason 准备好后启动轮询
+            mr.refresh(smart_quit)
+         "
         cd
