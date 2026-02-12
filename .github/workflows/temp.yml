@@ -120,10 +120,5 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "lua 
-          require('lazy').sync({wait = true})
-          vim.wait(60000, function() 
-            return #require('mason-registry').get_installing_packages() == 0 
-          end)
-          vim.cmd('sleep 2 | qa')
-        "
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim -c "lua require('lazy').sync({wait = true})" -c "sleep 60" -c "qa" && \
+        cd
