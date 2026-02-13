@@ -121,7 +121,16 @@ jobs:
         } && \
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
-          -c "qa" && \
+          -c "lua require('mason-registry').refresh(function()
+            local mr = require('mason-registry')
+            local function check()
+              for _, p in ipairs(mr.get_installed_packages()) do
+                if p:is_installing() then return vim.defer_fn(check, 1000) end
+              end
+              vim.cmd('qa')
+            end
+            check()
+          end)" && \
         cd && \
         ls ~/.local/share/nvim/mason/packages && \
         du -sh ~/.local/share/nvim/mason/packages
