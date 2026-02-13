@@ -59,7 +59,7 @@ jobs:
           "mason-org/mason.nvim",
           opts = {
             ensure_installed = {
-              "actionlint", "ada-language-server", "aiken", "air", "alejandra", "alex", "amber-lsp", "angular-language-server", "ansible-language-server", "ansible-lint", "antlers-language-server", "apex-language-server", "api-linter", "arduino-language-server", "asm-lsp", "asmfmt", "ast-grep", "astro-language-server", "autoflake", "autopep8", "autotools-language-server", "awk-language-server", "azure-pipelines-language-server", "bacon", "bacon-ls", "bandit", "basedpyright", "bash-debug-adapter", "bash-language-server", "basics-language-server", "bazelrc-lsp", "beancount-language-server", "beanhub-cli", "beautysh", "bibtex-tidy", "bicep-lsp", "biome", "black", "blackd-client", "blade-formatter", "blue", "bqls", "brighterscript", "brighterscript-formatter", "brunette", "bsl-language-server", "bslint", "buf", "clang-format", "clangd", "cpptools", "pretty-php", "prettydiff", "prettypst", "prisma-language-server", "prometheus-pint", "proselint", "prosemd-lsp", "protolint", "protols", "psalm", "pug-lsp", "puppet-editor-services", "purescript-language-server", "pyright", "ruff", "stylelint-lsp", "stylua", "superhtml", "svelte-language-server", "svlangserver", "svls", "swift-mesonlsp", "swiftformat", "swiftlint", "systemd-language-server", "systemd-lsp", "systemdlint", "tabby-agent", "tailwindcss-language-server", "taplo",
+              "bash-debug-adapter", "bash-language-server", "clang-format", "clangd", "cpptools", "pyright", "ruff",
             },
           },
         }
