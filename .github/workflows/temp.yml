@@ -124,11 +124,12 @@ jobs:
           -c "lua
             local mr = require('mason-registry')
             local function check()
-              if #mr.get_installing_packages() > 0 then
-                vim.defer_fn(check, 1000)
-              else
-                vim.cmd('qa')
+              for _, p in ipairs(mr.get_all_packages()) do
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
+                end
               end
+              vim.cmd('qa')
             end
             mr.refresh(check)" && \
         cd && \
