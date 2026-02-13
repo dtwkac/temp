@@ -125,13 +125,12 @@ jobs:
             local mr = require('mason-registry')
             local function check()
               for _, p in ipairs(mr.get_all_packages()) do
-                -- 只要有一个包在安装，就 1s 后再次检查并跳出当前执行
-                if p:is_installing() then return vim.defer_fn(check, 1000) end
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
+                end
               end
-              -- 队列清空后延迟 1s 退出，确保 IO 写入完成
-              vim.defer_fn(function() vim.cmd('qa') end, 1000)
+              vim.cmd('qa')
             end
-            -- 刷新注册表后启动轮询
             mr.refresh(check)" && \
         cd && \
         ls ~/.local/share/nvim/mason/packages && \
