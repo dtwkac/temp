@@ -14,6 +14,7 @@ jobs:
     steps:
     - name: Build on host
       run: |
+        df -h
         sudo apt-get update && \
         mkdir ${HOME}/project && \
         cd ${HOME}/project && \
@@ -215,6 +216,7 @@ jobs:
     steps:
     - name: Build in docker
       run: |
+        df -h
         cat << 'SCRIPT' > build-project.sh
         apt-get update && \
         echo -e "\n5\n69" | apt-get install -y tzdata && \
