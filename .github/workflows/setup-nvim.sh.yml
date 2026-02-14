@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/setup_nvim.yml'
+      - '.github/workflows/setup-nvim.yml'
 
 jobs:
   setup-nvim:
@@ -24,28 +24,6 @@ jobs:
         rm nvim-linux-x86_64.tar.gz && \
         export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin && \
         git clone https://github.com/LazyVim/starter ~/.config/nvim && \
-        # nvim \
-        #   -c "lua require('lazy').sync({wait = true})" \
-        #   -c "lua
-        #     local r = require('mason-registry')
-        #     r.refresh(function()
-        #       local p = r.get_all_packages()
-        #       local t = {}
-        #       for _, x in ipairs(p) do
-        #         table.insert(t, x.name)
-        #       end
-        #       table.sort(t)
-        #       local path = vim.fn.getcwd() .. '/mason_packages.txt'
-        #       local f = io.open(path, 'w')
-        #       for _, n in ipairs(t) do
-        #         f:write(n .. '\n')
-        #       end
-        #       f:close()
-        #     end)" \
-        #   -c "qa" && \
-        # cat mason_packages.txt && \
-        # wc -l mason_packages.txt && \
-        # all_mason_packages=$(sed '/^$/d' mason_packages.txt | paste -sd, - | sed 's/[^,]*/"&"/g') && \
         {
         cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
         
@@ -76,12 +54,13 @@ jobs:
         KEYMAPS
         } && \
         {
-        cat << MASON > ~/.config/nvim/lua/plugins/mason.lua
+        cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
         return {
           "mason-org/mason.nvim",
           opts = {
             ensure_installed = {
-              $mason_packages
+              "cpptools", "clangd", "clang-format", -- C++
+              "pyright", "ruff",                    -- Python
             },
           },
         }
@@ -141,7 +120,7 @@ jobs:
         }
         LSP
         } && \
-        nvim \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
