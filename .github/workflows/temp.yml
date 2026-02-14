@@ -83,8 +83,8 @@ jobs:
           },
         }
         MASON
-        cat ~/.config/nvim/lua/plugins/mason.lua && \
         } && \
+        cat ~/.config/nvim/lua/plugins/mason.lua && \
         {
         cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
