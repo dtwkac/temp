@@ -120,25 +120,30 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
+        nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
             mr.refresh(function()
-              for _, pkg in ipairs(mr.get_all_packages()) do
-                if not pkg:is_installed() then
-                  pkg:install()
+              local function check()
+                local all_done = true
+                for _, pkg in ipairs(mr.get_all_packages()) do
+                  if pkg:is_installing() then
+                    -- 还在安装中，标记未完成
+                    all_done = false
+                  elseif not pkg:is_installed() then
+                    -- 发现没装，立即触发安装，并标记未完成
+                    pkg:install()
+                    all_done = false
+                  end
+                end
+                if all_done then
+                  vim.cmd('qa')
+                else
+                  vim.defer_fn(check_and_exit, 1000)
                 end
               end
-            end)
-            local function check()
-              for _, p in ipairs(mr.get_all_packages()) do
-                if p:is_installing() then
-                  return vim.defer_fn(check, 1000)
-                end
-              end
-              vim.cmd('qa')
-            end
-            mr.refresh(check)" && \
+              check()
+            end)" && \
             tree -L 2 ~/.local/share/nvim/mason/packages && \
             du -sh ~/.local/share/nvim/mason/packages
