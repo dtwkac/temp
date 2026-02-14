@@ -37,7 +37,7 @@ jobs:
         echo "Plug 'tomasiser/vim-code-dark'" >> ~/.vimrc && \
         echo "Plug 'ycm-core/YouCompleteMe'" >> ~/.vimrc && \
         echo 'call plug#end()' >> ~/.vimrc && \
-        vim -c 'PlugInstall' -c 'qa' && \
+        vim --not-a-term -c 'PlugInstall' -c 'qa' && \
         sudo apt-get install -y python3-dev && \
         cd ~/.vim/plugged/YouCompleteMe && \
         python3 install.py --clangd-completer && \
