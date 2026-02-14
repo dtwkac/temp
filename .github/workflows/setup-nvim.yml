@@ -140,7 +140,7 @@ jobs:
                 if all_done then
                   vim.cmd('qa')
                 else
-                  vim.defer_fn(check_and_exit, 1000)
+                  vim.defer_fn(check, 1000)
                 end
               end
               check()
