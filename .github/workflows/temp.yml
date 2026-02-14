@@ -15,3 +15,5 @@ jobs:
         set -e
         date
         df -h
+        which npm
+        whereis npm
