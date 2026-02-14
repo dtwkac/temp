@@ -124,6 +124,13 @@ jobs:
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
+            mr.refresh(function()
+              for _, pkg in ipairs(mr.get_all_packages()) do
+                if not pkg:is_installed() then
+                  pkg:install()
+                end
+              end
+            end)
             local function check()
               for _, p in ipairs(mr.get_all_packages()) do
                 if p:is_installing() then
