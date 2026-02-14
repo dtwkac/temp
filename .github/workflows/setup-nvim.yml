@@ -22,7 +22,7 @@ jobs:
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
         tar -zxf nvim-linux-x86_64.tar.gz && \
         rm nvim-linux-x86_64.tar.gz && \
-        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc && \
+        export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin && \
         git clone https://github.com/LazyVim/starter ~/.config/nvim && \
         nvim \
           -c "lua require('lazy').sync({wait = true})" \
@@ -141,7 +141,7 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
+        nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
