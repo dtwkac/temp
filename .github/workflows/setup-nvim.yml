@@ -145,5 +145,5 @@ jobs:
               end
               check()
             end)" && \
-            tree -L 2 ~/.local/share/nvim/mason/packages && \
+            tree -L 1 ~/.local/share/nvim/mason/packages && \
             du -sh ~/.local/share/nvim/mason/packages
