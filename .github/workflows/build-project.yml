@@ -14,6 +14,7 @@ jobs:
     steps:
     - name: Build on host
       run: |
+        lscpu
         df -h
         sudo apt-get update && \
         mkdir ${HOME}/project && \
@@ -216,6 +217,7 @@ jobs:
     steps:
     - name: Build in docker
       run: |
+        lscpu
         df -h
         cat << 'SCRIPT' > build-project.sh
         apt-get update && \
