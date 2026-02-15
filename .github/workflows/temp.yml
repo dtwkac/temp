@@ -54,6 +54,19 @@ jobs:
         KEYMAPS
         } && \
         {
+        cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
+        return {
+          "mason-org/mason.nvim",
+          opts = {
+            ensure_installed = {
+              "cpptools", "clangd", "clang-format", -- C++
+              "pyright", "ruff",                    -- Python
+            },
+          },
+        }
+        MASON
+        } && \
+        {
         cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
           {
