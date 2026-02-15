@@ -120,51 +120,45 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim --headless \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
             mr.refresh(function()
-              -- 1. 先写文件
+              -- 写入包名到文件
               local packages = mr.get_all_packages()
               local t = {}
-              for _, x in ipairs(packages) do table.insert(t, x.name) end
+              for _, x in ipairs(packages) do
+                table.insert(t, x.name)
+              end
               table.sort(t)
-              local f = io.open('mason_packages.txt', 'w')
-              if f then f:write(table.concat(t, '\n')); f:close() end
+              local path = vim.fn.getcwd() .. '/mason_packages.txt'
+              local f = io.open(path, 'w')
+              for _, n in ipairs(t) do
+                f:write(n .. '\n')
+              end
+              f:close()
         
-              -- 2. 启动安装
-              local installed_started = false
+              -- 安装未安装的包
               for _, pkg in ipairs(packages) do
                 if not pkg:is_installed() then
                   pkg:install()
-                  installed_started = true
                 end
               end
         
-              -- 3. 递归检查函数
-              local function wait_and_quit()
-                local is_any_installing = false
+              -- 检查安装状态，直到所有包安装完成
+              local function check()
                 for _, p in ipairs(mr.get_all_packages()) do
                   if p:is_installing() then
-                    is_any_installing = true
-                    break
+                    return vim.defer_fn(check, 1000)
                   end
                 end
-        
-                if is_any_installing then
-                  vim.defer_fn(wait_and_quit, 2000) -- 每2秒检查一次
-                else
-                  vim.schedule(function() vim.cmd('qa!') end)
-                end
+                -- 所有包安装完成，退出 nvim
+                vim.schedule(function() vim.cmd('qa') end)
               end
         
-              -- 如果没有需要安装的，直接退出；否则开始轮询
-              if not installed_started then
-                vim.schedule(function() vim.cmd('qa!') end)
-              else
-                vim.defer_fn(wait_and_quit, 1000)
-              end
+              -- 延迟调用检查函数
+              vim.defer_fn(check, 1000)
             end)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         wc -l mason_packages.txt
