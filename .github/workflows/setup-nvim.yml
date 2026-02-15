@@ -129,9 +129,8 @@ jobs:
                 local all_done = true
                 for _, pkg in ipairs(mr.get_all_packages()) do
                   if not pkg:is_installed() then
-                    all_done = false -- 只要有一个没装完，就不能退出
-                    -- 如果也没在安装中，就让它开始安装
-                    if not pkg:is_installing() then
+                    all_done = false -- 只要有一个没装完，就不退出
+                    if not pkg:is_installing() then -- 如果也没在安装中，就让它开始安装
                       pkg:install()
                     end
                   end
@@ -144,5 +143,5 @@ jobs:
               end
               check()
             end)" && \
-            tree -L 1 ~/.local/share/nvim/mason/packages && \
+            tree -L 2 ~/.local/share/nvim/mason/packages && \
             du -sh ~/.local/share/nvim/mason/packages
