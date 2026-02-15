@@ -128,13 +128,12 @@ jobs:
               local function check()
                 local all_done = true
                 for _, pkg in ipairs(mr.get_all_packages()) do
-                  if pkg:is_installing() then
-                    -- 还在安装中，标记未完成
-                    all_done = false
-                  elseif not pkg:is_installed() then
-                    -- 发现没装，立即触发安装，并标记未完成
-                    pkg:install()
-                    all_done = false
+                  if not pkg:is_installed() then
+                    all_done = false -- 只要有一个没装完，就不能退出
+                    -- 如果也没在安装中，就让它开始安装
+                    if not pkg:is_installing() then
+                      pkg:install()
+                    end
                   end
                 end
                 if all_done then
