@@ -123,34 +123,39 @@ jobs:
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
-            local mr = require('mason-registry')
-            mr.refresh(function()
-              local packages = mr.get_all_packages()
+            local r = require('mason-registry')
+            r.refresh(function()
+              local p = r.get_all_packages()
               local t = {}
-              for _, x in ipairs(packages) do
+              for _, x in ipairs(p) do
                 table.insert(t, x.name)
               end
               table.sort(t)
-              local f = io.open(vim.fn.getcwd() .. '/mason_packages.txt', 'w')
-              if f then
-                f:write(table.concat(t, '\n'))
-                f:close()
+              local path = vim.fn.getcwd() .. '/mason_packages.txt'
+              local f = io.open(path, 'w')
+              for _, n in ipairs(t) do
+                f:write(n .. '\n')
               end
-              for _, pkg in ipairs(packages) do
+              f:close()
+            end)" \
+          -c "lua
+            local mr = require('mason-registry')
+            mr.refresh(function()
+              for _, pkg in ipairs(mr.get_all_packages()) do
                 if not pkg:is_installed() then
                   pkg:install()
                 end
               end
-              local function check()
-                for _, p in ipairs(mr.get_all_packages()) do
-                  if p:is_installing() then
-                    return vim.defer_fn(check, 1000)
-                  end
+            end)
+            local function check()
+              for _, p in ipairs(mr.get_all_packages()) do
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
                 end
-                vim.schedule(function() vim.cmd('qa') end)
               end
-              vim.defer_fn(check, 1000)
-            end)"
+              vim.cmd('qa')
+            end
+            mr.refresh(check)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         wc -l mason_packages.txt
         echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
