@@ -125,41 +125,21 @@ jobs:
           -c "lua
             local mr = require('mason-registry')
             mr.refresh(function()
-              -- 写入包名到文件
-              local packages = mr.get_all_packages()
-              local t = {}
-              for _, x in ipairs(packages) do
-                table.insert(t, x.name)
-              end
-              table.sort(t)
-              local path = vim.fn.getcwd() .. '/mason_packages.txt'
-              local f = io.open(path, 'w')
-              for _, n in ipairs(t) do
-                f:write(n .. '\n')
-              end
-              f:close()
-        
-              -- 安装未安装的包
-              for _, pkg in ipairs(packages) do
+              for _, pkg in ipairs(mr.get_all_packages()) do
                 if not pkg:is_installed() then
                   pkg:install()
                 end
               end
-        
-              -- 检查安装状态，直到所有包安装完成
-              local function check()
-                for _, p in ipairs(mr.get_all_packages()) do
-                  if p:is_installing() then
-                    return vim.defer_fn(check, 1000)
-                  end
+            end)
+            local function check()
+              for _, p in ipairs(mr.get_all_packages()) do
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
                 end
-                -- 所有包安装完成，退出 nvim
-                vim.schedule(function() vim.cmd('qa') end)
               end
-        
-              -- 延迟调用检查函数
-              vim.defer_fn(check, 1000)
-            end)"
+              vim.schedule(function() vim.cmd('qa') end)
+            end
+            mr.refresh(check)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         wc -l mason_packages.txt
         echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
