@@ -125,34 +125,35 @@ jobs:
           -c "lua
             local mr = require('mason-registry')
             mr.refresh(function()
+              local packages = mr.get_all_packages()
               local t = {}
-              for _, x in ipairs(mr.get_all_packages()) do
+              for _, x in ipairs(packages) do
                 table.insert(t, x.name)
               end
               table.sort(t)
-              local path = vim.fn.getcwd() .. '/mason_packages.txt'
-              local f = io.open(path, 'w')
-              for _, n in ipairs(t) do
-                f:write(n .. '\n')
+              local f = io.open(vim.fn.getcwd() .. '/mason_packages.txt', 'w')
+              if f then
+                f:write(table.concat(t, '\n'))
+                f:close()
               end
-              f:close()
-              for _, pkg in ipairs(mr.get_all_packages()) do
+              for _, pkg in ipairs(packages) do
                 if not pkg:is_installed() then
                   pkg:install()
                 end
               end
-            end)
-            local function check()
-              for _, p in ipairs(mr.get_all_packages()) do
-                if p:is_installing() then
-                  return vim.defer_fn(check, 1000)
+              local function check()
+                for _, p in ipairs(mr.get_all_packages()) do
+                  if p:is_installing() then
+                    return vim.defer_fn(check, 1000)
+                  end
                 end
+                vim.schedule(function() vim.cmd('qa') end)
               end
-              vim.cmd('qa')
-            end
-            mr.refresh(check)"
+              vim.defer_fn(check, 1000)
+            end)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         wc -l mason_packages.txt
+        echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
         tree -L 1 ~/.local/share/nvim/mason/packages
         echo -e "\033[32mfind ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
         find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
