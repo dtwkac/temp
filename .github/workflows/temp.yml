@@ -161,6 +161,6 @@ jobs:
               vim.cmd('qa')
             end
             mr.refresh(check)"
-        tree -L 1 ~/.local/share/nvim/mason/packages
-        find dir -mindepth 1 -maxdepth 1 -type d | wc -l
+        tree -L 2 ~/.local/share/nvim/mason/packages
+        find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
         du -sh ~/.local/share/nvim/mason/packages
