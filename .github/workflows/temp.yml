@@ -120,42 +120,52 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim --headless \
           -c "lua require('lazy').sync({wait = true})" \
-          -c "lua
-            local r = require('mason-registry')
-            r.refresh(function()
-              local p = r.get_all_packages()
-              local t = {}
-              for _, x in ipairs(p) do
-                table.insert(t, x.name)
-              end
-              table.sort(t)
-              local path = vim.fn.getcwd() .. '/mason_packages.txt'
-              local f = io.open(path, 'w')
-              for _, n in ipairs(t) do
-                f:write(n .. '\n')
-              end
-              f:close()
-            end)" \
           -c "lua
             local mr = require('mason-registry')
             mr.refresh(function()
-              for _, pkg in ipairs(mr.get_all_packages()) do
+              -- 1. 先写文件
+              local packages = mr.get_all_packages()
+              local t = {}
+              for _, x in ipairs(packages) do table.insert(t, x.name) end
+              table.sort(t)
+              local f = io.open('mason_packages.txt', 'w')
+              if f then f:write(table.concat(t, '\n')); f:close() end
+        
+              -- 2. 启动安装
+              local installed_started = false
+              for _, pkg in ipairs(packages) do
                 if not pkg:is_installed() then
                   pkg:install()
+                  installed_started = true
                 end
               end
-            end)
-            local function check()
-              for _, p in ipairs(mr.get_all_packages()) do
-                if p:is_installing() then
-                  return vim.defer_fn(check, 1000)
+        
+              -- 3. 递归检查函数
+              local function wait_and_quit()
+                local is_any_installing = false
+                for _, p in ipairs(mr.get_all_packages()) do
+                  if p:is_installing() then
+                    is_any_installing = true
+                    break
+                  end
+                end
+        
+                if is_any_installing then
+                  vim.defer_fn(wait_and_quit, 2000) -- 每2秒检查一次
+                else
+                  vim.schedule(function() vim.cmd('qa!') end)
                 end
               end
-              vim.cmd('qa')
-            end
-            mr.refresh(check)"
+        
+              -- 如果没有需要安装的，直接退出；否则开始轮询
+              if not installed_started then
+                vim.schedule(function() vim.cmd('qa!') end)
+              else
+                vim.defer_fn(wait_and_quit, 1000)
+              end
+            end)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         wc -l mason_packages.txt
         echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
