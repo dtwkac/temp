@@ -133,6 +133,17 @@ jobs:
               vim.schedule(function() vim.cmd('qa') end)
             end
             mr.refresh(function()
+              local t = {}
+              for _, x in ipairs(mr.get_all_packages()) do
+                table.insert(t, x.name)
+              end
+              table.sort(t)
+              local path = vim.fn.getcwd() .. '/mason_packages.txt'
+              local f = io.open(path, 'w')
+              for _, n in ipairs(t) do
+                f:write(n .. '\n')
+              end
+              f:close()
               for _, p in ipairs(mr.get_all_packages()) do
                 if not p:is_installed() then
                   p:install()
