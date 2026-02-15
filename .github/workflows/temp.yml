@@ -136,7 +136,7 @@ jobs:
               local t = {}
               for _, p in ipairs(mr.get_all_packages()) do
                 table.insert(t, p.name)
-                if not p:is_installed() and not p:is_installing() then
+                if not p:is_installed() then
                   p:install()
                 end
               end
