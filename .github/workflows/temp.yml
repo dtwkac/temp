@@ -120,7 +120,7 @@ jobs:
         }
         LSP
         } && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
+        nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
@@ -134,8 +134,11 @@ jobs:
             end
             mr.refresh(function()
               local t = {}
-              for _, x in ipairs(mr.get_all_packages()) do
-                table.insert(t, x.name)
+              for _, p in ipairs(mr.get_all_packages()) do
+                table.insert(t, p.name)
+                if not p:is_installed() then
+                  p:install()
+                end
               end
               table.sort(t)
               local path = vim.fn.getcwd() .. '/mason_packages.txt'
@@ -144,11 +147,6 @@ jobs:
                 f:write(n .. '\n')
               end
               f:close()
-              for _, p in ipairs(mr.get_all_packages()) do
-                if not p:is_installed() then
-                  p:install()
-                end
-              end
               check()
             end)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
