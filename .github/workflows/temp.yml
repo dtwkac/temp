@@ -57,12 +57,12 @@ jobs:
         cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
         return {
           "mason-org/mason.nvim",
-          opts = {
-            ensure_installed = {
-              "cpptools", "clangd", "clang-format", -- C++
-              "pyright", "ruff",                    -- Python
-            },
-          },
+          # opts = {
+          #   ensure_installed = {
+          #     "cpptools", "clangd", "clang-format", -- C++
+          #     "pyright", "ruff",                    -- Python
+          #   },
+          # },
         }
         MASON
         } && \
@@ -120,14 +120,21 @@ jobs:
         }
         LSP
         } && \
-        nvim \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
-            local r = require('mason-registry')
-            r.refresh(function()
-              local p = r.get_all_packages()
+            local mr = require('mason-registry')
+            local function check()
+              for _, p in ipairs(mr.get_all_packages()) do
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
+                end
+              end
+              vim.schedule(function() vim.cmd('qa') end)
+            end
+            mr.refresh(function()
               local t = {}
-              for _, x in ipairs(p) do
+              for _, x in ipairs(mr.get_all_packages()) do
                 table.insert(t, x.name)
               end
               table.sort(t)
@@ -137,28 +144,13 @@ jobs:
                 f:write(n .. '\n')
               end
               f:close()
-            end)" \
-          -c "qa" && \
-        nvim \
-          -c "lua require('lazy').sync({wait = true})" \
-          -c "lua
-            local mr = require('mason-registry')
-            mr.refresh(function()
-              for _, pkg in ipairs(mr.get_all_packages()) do
-                if not pkg:is_installed() then
-                  pkg:install()
-                end
-              end
-            end)
-            local function check()
               for _, p in ipairs(mr.get_all_packages()) do
-                if p:is_installing() then
-                  return vim.defer_fn(check, 1000)
+                if not p:is_installed() then
+                  p:install()
                 end
               end
-              vim.cmd('qa')
-            end
-            mr.refresh(check)"
+              check()
+            end)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         wc -l mason_packages.txt
         echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
