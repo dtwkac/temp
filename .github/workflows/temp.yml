@@ -75,18 +75,19 @@ jobs:
         vim.keymap.set('i', '<C-v>', '<C-r>+', { silent = true })
         KEYMAPS
         } && \
-        # {
-        # cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
-        # return {
-        #   "mason-org/mason.nvim",
-        #   opts = {
-        #     ensure_installed = {
-        #       ${all_mason_packages}
-        #     },
-        #   },
-        # }
-        # MASON
-        # } && \
+        {
+        cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
+        return {
+          "mason-org/mason.nvim",
+          opts = {
+            ensure_installed = {
+              ${all_mason_packages}
+            },
+          },
+        }
+        MASON
+        } && \
+        cat ~/.config/nvim/lua/plugins/mason.lua
         {
         cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
