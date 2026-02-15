@@ -136,7 +136,6 @@ jobs:
               local t = {}
               for _, p in ipairs(mr.get_all_packages()) do
                 table.insert(t, p.name)
-                -- 只有既没安装也没在安装的包才触发 install
                 if not p:is_installed() and not p:is_installing() then
                   p:install()
                 end
@@ -144,10 +143,10 @@ jobs:
               table.sort(t)
               local path = vim.fn.getcwd() .. '/mason_packages.txt'
               local f = io.open(path, 'w')
-              if f then
-                for _, n in ipairs(t) do f:write(n .. '\n') end
-                f:close()
+              for _, n in ipairs(t) do
+                f:write(n .. '\n')
               end
+              f:close()
               check()
             end)"
         echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
