@@ -75,18 +75,18 @@ jobs:
         vim.keymap.set('i', '<C-v>', '<C-r>+', { silent = true })
         KEYMAPS
         } && \
-        {
-        cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
-        return {
-          "mason-org/mason.nvim",
-          opts = {
-            ensure_installed = {
-              ${all_mason_packages}
-            },
-          },
-        }
-        MASON
-        } && \
+        # {
+        # cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
+        # return {
+        #   "mason-org/mason.nvim",
+        #   opts = {
+        #     ensure_installed = {
+        #       ${all_mason_packages}
+        #     },
+        #   },
+        # }
+        # MASON
+        # } && \
         {
         cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
@@ -161,6 +161,6 @@ jobs:
               vim.cmd('qa')
             end
             mr.refresh(check)"
-        tree -L 2 ~/.local/share/nvim/mason/packages
+        tree -L 1 ~/.local/share/nvim/mason/packages
         find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
         du -sh ~/.local/share/nvim/mason/packages
