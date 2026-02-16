@@ -200,7 +200,7 @@ jobs:
               end
               f:close()
             end)" \
-          -c "qa" &> /dev/null
+          -c "qa"
         all_mason_packages=$(awk 'NF { printf "\"%s\",", $0 }' all_mason_packages.txt | sed 's/,$//')
         echo -e "\033[32mecho \${all_mason_packages}:\033[0m"
         echo ${all_mason_packages}
