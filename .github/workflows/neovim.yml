@@ -1,0 +1,158 @@
+name: neovim
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/neovim.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: temp
+      run: |
+        set -e
+        date
+        df -h
+        sudo apt-get update && \
+        sudo apt-get install -y python3-venv npm && \
+        mkdir -p ~/tools && \
+        cd ~/tools && \
+        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
+        tar -zxf nvim-linux-x86_64.tar.gz && \
+        rm nvim-linux-x86_64.tar.gz && \
+        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc && \
+        git clone https://github.com/LazyVim/starter ~/.config/nvim && \
+        {
+        cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
+        
+        vim.opt.expandtab = true
+        vim.opt.shiftwidth = 4
+        vim.opt.relativenumber = false
+        vim.opt.guicursor = "a:ver25"
+        vim.opt.selection = "exclusive"
+        OPTIONS
+        } && \
+        {
+        cat << 'AUTOCMDS' >> ~/.config/nvim/lua/config/autocmds.lua
+        
+        vim.api.nvim_create_autocmd({ "ColorScheme", "User" }, {
+          pattern = { "*", "LazyVimStarted" },
+          callback = function()
+            vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "NONE", bg = "NONE" })
+          end,
+        })
+        AUTOCMDS
+        } && \
+        {
+        cat << 'KEYMAPS' >> ~/.config/nvim/lua/config/keymaps.lua
+        
+        vim.keymap.set({'v', 'x'}, '<C-c>', '"+y', { silent = true })
+        vim.keymap.set({'n', 'v'}, '<C-v>', '"+p', { silent = true })
+        vim.keymap.set('i', '<C-v>', '<C-r>+', { silent = true })
+        KEYMAPS
+        } && \
+        {
+        cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
+        return {
+          "mason-org/mason.nvim",
+          opts = {
+            ensure_installed = {
+              "cpptools", "clangd", "clang-format", -- C++
+              "pyright", "ruff",                    -- Python
+            },
+          },
+        }
+        MASON
+        } && \
+        {
+        cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
+        return {
+          {
+            "saghen/blink.cmp",
+            opts = {
+              completion = {
+                accept = {
+                  auto_brackets = { enabled = true },
+                },
+                menu = {
+                  draw = {
+                    columns = {
+                      { "kind_icon", "label", gap = 1 },
+                    },
+                  },
+                },
+                ghost_text = { enabled = false },
+              },
+              keymap = {
+                preset = "none",
+                ["<CR>"] = { "fallback" },
+                ["<Tab>"] = { "accept", "fallback" },
+                ["<C-n>"] = { "select_next", "fallback" },
+                ["<C-p>"] = { "select_prev", "fallback" },
+                ["<C-Space>"] = { "show", "fallback" },
+                ["<C-e>"] = { "hide", "fallback" },
+                ["<Up>"] = { "select_prev", "fallback" },
+                ["<Down>"] = { "select_next", "fallback" },
+              },
+            },
+          },
+        }
+        BLINK
+        } && \
+        {
+        cat << 'LSP' > ~/.config/nvim/lua/plugins/lsp.lua
+        return {
+          {
+            "neovim/nvim-lspconfig",
+            opts = {
+              inlay_hints = { enabled = false },
+              servers = {
+                clangd = {
+                  cmd = { "clangd", "--function-arg-placeholders=0" },
+                },
+                pyright = {},
+                ruff = {},
+              },
+            },
+          },
+        }
+        LSP
+        } && \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
+          -c "lua require('lazy').sync({wait = true})" \
+          -c "lua
+            local mr = require('mason-registry')
+            local function check()
+              for _, p in ipairs(mr.get_all_packages()) do
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
+                end
+              end
+              vim.schedule(function() vim.cmd('qa') end)
+            end
+            mr.refresh(function()
+              local t = {}
+              for _, p in ipairs(mr.get_all_packages()) do
+                table.insert(t, p.name)
+                if not p:is_installed() and not p:is_installing() then
+                  p:install()
+                end
+              end
+              table.sort(t)
+              local path = vim.fn.getcwd() .. '/mason_packages.txt'
+              local f = io.open(path, 'w')
+              for _, n in ipairs(t) do
+                f:write(n .. '\n')
+              end
+              f:close()
+              check()
+            end)"
+        echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
+        wc -l mason_packages.txt
+        echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
+        tree -L 1 ~/.local/share/nvim/mason/packages
+        echo -e "\033[32mfind ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
+        find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
+        du -sh ~/.local/share/nvim/mason/packages
