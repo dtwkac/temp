@@ -1,10 +1,10 @@
-name: dump test
+name: dump
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/dump-test.yml'
+      - '.github/workflows/dump.yml'
       - 'sort-gcc.cpp'
       - 'sort-general.cpp'
 
