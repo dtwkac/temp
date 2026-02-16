@@ -147,3 +147,23 @@ jobs:
         }
         LSP
         }
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
+          -c "lua require('lazy').sync({wait = true})" \
+          -c "lua
+            local mr = require('mason-registry')
+            local function check()
+              for _, p in ipairs(mr.get_all_packages()) do
+                if p:is_installing() then
+                  return vim.defer_fn(check, 1000)
+                end
+              end
+              vim.schedule(function() vim.cmd('qa') end)
+            end
+            mr.refresh(check)"
+        echo -e "\033[32mwc -l all_mason_packages.txt:\033[0m"
+        wc -l all_mason_packages.txt
+        echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
+        tree -L 1 ~/.local/share/nvim/mason/packages
+        echo -e "\033[32mfind ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
+        find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
+        du -sh ~/.local/share/nvim/mason/packages
