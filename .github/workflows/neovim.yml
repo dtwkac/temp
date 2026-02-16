@@ -17,8 +17,6 @@ jobs:
         if [ "$avail" -lt 50 ]; then
           exit 0
         fi
-        date
-        df -h
         sudo apt-get update
         sudo apt-get install -y python3-venv npm
         mkdir -p ~/tools
@@ -171,8 +169,6 @@ jobs:
         if [ "$avail" -lt 50 ]; then
           exit 0
         fi
-        date
-        df -h
         sudo apt-get update
         sudo apt-get install -y python3-venv npm
         mkdir -p ~/tools
