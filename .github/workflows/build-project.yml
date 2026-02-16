@@ -19,7 +19,9 @@ jobs:
         df -h
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
         if [ "$avail" -lt 50 ]; then
-          exit 0 # 磁盘空间不足，安全退出
+          echo -e "\033[91mNo enough space:\033[0m"
+          df -h
+          exit 0
         fi
         sudo apt-get update && \
         mkdir ${HOME}/project && \
@@ -215,6 +217,8 @@ jobs:
         ./package-release-zip.sh $OutputArchArm $OutputPathArm64 && \
         echo -e "\033[32mls -AlhF ${HOME}/project/v2rayN:\033[0m" && \
         ls -AlhF ${HOME}/project/v2rayN && \
+        echo -e "\033[32mdu -sh ${HOME}/project:\033[0m" && \
+        du -sh ${HOME}/project
         cd ${HOME}/project
 
   build-in-docker:
@@ -427,6 +431,8 @@ jobs:
         ./package-release-zip.sh $OutputArchArm $OutputPathArm64 && \
         echo -e "\033[32mls -AlhF ${HOME}/project/v2rayN:\033[0m" && \
         ls -AlhF ${HOME}/project/v2rayN && \
+        echo -e "\033[32mdu -sh ${HOME}/project:\033[0m" && \
+        du -sh ${HOME}/project
         cd ${HOME}/project
         SCRIPT
         cat build-project.sh | docker run -i --rm ubuntu bash
