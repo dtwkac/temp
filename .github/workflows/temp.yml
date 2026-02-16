@@ -13,10 +13,6 @@ jobs:
     - name: temp
       run: |
         set -e
-        avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
-        if [ "$avail" -lt 50 ]; then
-          exit 0 # 磁盘空间不足，安全退出
-        fi
         date
         df -h
         sudo apt-get update &> /dev/null && \
@@ -49,7 +45,7 @@ jobs:
           -c "qa" && \
         cat all_mason_packages.txt && \
         wc -l all_mason_packages.txt && \
-        all_mason_packages=$(sed '/^$/d' mason_packages.txt | paste -sd, - | sed 's/[^,]*/"&"/g')
+        all_mason_packages=$(sed '/^$/d' all_mason_packages.txt | paste -sd, - | sed 's/[^,]*/"&"/g')
         echo ${all_mason_packages}
         {
         cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
