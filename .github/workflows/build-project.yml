@@ -15,12 +15,12 @@ jobs:
     - name: Build on host
       run: |
         set -e
+        lscpu
+        df -h
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
         if [ "$avail" -lt 50 ]; then
           exit 0 # 磁盘空间不足，安全退出
         fi
-        lscpu
-        df -h
         sudo apt-get update && \
         mkdir ${HOME}/project && \
         cd ${HOME}/project && \
