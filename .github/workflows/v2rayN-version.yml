@@ -10,7 +10,7 @@ jobs:
   check-version:
     runs-on: ubuntu-latest
     env:
-      V2RAYN_VERSION: 7.15.6
+      V2RAYN_VERSION: 7.18.0
     steps:
     - name: Check version
       run: |
@@ -22,7 +22,7 @@ jobs:
         if [ "$a" -lt 7 ] || { [ "$a" -eq 7 ] && [ "$b" -lt 18 ]; }; then
           wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained.zip
           unzip -q v2rayN-windows-64-SelfContained.zip
-          echo -e "\033[36mv2rayN-windows-64-SelfContained:\033[0m"
+          echo -e "\033[35mv2rayN-windows-64-SelfContained:\033[0m"
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/mihomo.exe -v:\033[0m"
           wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/mihomo.exe -v 2> /dev/null
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version:\033[0m"
@@ -34,7 +34,7 @@ jobs:
         wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
         unzip -q v2rayN-windows-64-desktop.zip
         mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
-        echo -e "\033[36mv2rayN-windows-64-desktop:\033[0m"
+        echo -e "\033[35mv2rayN-windows-64-desktop:\033[0m"
         echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v:\033[0m"
         wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v 2> /dev/null
         echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:\033[0m"
@@ -44,7 +44,7 @@ jobs:
         echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
         wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64.zip
         unzip -q v2rayN-windows-64.zip
-        echo -e "\033[36mv2rayN-windows-64:\033[0m"
+        echo -e "\033[35mv2rayN-windows-64:\033[0m"
         echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo.exe -v:\033[0m"
         wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo.exe -v 2> /dev/null
         echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version:\033[0m"
@@ -54,7 +54,7 @@ jobs:
         echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
         wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-linux-64.zip
         unzip -q v2rayN-linux-64.zip
-        echo -e "\033[36mv2rayN-linux-64:\033[0m"
+        echo -e "\033[35mv2rayN-linux-64:\033[0m"
         chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo
         echo -e "\033[32m${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v:\033[0m"
         ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v 2> /dev/null
