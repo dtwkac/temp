@@ -15,8 +15,12 @@ jobs:
         set -e
         date
         df -h
-        sudo apt-get update &> /dev/null
-        sudo apt-get install -y python3-venv npm &> /dev/null
+        avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
+        if [ "$avail" -lt 50 ]; then
+          exit 0
+        fi
+        sudo apt-get update
+        sudo apt-get install -y python3-venv npm
         mkdir -p ~/tools
         cd ~/tools
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
@@ -42,8 +46,10 @@ jobs:
               end
               f:close()
             end)" \
-          -c "qa" &> /dev/null
+          -c "qa"
         all_mason_packages=$(awk 'NF { printf "\"%s\",", $0 }' all_mason_packages.txt | sed 's/,$//')
+        echo -e "\033[32mecho \${all_mason_packages}:\033[0m"
+        echo ${all_mason_packages}
         {
         cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
         
@@ -85,6 +91,8 @@ jobs:
         }
         MASON
         }
+        echo -e "\033[32mcat ~/.config/nvim/lua/plugins/mason.lua:\033[0m"
+        cat ~/.config/nvim/lua/plugins/mason.lua
         {
         cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
@@ -139,23 +147,3 @@ jobs:
         }
         LSP
         }
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
-          -c "lua require('lazy').sync({wait = true})" \
-          -c "lua
-            local mr = require('mason-registry')
-            local function check()
-              for _, p in ipairs(mr.get_all_packages()) do
-                if p:is_installing() then
-                  return vim.defer_fn(check, 1000)
-                end
-              end
-              vim.schedule(function() vim.cmd('qa') end)
-            end
-            mr.refresh(check)"
-        echo -e "\033[32mwc -l all_mason_packages.txt:\033[0m"
-        wc -l all_mason_packages.txt
-        echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
-        tree -L 1 ~/.local/share/nvim/mason/packages
-        echo -e "\033[32mfind ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
-        find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
-        du -sh ~/.local/share/nvim/mason/packages
