@@ -12,6 +12,7 @@ jobs:
     steps:
     - name: Auto install
       run: |
+        set -e
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
         if [ "$avail" -lt 50 ]; then
           exit 0
