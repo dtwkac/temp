@@ -19,17 +19,17 @@ jobs:
         fi
         date
         df -h
-        sudo apt-get update && \
-        sudo apt-get install -y python3-venv npm && \
-        mkdir -p ${HOME}/tools && \
-        cd ${HOME}/tools && \
-        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
-        tar -zxf nvim-linux-x86_64.tar.gz && \
-        rm nvim-linux-x86_64.tar.gz && \
-        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ${HOME}/.bashrc && \
-        git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim && \
+        sudo apt-get update
+        sudo apt-get install -y python3-venv npm
+        mkdir -p ~/tools
+        cd ~/tools
+        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
+        tar -zxf nvim-linux-x86_64.tar.gz
+        rm nvim-linux-x86_64.tar.gz
+        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc
+        git clone https://github.com/LazyVim/starter ~/.config/nvim
         {
-        cat << 'OPTIONS' >> ${HOME}/.config/nvim/lua/config/options.lua
+        cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
         
         vim.opt.expandtab = true
         vim.opt.shiftwidth = 4
@@ -37,9 +37,9 @@ jobs:
         vim.opt.guicursor = "a:ver25"
         vim.opt.selection = "exclusive"
         OPTIONS
-        } && \
+        }
         {
-        cat << 'AUTOCMDS' >> ${HOME}/.config/nvim/lua/config/autocmds.lua
+        cat << 'AUTOCMDS' >> ~/.config/nvim/lua/config/autocmds.lua
         
         vim.api.nvim_create_autocmd({ "ColorScheme", "User" }, {
           pattern = { "*", "LazyVimStarted" },
@@ -48,17 +48,17 @@ jobs:
           end,
         })
         AUTOCMDS
-        } && \
+        }
         {
-        cat << 'KEYMAPS' >> ${HOME}/.config/nvim/lua/config/keymaps.lua
+        cat << 'KEYMAPS' >> ~/.config/nvim/lua/config/keymaps.lua
         
         vim.keymap.set({'v', 'x'}, '<C-c>', '"+y', { silent = true })
         vim.keymap.set({'n', 'v'}, '<C-v>', '"+p', { silent = true })
         vim.keymap.set('i', '<C-v>', '<C-r>+', { silent = true })
         KEYMAPS
-        } && \
+        }
         {
-        cat << 'MASON' > ${HOME}/.config/nvim/lua/plugins/mason.lua
+        cat << 'MASON' > ~/.config/nvim/lua/plugins/mason.lua
         return {
           "mason-org/mason.nvim",
           opts = {
@@ -69,9 +69,9 @@ jobs:
           },
         }
         MASON
-        } && \
+        }
         {
-        cat << 'BLINK' > ${HOME}/.config/nvim/lua/plugins/blink.lua
+        cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
           {
             "saghen/blink.cmp",
@@ -104,9 +104,9 @@ jobs:
           },
         }
         BLINK
-        } && \
+        }
         {
-        cat << 'LSP' > ${HOME}/.config/nvim/lua/plugins/lsp.lua
+        cat << 'LSP' > ~/.config/nvim/lua/plugins/lsp.lua
         return {
           {
             "neovim/nvim-lspconfig",
@@ -123,7 +123,7 @@ jobs:
           },
         }
         LSP
-        } && \
+        }
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
@@ -155,11 +155,11 @@ jobs:
             end)"
         echo -e "\033[32mwc -l all_mason_packages.txt:\033[0m"
         wc -l all_mason_packages.txt
-        echo -e "\033[32mtree -L 1 ${HOME}/.local/share/nvim/mason/packages:\033[0m"
-        tree -L 1 ${HOME}/.local/share/nvim/mason/packages
-        echo -e "\033[32mfind ${HOME}/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
-        find ${HOME}/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
-        du -sh ${HOME}/.local/share/nvim/mason/packages
+        echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
+        tree -L 1 ~/.local/share/nvim/mason/packages
+        echo -e "\033[32mfind ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
+        find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
+        du -sh ~/.local/share/nvim/mason/packages
 
   all-packages-install:
     runs-on: ubuntu-latest
@@ -175,13 +175,13 @@ jobs:
         df -h
         sudo apt-get update
         sudo apt-get install -y python3-venv npm
-        mkdir -p ${HOME}/tools
-        cd ${HOME}/tools
+        mkdir -p ~/tools
+        cd ~/tools
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
         tar -zxf nvim-linux-x86_64.tar.gz
         rm nvim-linux-x86_64.tar.gz
-        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ${HOME}/.bashrc
-        git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
+        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc
+        git clone https://github.com/LazyVim/starter ~/.config/nvim
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
@@ -205,7 +205,7 @@ jobs:
         echo -e "\033[32mecho \${all_mason_packages}:\033[0m"
         echo ${all_mason_packages}
         {
-        cat << 'OPTIONS' >> ${HOME}/.config/nvim/lua/config/options.lua
+        cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
         
         vim.opt.expandtab = true
         vim.opt.shiftwidth = 4
@@ -215,7 +215,7 @@ jobs:
         OPTIONS
         }
         {
-        cat << 'AUTOCMDS' >> ${HOME}/.config/nvim/lua/config/autocmds.lua
+        cat << 'AUTOCMDS' >> ~/.config/nvim/lua/config/autocmds.lua
         
         vim.api.nvim_create_autocmd({ "ColorScheme", "User" }, {
           pattern = { "*", "LazyVimStarted" },
@@ -226,7 +226,7 @@ jobs:
         AUTOCMDS
         }
         {
-        cat << 'KEYMAPS' >> ${HOME}/.config/nvim/lua/config/keymaps.lua
+        cat << 'KEYMAPS' >> ~/.config/nvim/lua/config/keymaps.lua
         
         vim.keymap.set({'v', 'x'}, '<C-c>', '"+y', { silent = true })
         vim.keymap.set({'n', 'v'}, '<C-v>', '"+p', { silent = true })
@@ -234,7 +234,7 @@ jobs:
         KEYMAPS
         }
         {
-        cat << MASON > ${HOME}/.config/nvim/lua/plugins/mason.lua
+        cat << MASON > ~/.config/nvim/lua/plugins/mason.lua
         return {
           "mason-org/mason.nvim",
           opts = {
@@ -245,10 +245,10 @@ jobs:
         }
         MASON
         }
-        echo -e "\033[32mcat ${HOME}/.config/nvim/lua/plugins/mason.lua:\033[0m"
-        cat ${HOME}/.config/nvim/lua/plugins/mason.lua
+        echo -e "\033[32mcat ~/.config/nvim/lua/plugins/mason.lua:\033[0m"
+        cat ~/.config/nvim/lua/plugins/mason.lua
         {
-        cat << 'BLINK' > ${HOME}/.config/nvim/lua/plugins/blink.lua
+        cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
         return {
           {
             "saghen/blink.cmp",
@@ -283,7 +283,7 @@ jobs:
         BLINK
         }
         {
-        cat << 'LSP' > ${HOME}/.config/nvim/lua/plugins/lsp.lua
+        cat << 'LSP' > ~/.config/nvim/lua/plugins/lsp.lua
         return {
           {
             "neovim/nvim-lspconfig",
@@ -316,8 +316,8 @@ jobs:
             mr.refresh(check)"
         echo -e "\033[32mwc -l all_mason_packages.txt:\033[0m"
         wc -l all_mason_packages.txt
-        echo -e "\033[32mtree -L 1 ${HOME}/.local/share/nvim/mason/packages:\033[0m"
-        tree -L 1 ${HOME}/.local/share/nvim/mason/packages
-        echo -e "\033[32mfind ${HOME}/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
-        find ${HOME}/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
-        du -sh ${HOME}/.local/share/nvim/mason/packages
+        echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
+        tree -L 1 ~/.local/share/nvim/mason/packages
+        echo -e "\033[32mfind ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l:\033[0m"
+        find ~/.local/share/nvim/mason/packages -mindepth 1 -maxdepth 1 -type d | wc -l
+        du -sh ~/.local/share/nvim/mason/packages
