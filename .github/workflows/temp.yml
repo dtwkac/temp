@@ -15,15 +15,15 @@ jobs:
         set -e
         date
         df -h
-        sudo apt-get update &> /dev/null && \
-        sudo apt-get install -y python3-venv npm &> /dev/null && \
-        mkdir -p ~/tools && \
-        cd ~/tools && \
-        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
-        tar -zxf nvim-linux-x86_64.tar.gz && \
-        rm nvim-linux-x86_64.tar.gz && \
-        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc && \
-        git clone https://github.com/LazyVim/starter ~/.config/nvim && \
+        sudo apt-get update &> /dev/null
+        sudo apt-get install -y python3-venv npm &> /dev/null
+        mkdir -p ~/tools
+        cd ~/tools
+        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
+        tar -zxf nvim-linux-x86_64.tar.gz
+        rm nvim-linux-x86_64.tar.gz
+        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc
+        git clone https://github.com/LazyVim/starter ~/.config/nvim
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
@@ -42,10 +42,10 @@ jobs:
               end
               f:close()
             end)" \
-          -c "qa" && \
-        cat all_mason_packages.txt && \
-        wc -l all_mason_packages.txt && \
-        all_mason_packages=$(sed '/^$/d' all_mason_packages.txt | paste -sd, - | sed 's/[^,]*/"&"/g')
+          -c "qa"
+        cat all_mason_packages.txt
+        wc -l all_mason_packages.txt
+        all_mason_packages=$(awk 'NF { printf "\"%s\",", $0 }' all_mason_packages.txt | sed 's/,$//')
         echo ${all_mason_packages}
         {
         cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
@@ -56,7 +56,7 @@ jobs:
         vim.opt.guicursor = "a:ver25"
         vim.opt.selection = "exclusive"
         OPTIONS
-        } && \
+        }
         {
         cat << 'AUTOCMDS' >> ~/.config/nvim/lua/config/autocmds.lua
         
@@ -67,7 +67,7 @@ jobs:
           end,
         })
         AUTOCMDS
-        } && \
+        }
         {
         cat << 'KEYMAPS' >> ~/.config/nvim/lua/config/keymaps.lua
         
@@ -75,7 +75,7 @@ jobs:
         vim.keymap.set({'n', 'v'}, '<C-v>', '"+p', { silent = true })
         vim.keymap.set('i', '<C-v>', '<C-r>+', { silent = true })
         KEYMAPS
-        } && \
+        }
         {
         cat << MASON > ~/.config/nvim/lua/plugins/mason.lua
         return {
@@ -87,7 +87,7 @@ jobs:
           },
         }
         MASON
-        } && \
+        }
         cat ~/.config/nvim/lua/plugins/mason.lua
         {
         cat << 'BLINK' > ~/.config/nvim/lua/plugins/blink.lua
@@ -123,7 +123,7 @@ jobs:
           },
         }
         BLINK
-        } && \
+        }
         {
         cat << 'LSP' > ~/.config/nvim/lua/plugins/lsp.lua
         return {
@@ -142,7 +142,7 @@ jobs:
           },
         }
         LSP
-        } && \
+        }
         # ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
         #   -c "lua require('lazy').sync({wait = true})" \
         #   -c "lua
@@ -155,7 +155,7 @@ jobs:
         #       end
         #       vim.schedule(function() vim.cmd('qa') end)
         #     end
-        #     mr.refresh(check)" && \
+        #     mr.refresh(check)"
         # echo -e "\033[32mwc -l mason_packages.txt:\033[0m"
         # wc -l mason_packages.txt
         # echo -e "\033[32mtree -L 1 ~/.local/share/nvim/mason/packages:\033[0m"
