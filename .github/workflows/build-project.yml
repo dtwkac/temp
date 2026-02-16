@@ -14,9 +14,11 @@ jobs:
     steps:
     - name: Build on host
       run: |
+        set -e
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
         if [ "$avail" -lt 50 ]; then
-            exit 0 # 磁盘空间不足，安全退出
+          exit 0 # 磁盘空间不足，安全退出
+        fi
         lscpu
         df -h
         sudo apt-get update && \
@@ -220,6 +222,11 @@ jobs:
     steps:
     - name: Build in docker
       run: |
+        set -e
+        avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
+        if [ "$avail" -lt 50 ]; then
+          exit 0 # 磁盘空间不足，安全退出
+        fi
         lscpu
         df -h
         cat << 'SCRIPT' > build-project.sh
