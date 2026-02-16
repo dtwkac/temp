@@ -17,12 +17,12 @@ jobs:
         df -h
         sudo apt-get update && \
         sudo apt-get install -y python3-venv npm && \
-        mkdir ~/tools && \
+        mkdir -p ~/tools && \
         cd ~/tools && \
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
         tar -zxf nvim-linux-x86_64.tar.gz && \
         rm nvim-linux-x86_64.tar.gz && \
-        export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin && \
+        echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc && \
         git clone https://github.com/LazyVim/starter ~/.config/nvim && \
         {
         cat << 'OPTIONS' >> ~/.config/nvim/lua/config/options.lua
@@ -120,7 +120,7 @@ jobs:
         }
         LSP
         } && \
-        nvim \
+        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
             local mr = require('mason-registry')
@@ -136,7 +136,7 @@ jobs:
               local t = {}
               for _, p in ipairs(mr.get_all_packages()) do
                 table.insert(t, p.name)
-                if not p:is_installed() then
+                if not p:is_installed()
                   p:install()
                 end
               end
