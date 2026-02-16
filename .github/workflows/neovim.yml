@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: temp
+    - name: Neovim
       run: |
         set -e
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
