@@ -7,7 +7,7 @@ on:
       - '.github/workflows/neovim.yml'
 
 jobs:
-  Auto-install:
+  auto-install:
     runs-on: ubuntu-latest
     steps:
     - name: Auto install
