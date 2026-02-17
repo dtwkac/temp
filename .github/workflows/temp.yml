@@ -126,7 +126,7 @@ jobs:
         # LSP
         # } && \
         echo -e "\033[32mls ${HOME}/.local/share/nvim/mason/packages:\033[0m"
-        ls ${HOME}/.local/share/nvim/mason/packages
+        ls ${HOME}/.local/share/nvim/mason/packages || true
         ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
           -c "lua require('lazy').sync({wait = true})" \
           -c "lua
