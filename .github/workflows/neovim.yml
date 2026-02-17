@@ -8,6 +8,9 @@ on:
     paths:
       - '.github/workflows/neovim.yml'
 
+env:
+  NEOVIM_VERSION: v0.11.6
+
 jobs:
   auto-install:
     runs-on: ubuntu-latest
@@ -25,7 +28,7 @@ jobs:
         sudo apt-get install -y python3-venv npm
         mkdir -p ${HOME}/tools
         cd ${HOME}/tools
-        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
+        wget -nv https://github.com/neovim/neovim/releases/download/${{ env.NEOVIM_VERSION }}/nvim-linux-x86_64.tar.gz
         tar -zxf nvim-linux-x86_64.tar.gz
         rm nvim-linux-x86_64.tar.gz
         echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ${HOME}/.bashrc
@@ -177,7 +180,7 @@ jobs:
         sudo apt-get install -y python3-venv npm
         mkdir -p ${HOME}/tools
         cd ${HOME}/tools
-        wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
+        wget -nv https://github.com/neovim/neovim/releases/download/${{ env.NEOVIM_VERSION }}/nvim-linux-x86_64.tar.gz
         tar -zxf nvim-linux-x86_64.tar.gz
         rm nvim-linux-x86_64.tar.gz
         echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ${HOME}/.bashrc
