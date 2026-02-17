@@ -29,28 +29,6 @@ jobs:
         rm nvim-linux-x86_64.tar.gz
         echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ${HOME}/.bashrc
         git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
-          -c "lua require('lazy').sync({wait = true})" \
-          -c "lua
-            local r = require('mason-registry')
-            r.refresh(function()
-              local p = r.get_all_packages()
-              local t = {}
-              for _, x in ipairs(p) do
-                table.insert(t, x.name)
-              end
-              table.sort(t)
-              local path = vim.fn.getcwd() .. '/all_mason_packages.txt'
-              local f = io.open(path, 'w')
-              for _, n in ipairs(t) do
-                f:write(n .. '\n')
-              end
-              f:close()
-            end)" \
-          -c "qa"
-        all_mason_packages=$(awk 'NF { printf "\"%s\",", $0 }' all_mason_packages.txt | sed 's/,$//')
-        echo -e "\033[32mecho \${all_mason_packages}:\033[0m"
-        echo ${all_mason_packages}
         {
         cat << 'OPTIONS' >> ${HOME}/.config/nvim/lua/config/options.lua
         
@@ -86,7 +64,7 @@ jobs:
           "mason-org/mason.nvim",
           opts = {
             ensure_installed = {
-              ${all_mason_packages}
+              "bzl", "clarity-lsp", "coq-lsp", "digestif", "erlang-debugger", "erlang-ls", "fennel-ls", "flux-lsp", "gospel", "haskell-debug-adapter", "hdl-checker", "java-language-server", "luacheck", "luaformatter", "nil", "nimlsp", "ocaml-lsp", "ocamlearlybird", "ocamlformat", "pkgbuild-language-server", "psalm", "r-languageserver", "salt-lsp", "teal-language-server", "vala-language-server", "vls", "vsg", "xcodeprojectcli"
             },
           },
         }
@@ -161,8 +139,6 @@ jobs:
               vim.schedule(function() vim.cmd('qa') end)
             end
             mr.refresh(check)"
-        echo -e "\033[32mcat all_mason_packages.txt:\033[0m"
-        cat all_mason_packages.txt
         echo -e "\033[32mls ${HOME}/.local/share/nvim/mason/packages:\033[0m"
         ls ${HOME}/.local/share/nvim/mason/packages
         du -sh ${HOME}/.local/share/nvim/mason/packages
