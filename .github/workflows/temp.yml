@@ -59,20 +59,6 @@ jobs:
         KEYMAPS
         }
         {
-        cat << MASON > ${HOME}/.config/nvim/lua/plugins/mason.lua
-        return {
-          "mason-org/mason.nvim",
-          opts = {
-            ensure_installed = {
-              "bzl", "clarity-lsp", "coq-lsp", "digestif", "erlang-debugger", "erlang-ls", "fennel-ls", "flux-lsp", "gospel", "haskell-debug-adapter", "hdl-checker", "java-language-server", "luacheck", "luaformatter", "nil", "nimlsp", "ocaml-lsp", "ocamlearlybird", "ocamlformat", "pkgbuild-language-server", "psalm", "r-languageserver", "salt-lsp", "teal-language-server", "vala-language-server", "vls", "vsg", "xcodeprojectcli"
-            },
-          },
-        }
-        MASON
-        }
-        echo -e "\033[32mcat ${HOME}/.config/nvim/lua/plugins/mason.lua:\033[0m"
-        cat ${HOME}/.config/nvim/lua/plugins/mason.lua
-        {
         cat << 'BLINK' > ${HOME}/.config/nvim/lua/plugins/blink.lua
         return {
           {
