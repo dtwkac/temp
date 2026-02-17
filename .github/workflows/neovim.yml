@@ -17,6 +17,8 @@ jobs:
         set -e
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
         if [ "$avail" -lt 50 ]; then
+          echo -e "\033[91mNo enough space:\033[0m"
+          df -h
           exit 0
         fi
         sudo apt-get update
@@ -167,6 +169,8 @@ jobs:
         set -e
         avail=$(df -h / | awk 'NR==2 {print $4}' | sed 's/G//')
         if [ "$avail" -lt 50 ]; then
+          echo -e "\033[91mNo enough space:\033[0m"
+          df -h
           exit 0
         fi
         sudo apt-get update
