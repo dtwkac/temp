@@ -90,6 +90,7 @@ jobs:
         }
         MASON
         }
+        cat ${HOME}/.config/nvim/lua/plugins/mason.lua
         {
         cat << 'BLINK' > ${HOME}/.config/nvim/lua/plugins/blink.lua
         return {
