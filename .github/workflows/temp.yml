@@ -24,7 +24,7 @@ jobs:
         sudo apt-get install -y python3-venv npm dotnet-host-10.0 opam \
           luarocks gem composer meson rebar3 cabal-install r-base-core nim \
           openjdk-21-jdk-headless golang-go maven hunspell &> /dev/null &> /dev/null && \
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -y && \
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
         OPAMYES=1 opam init --bare --disable-sandboxing && \
         source ~/.cargo/env -y && \
         mkdir -p ~/tools && \
