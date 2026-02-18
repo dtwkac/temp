@@ -26,7 +26,7 @@ jobs:
           openjdk-21-jdk-headless golang-go maven hunspell &> /dev/null &> /dev/null && \
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh && \
         OPAMYES=1 opam init -y --bare --disable-sandboxing && \
-        source ~/.cargo/env && \
+        source ~/.cargo/env -y && \
         mkdir -p ~/tools && \
         cd ~/tools && \
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
