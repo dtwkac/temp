@@ -34,26 +34,6 @@ jobs:
         rm nvim-linux-x86_64.tar.gz && \
         echo 'export PATH=$PATH:${HOME}/tools/nvim-linux-x86_64/bin' >> ~/.bashrc && \
         git clone https://github.com/LazyVim/starter ~/.config/nvim && \
-        ${HOME}/tools/nvim-linux-x86_64/bin/nvim \
-          -c "lua require('lazy').sync({wait = true})" \
-          -c "lua
-            local r = require('mason-registry')
-            r.refresh(function()
-              local p = r.get_all_packages()
-              local t = {}
-              for _, x in ipairs(p) do
-                table.insert(t, x.name)
-              end
-              table.sort(t)
-              local path = vim.fn.getcwd() .. '/all_mason_packages.txt'
-              local f = io.open(path, 'w')
-              for _, n in ipairs(t) do
-                f:write(n .. '\n')
-              end
-              f:close()
-            end)" \
-          -c "qa"
-        all_mason_packages=$(awk 'NF { printf "\"%s\",", $0 }' all_mason_packages.txt | sed 's/,$//')
         {
         cat << 'OPTIONS' >> ${HOME}/.config/nvim/lua/config/options.lua
         
