@@ -72,7 +72,6 @@ jobs:
               ,
               --diff
               --"bzl", "clarity-lsp", "coq-lsp", "digestif", "erlang-debugger", "erlang-ls", "fennel-ls", "flux-lsp", "gospel", "haskell-debug-adapter", "hdl-checker", "java-language-server", "luacheck", "luaformatter", "nil", "nimlsp", "ocaml-lsp", "ocamlearlybird", "ocamlformat", "pkgbuild-language-server", "psalm", "r-languageserver", "salt-lsp", "teal-language-server", "vala-language-server", "vls", "xcodeprojectcli"
-              ,
             },
           },
         }
