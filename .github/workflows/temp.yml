@@ -21,7 +21,7 @@ jobs:
           exit 0
         fi
         sudo apt-get update
-        sudo apt-get install -y python3-venv npm
+        sudo apt-get install -y python3-venv npm &> /dev/null
         mkdir -p ${HOME}/tools
         cd ${HOME}/tools
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
