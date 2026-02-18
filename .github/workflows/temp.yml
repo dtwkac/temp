@@ -19,9 +19,11 @@ jobs:
           df -h
           exit 0
         fi
-        sudo apt-get update &> /dev/null
-        #sudo apt-get install -y python3-venv npm dotnet-host-10.0 opam luarocks gem composer meson rebar3 \
-        #  cabal-install r-base-core nim openjdk-21-jdk-headless golang-go &> /dev/null
+        sudo apt-get update &> /dev/null && \
+        sudo apt-get install -y vim g++ cmake git wget curl zip unzip tree &> /dev/null && \
+        sudo apt-get install -y python3-venv npm dotnet-host-10.0 opam \
+          luarocks gem composer meson rebar3 cabal-install r-base-core nim \
+          openjdk-21-jdk-headless golang-go maven hunspell &> /dev/null &> /dev/null && \
         mkdir -p ${HOME}/tools
         cd ${HOME}/tools
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz
