@@ -20,7 +20,7 @@ jobs:
           exit 0
         fi
         sudo apt-get update &> /dev/null && \
-        sudo apt-get install -y opam luarocks rebar3 nimble &> /dev/null && \
+        sudo apt-get install -y opam luarocks rebar3 nim &> /dev/null && \
         mkdir -p ~/tools && \
         cd ~/tools && \
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
