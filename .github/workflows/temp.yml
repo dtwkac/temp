@@ -19,11 +19,6 @@ jobs:
           df -h
           exit 0
         fi
-        sudo apt-get update &> /dev/null && \
-        sudo apt-get install -y opam luarocks rebar3 nim liblua5.1-0-dev &> /dev/null && \
-        opam init --bare -y --disable-sandboxing && \
-        opam switch create default ocaml-base-compiler.5.1.1 -y && \
-        eval "$(opam env)" && \
         mkdir -p ~/tools && \
         cd ~/tools && \
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
@@ -66,11 +61,6 @@ jobs:
           "mason-org/mason.nvim",
           opts = {
             ensure_installed = {
-              "bzl", "clarity-lsp", "coq-lsp", "digestif", "erlang-debugger", "erlang-ls",
-              "fennel-ls", "flux-lsp", "gospel", "haskell-debug-adapter", "hdl-checker",
-              "java-language-server", "luacheck", "luaformatter", "nil", "nimlsp", "ocaml-lsp",
-              "ocamlearlybird", "ocamlformat", "pkgbuild-language-server", "psalm", "r-languageserver",
-              "salt-lsp", "teal-language-server", "vala-language-server", "vls", "vsg", "xcodeprojectcli"
             },
           },
         }
