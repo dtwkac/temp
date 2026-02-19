@@ -20,7 +20,7 @@ jobs:
           exit 0
         fi
         sudo apt-get update &> /dev/null && \
-        sudo apt-get install -y opam luarocks rebar3 nim lua5.1 &> /dev/null && \
+        sudo apt-get install -y opam luarocks rebar3 nim liblua5.1-0-dev &> /dev/null && \
         opam init --bare -y --disable-sandboxing && \
         opam switch create default ocaml-base-compiler.5.1.1 -y && \
         eval "$(opam env)" && \
