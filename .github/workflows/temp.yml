@@ -20,9 +20,9 @@ jobs:
           exit 0
         fi
         sudo apt-get update &> /dev/null && \
-        sudo apt-get install -y python3-venv npm dotnet-host-10.0 opam \
+        sudo apt-get install -y curl unzip python3-venv npm dotnet-host-10.0 opam \
           luarocks gem composer meson rebar3 cabal-install r-base-core nim \
-          openjdk-21-jdk-headless golang-go maven libhunspell-dev nix-bin &> /dev/null &> /dev/null && \
+          openjdk-21-jdk-headless golang-go maven libhunspell-dev nix-bin &> /dev/null
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
         OPAMYES=1 opam init --bare --disable-sandboxing && \
         source ~/.cargo/env -y && \
