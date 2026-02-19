@@ -21,6 +21,7 @@ jobs:
         fi
         sudo apt-get update &> /dev/null && \
         sudo apt-get install -y opam luarocks rebar3 nim &> /dev/null && \
+        opam init --bare -y --disable-sandboxing && \
         mkdir -p ~/tools && \
         cd ~/tools && \
         wget -nv https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.tar.gz && \
