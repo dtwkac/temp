@@ -144,5 +144,7 @@ jobs:
             mr.refresh(check)" && \
         echo -e "\033[32mtree -L 1 ${HOME}/.local/share/nvim/mason/packages:\033[0m"
         tree -L 1 ${HOME}/.local/share/nvim/mason/packages
+        echo -e "\033[32mcat ${HOME}/.local/state/nvim/mason.log:\033[0m"
+        cat ${HOME}/.local/state/nvim/mason.log
         echo -e "\033[32mdu -sh ${HOME}/.local/share/nvim/mason/packages:\033[0m"
         du -sh ${HOME}/.local/share/nvim/mason/packages
