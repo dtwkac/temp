@@ -61,6 +61,8 @@ jobs:
           "mason-org/mason.nvim",
           opts = {
             ensure_installed = {
+              "cpptools", "clangd", "clang-format", -- C++
+              "pyright", "ruff",                    -- Python
             },
           },
         }
