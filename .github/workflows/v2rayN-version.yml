@@ -34,13 +34,6 @@ jobs:
         fi
         if [ "$a" -eq 7 ]; then
           if [ "$b" -lt 7 ]; then
-            if [ "$b" -lt 5 ]; then
-              wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.7z
-              7z x v2rayN-windows-64-SelfContained-With-Core.7z > /dev/null
-            else
-              wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.zip
-              unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
-            fi
             wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-With-Core.zip
             unzip -q v2rayN-windows-64-With-Core.zip
             echo -e "\033[35mv2rayN-windows-64-With-Core:\033[0m"
@@ -51,6 +44,13 @@ jobs:
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+            if [ "$b" -lt 5 ]; then
+              wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.7z
+              7z x v2rayN-windows-64-SelfContained-With-Core.7z > /dev/null
+            else
+              wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.zip
+              unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
+            fi
             echo -e "\033[35mv2rayN-windows-64-SelfContained-With-Core:\033[0m"
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/mihomo*.exe -v:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
