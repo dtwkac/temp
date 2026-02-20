@@ -19,6 +19,19 @@ jobs:
         sudo apt-get install -y wget unzip wine &> /dev/null
         echo -e "\033[32m-------------------------------- v2rayN ${V2RAYN_VERSION} --------------------------------\033[0m"
         IFS='.' read -r a b c <<< "${V2RAYN_VERSION}" && \
+        if [ "$a" -gt 7 ] || { [ "$a" -eq 7 ] && [ "$b" -ge 9 ]; }; then
+          wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
+          unzip -q v2rayN-windows-64-desktop.zip
+          mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
+          echo -e "\033[35mv2rayN-windows-64-desktop:\033[0m"
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+        fi
         if [ "$a" -eq 7 ]; then
           if [ "$b" -lt 7 ]; then
             wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.zip.zip
@@ -55,19 +68,6 @@ jobs:
               echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
             fi
           fi
-        fi
-        if [ "$a" -gt 7 ] || { [ "$a" -eq 7 ] && [ "$b" -ge 9 ]; }; then
-          wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
-          unzip -q v2rayN-windows-64-desktop.zip
-          mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
-          echo -e "\033[35mv2rayN-windows-64-desktop:\033[0m"
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v:\033[0m"
-          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:\033[0m"
-          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version:\033[0m"
-          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
         fi
         wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-linux-64.zip
         unzip -q v2rayN-linux-64.zip
