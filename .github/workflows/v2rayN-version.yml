@@ -36,7 +36,7 @@ jobs:
           if [ "$b" -lt 7 ]; then
             if [ "$b" -lt 5 ]; then
               wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.7z
-              7z x v2rayN-windows-64-SelfContained-With-Core.7z
+              7z x v2rayN-windows-64-SelfContained-With-Core.7z > /dev/null
             else
               wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained-With-Core.zip
               unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
