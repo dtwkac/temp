@@ -15,7 +15,7 @@ jobs:
         set -e
         date
         VERSION=7.12.5
-        wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
+        wget -nv https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
         unzip -q v2rayN-windows-64-desktop.zip
         mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
         ls ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo*.exe
