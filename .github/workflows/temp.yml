@@ -14,7 +14,7 @@ jobs:
       run: |
         set -e
         date
-        V2RAYN_VERSION=7.12.5
+        V2RAYN_VERSION=7.15.2
         wget -nv https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
         unzip -q v2rayN-windows-64-desktop.zip
         mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
