@@ -10,7 +10,7 @@ jobs:
   check-version:
     runs-on: ubuntu-latest
     env:
-      V2RAYN_VERSION: 7.18.0
+      V2RAYN_VERSION: 7.3.2
     steps:
     - name: Check version
       run: |
@@ -19,13 +19,18 @@ jobs:
         sudo apt-get install -y wget unzip wine &> /dev/null
         echo -e "\033[32m-------------------------------- v2rayN ${V2RAYN_VERSION} --------------------------------\033[0m"
         IFS='.' read -r a b c <<< "${V2RAYN_VERSION}" && \
+        if [ "$a" -gt 7 ] || { [ "$a" -eq 7 ] && [ "$b" -ge 14 ]; }; then
+          mihomo_bin="mihomo.exe"
+        else
+          mihomo_bin="mihomo-windows-amd64-compatible.exe"
+        fi
         if [ "$a" -gt 7 ] || { [ "$a" -eq 7 ] && [ "$b" -ge 9 ]; }; then
           wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-desktop.zip
           unzip -q v2rayN-windows-64-desktop.zip
           mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
           echo -e "\033[35mv2rayN-windows-64-desktop:\033[0m"
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo*.exe -v:\033[0m"
-          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/${mihomo_bin} -v:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/${mihomo_bin} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:\033[0m"
           wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version:\033[0m"
@@ -37,8 +42,8 @@ jobs:
             wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-With-Core.zip
             unzip -q v2rayN-windows-64-With-Core.zip
             echo -e "\033[35mv2rayN-windows-64-With-Core:\033[0m"
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/mihomo*.exe -v:\033[0m"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/${mihomo_bin} -v:\033[0m"
+            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/${mihomo_bin} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/sing_box/sing-box.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version:\033[0m"
@@ -52,8 +57,8 @@ jobs:
               unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
             fi
             echo -e "\033[35mv2rayN-windows-64-SelfContained-With-Core:\033[0m"
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/mihomo*.exe -v:\033[0m"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/${mihomo_bin} -v:\033[0m"
+            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/${mihomo_bin} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/sing_box/sing-box.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/xray/xray.exe version:\033[0m"
@@ -63,8 +68,8 @@ jobs:
             wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64.zip
             unzip -q v2rayN-windows-64.zip
             echo -e "\033[35mv2rayN-windows-64:\033[0m"
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo*.exe -v:\033[0m"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/${mihomo_bin} -v:\033[0m"
+            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/${mihomo_bin} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version:\033[0m"
@@ -74,8 +79,8 @@ jobs:
               wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64-SelfContained.zip
               unzip -q v2rayN-windows-64-SelfContained.zip
               echo -e "\033[35mv2rayN-windows-64-SelfContained:\033[0m"
-              echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/mihomo*.exe -v:\033[0m"
-              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/${mihomo_bin} -v:\033[0m"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/${mihomo_bin} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
               echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version:\033[0m"
               wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
               echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/xray/xray.exe version:\033[0m"
