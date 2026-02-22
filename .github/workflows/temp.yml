@@ -51,28 +51,14 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
-        for ((minor=0; minor<=29; minor++)); do
-          echo -e "${PURPLE}-------------------------------- 3.${minor} --------------------------------${RESET}"
-          if [ "${minor}" -eq 15 ]; then
-            for ((patch=1; patch<=2; patch++)); do
-              echo -e "${PURPLE}-------------------------------- 3.${minor}.${patch} --------------------------------${RESET}"
-              wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.1/v2rayN-Core.zip 2> error.log
-              unzip -q v2rayN-Core.zip
-              echo -e "${PURPLE}v2rayN-Core:${RESET}"
-              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
-              wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-              rm -rf v2rayN-Core v2rayN-Core.zip
-            done
-            continue
-          fi
-          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}/v2rayN-Core.zip 2> error.log; then
+        for ((minor=22; minor<=44; minor++)); do
+          if ! wget -nv https://github.com/v2fly/v2ray-core/releases/download/v4.${minor}.0/v2ray-linux-64.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
           fi
-          unzip -q v2rayN-Core.zip
-          echo -e "${PURPLE}v2rayN-Core:${RESET}"
-          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
-          wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          unzip -q v2ray-linux-64.zip
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2ray-linux-64.zip/v2ray.exe -help:${RESET}"
+          wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -help 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           rm -rf v2rayN-Core v2rayN-Core.zip
         done
 
