@@ -28,7 +28,7 @@ jobs:
             continue
           fi
           unzip -q v2ray-linux-64.zip
-          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2ray-linux-64.zip/v2ray.exe -help:${RESET}"
-          wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -help 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2ray-linux-64/v2ray.exe -help:${RESET}"
+          wine ${GITHUB_WORKSPACE}/v2ray-linux-64/v2ray.exe -help 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           rm -rf v2ray-linux-64.zip v2ray-linux-64
         done
