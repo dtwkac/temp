@@ -20,7 +20,7 @@ jobs:
             if [ $? -eq 0 ]; then
               7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null
               echo ${version}:
-              ls zz_v2rayN-With-Core-SelfContained/bin/mihomo
+              ls zz_v2rayN-With-Core-SelfContained/bin/mihomo || true
               rm -rf zz_v2rayN-With-Core-SelfContained zz_v2rayN-With-Core-SelfContained.7z
             else
               echo "版本 ${version} 下载失败，跳过。"
