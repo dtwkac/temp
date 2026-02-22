@@ -31,7 +31,7 @@ jobs:
           fi
 
           wget https://github.com/2dust/v2rayN/releases/download/6.${version}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          ls -lhF error.log
+          cat error.log
           if [ ! -s error.log ]; then
             unzip -q v2rayN-With-Core.zip
             if [ "$version" -gt 32 ]; then
