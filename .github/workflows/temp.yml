@@ -19,7 +19,7 @@ jobs:
         RESET="\033[0m"
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
-        sudo apt install -y wine wine32:i386 &> /dev/null
+        sudo apt install -y wine &> /dev/null
         for ((minor=33; minor<=36; minor++)); do
           echo -e "\033[35m-------------------------------- 4.${minor} --------------------------------\033[0m"
           if ! wget -nv https://github.com/2dust/v2rayN/releases/download/4.${minor}/v2rayN-Core.zip 2> error.log; then
