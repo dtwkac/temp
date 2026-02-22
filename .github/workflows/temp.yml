@@ -18,7 +18,7 @@ jobs:
         sudo apt install -y 7zip wine &> /dev/null
         for ((minor=0; minor<=60; minor++)); do
           echo 6.${minor}:
-          if [ "$version" -ge 44 ]; then
+          if [ "${minor}" -ge 44 ]; then
             mihomo_exe="mihomo-windows-amd64-compatible.exe"
           else
             mihomo_exe="mihomo.exe"
@@ -30,7 +30,7 @@ jobs:
           fi
           unzip v2rayN-With-Core.zip > /dev/null 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ ! -s error.log ]; then
-            if [ "$version" -gt 32 ]; then
+            if [ "${minor}" -gt 32 ]; then
               echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/mihomo/mihomo.exe -v:\033[0m"
               wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             fi
@@ -48,7 +48,7 @@ jobs:
           7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ ! -s error.log ]; then
             echo -e "\033[35mzz_v2rayN-With-Core-SelfContained:\033[0m"
-            if [ "$version" -gt 32 ]; then
+            if [ "${minor}" -gt 32 ]; then
               echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:\033[0m"
               wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             fi
