@@ -10,7 +10,7 @@ jobs:
   check-version:
     runs-on: ubuntu-latest
     env:
-      V2RAYN_VERSION: 6.33
+      V2RAYN_VERSION: 6.55
     steps:
     - name: Check version
       run: |
