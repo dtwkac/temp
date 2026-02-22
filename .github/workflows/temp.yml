@@ -54,6 +54,7 @@ jobs:
           rm -rf v2rayN${suffix} v2rayN${suffix}.zip
 
           if [ "${minor}" -eq 7 ] || [ "${minor}" -eq 8 ]; then
+            echo -e "${PURPLE}v2rayN-With-Core-SelfContained:${RESET}"
             wget -q https://github.com/2dust/v2rayN/releases/download/6.${minor}/zz-v2rayN-With-Core-SelfContained.7z
             7z x zz-v2rayN-With-Core-SelfContained.7z > /dev/null
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version:${RESET}"
