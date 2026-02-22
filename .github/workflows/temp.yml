@@ -23,15 +23,9 @@ jobs:
         for ((minor=0; minor<=29; minor++)); do
           echo -e "\033[35m-------------------------------- 3.${minor} --------------------------------\033[0m"
           if [ "${minor}" -eq 15 ]; then
-            echo -e "\033[35m-------------------------------- 3.${minor}.1 --------------------------------\033[0m"
+            for ((patch=1; patch<=2; patch++)); do
+            echo -e "\033[35m-------------------------------- 3.${minor}.${patch} --------------------------------\033[0m"
             wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.1/v2rayN-Core.zip
-            unzip -q v2rayN-Core.zip
-            echo -e "${PURPLE}v2rayN-Core:${RESET}"
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
-            wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf v2rayN-Core v2rayN-Core.zip
-            echo -e "\033[35m-------------------------------- 3.${minor}.2 --------------------------------\033[0m"
-            wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.2/v2rayN-Core.zip
             unzip -q v2rayN-Core.zip
             echo -e "${PURPLE}v2rayN-Core:${RESET}"
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
