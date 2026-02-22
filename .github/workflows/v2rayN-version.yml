@@ -24,8 +24,8 @@ jobs:
           wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-Core.zip
           unzip -q v2rayN-Core.zip
           echo -e "\033[35mv2rayN-Core:\033[0m"
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-Core/clash-windows-amd64.exe version:\033[0m"
-          wine ${GITHUB_WORKSPACE}/v2rayN-Core/clash-windows-amd64.exe version
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-Core/clash-windows-amd64.exe -v:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-Core/clash-windows-amd64.exe -v
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe version:\033[0m"
           wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe version
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:\033[0m"
