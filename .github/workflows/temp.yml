@@ -18,7 +18,7 @@ jobs:
         RESET="\033[0m"
         date
         sudo apt update &> /dev/null
-        sudo apt install -y 7zip wine &> /dev/null
+        sudo apt install -y 7zip &> /dev/null
         for ((minor=0; minor<=60; minor++)); do
           echo -e "\033[35m-------------------------------- 6.${minor} --------------------------------\033[0m"
           if [ "${minor}" -lt 2 ]; then
