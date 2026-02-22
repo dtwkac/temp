@@ -10,14 +10,14 @@ jobs:
   check-version:
     runs-on: ubuntu-latest
     env:
-      V2RAYN_VERSION: 5.39
+      V2RAYN_VERSION: 6.33
     steps:
     - name: Check version
       run: |
         set -e
         sudo apt-get update &> /dev/null
         sudo apt-get install -y wget unzip wine &> /dev/null
-        echo -e "\033[32m-------------------------------- v2rayN ${V2RAYN_VERSION} --------------------------------\033[0m"
+        echo -e "\033[35m-------------------------------- v2rayN ${V2RAYN_VERSION} --------------------------------\033[0m"
         IFS='.' read -r a b c <<< "${V2RAYN_VERSION}"
 
         if [ "$a" -eq 5 ]; then
