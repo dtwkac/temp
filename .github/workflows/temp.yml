@@ -14,3 +14,8 @@ jobs:
       run: |
         set -e
         date
+        sudo apt update &> /dev/null
+        sudo apt install -y wine &> /dev/null
+        wget https://github.com/2dust/v2rayN/releases/download/5.39/v2rayN-Core.zip
+        unzip v2rayN-Core.zip
+        wine v2rayN-Core/xray.exe version 2> /dev/null
