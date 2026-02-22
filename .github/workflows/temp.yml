@@ -36,7 +36,7 @@ jobs:
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
           fi
-          unzip v2rayN${suffix}.zip
+          unzip -q v2rayN${suffix}.zip
           echo -e "\033[35mv2rayN${suffix}:\033[0m"
           if [ "${minor}" -ge 33 ]; then
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/mihomo/mihomo.exe -v:\033[0m"
