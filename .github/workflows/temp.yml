@@ -33,8 +33,8 @@ jobs:
           if [ "${minor}" -ge 9 ]; then
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            file ${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe
+            file ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe
           fi
           rm -rf v2rayN-Core v2rayN-Core.zip
-          file ${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe
+          file ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe
         done
