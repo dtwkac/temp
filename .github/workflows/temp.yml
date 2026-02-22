@@ -16,10 +16,7 @@ jobs:
         date
         sudo apt update &> /dev/null
         sudo apt install -y 7zip wine &> /dev/null
-        begin=0
-        end=60
-        minor_list=($(seq $begin $end))
-        for monor in "${minor_list[@]}"; do
+        for ((minor=0; minor<=60; minor++)); do
           echo 6.${minor}:
           if [ "$version" -ge 44 ]; then
             mihomo_exe="mihomo-windows-amd64-compatible.exe"
