@@ -42,6 +42,7 @@ jobs:
             wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            rm -rf v2rayN-With-Core v2rayN-With-Core.zip
             echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
             wget https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null
@@ -56,6 +57,7 @@ jobs:
             wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            rm -rf zz_v2rayN-With-Core-SelfContained.7z zz_v2rayN-With-Core-SelfContained
             echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
           fi
         done
