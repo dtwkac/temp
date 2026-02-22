@@ -43,7 +43,7 @@ jobs:
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
-            wget https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/zz_v2rayN-With-Core-SelfContained.7z 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            wget https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null
             echo -e "\033[35mzz_v2rayN-With-Core-SelfContained:\033[0m"
             if [ "$version" -gt 32 ]; then
