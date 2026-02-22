@@ -7,9 +7,9 @@ on:
       - '.github/workflows/temp.yml'
 
 env:
-  GREEN: "\033[32m"
-  PURPLE: "\033[35m"
-  RESET: "\033[0m"
+  GREEN: $'\033[32m'
+  PURPLE: $'\033[35m'
+  RESET: $'\033[0m'
 
 jobs:
   temp:
@@ -23,14 +23,14 @@ jobs:
   version-2:
     runs-on: ubuntu-latest
     steps:
-    - name: version-2
+    - name: v2rayN 2
       run: |
         set -e
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
         for ((minor=30; minor<=53; minor++)); do
-          echo -e "\033[35m-------------------------------- 2.${minor} --------------------------------\033[0m"
+          echo -e "${PURPLE}-------------------------------- 2.${minor} --------------------------------${RESET}"
           if ! wget -nv https://github.com/2dust/v2rayN/releases/download/2.${minor}/v2rayN-Core.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
@@ -45,17 +45,17 @@ jobs:
   version-3:
     runs-on: ubuntu-latest
     steps:
-    - name: version-3
+    - name: v2rayN 3
       run: |
         set -e
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
         for ((minor=0; minor<=29; minor++)); do
-          echo -e "\033[35m-------------------------------- 3.${minor} --------------------------------\033[0m"
+          echo -e "${PURPLE}-------------------------------- 3.${minor} --------------------------------${RESET}"
           if [ "${minor}" -eq 15 ]; then
             for ((patch=1; patch<=2; patch++)); do
-              echo -e "\033[35m-------------------------------- 3.${minor}.${patch} --------------------------------\033[0m"
+              echo -e "${PURPLE}-------------------------------- 3.${minor}.${patch} --------------------------------${RESET}"
               wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.1/v2rayN-Core.zip 2> error.log
               unzip -q v2rayN-Core.zip
               echo -e "${PURPLE}v2rayN-Core:${RESET}"
@@ -79,14 +79,14 @@ jobs:
   version-4:
     runs-on: ubuntu-latest
     steps:
-    - name: version-4
+    - name: v2rayN 4
       run: |
         set -e
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
         for ((minor=0; minor<=36; minor++)); do
-          echo -e "\033[35m-------------------------------- 4.${minor} --------------------------------\033[0m"
+          echo -e "${PURPLE}-------------------------------- 4.${minor} --------------------------------${RESET}"
           if ! wget -nv https://github.com/2dust/v2rayN/releases/download/4.${minor}/v2rayN-Core.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
@@ -99,5 +99,34 @@ jobs:
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           fi
+          rm -rf v2rayN-Core v2rayN-Core.zip
+        done
+
+  version-5:
+    runs-on: ubuntu-latest
+    steps:
+    - name: v2rayN 5
+      run: |
+        set -e
+        sudo dpkg --add-architecture i386
+        sudo apt update &> /dev/null
+        sudo apt install -y wine &> /dev/null
+        for ((minor=0; minor<=39; minor++)); do
+          echo -e "${PURPLE}-------------------------------- 5.${minor} --------------------------------${RESET}"
+          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/5.${minor}/v2rayN-Core.zip 2> error.log; then
+            perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            continue
+          fi
+          unzip -q v2rayN-Core.zip
+          echo -e "${PURPLE}v2rayN-Core:${RESET}"
+          if [ "${minor}" -le 5 ]; then
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
+            wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          else
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe version:${RESET}"
+            wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          fi
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
+          wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           rm -rf v2rayN-Core v2rayN-Core.zip
         done
