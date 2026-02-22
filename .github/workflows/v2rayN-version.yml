@@ -60,7 +60,7 @@ jobs:
         fi
 
         if [ "$a" -eq 7 ]; then
-          if [ "$b" -ge 14 ]; }; then
+          if [ "$b" -ge 14 ]; then
             mihomo_exe="mihomo.exe"
           else
             mihomo_exe="mihomo-windows-amd64-compatible.exe"
