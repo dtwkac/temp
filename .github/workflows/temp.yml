@@ -15,7 +15,7 @@ jobs:
         set -e
         date
         version_list=(
-          "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" 
+          "3" "4" "5" "6" "7" "8" "9" "10" 
           "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" 
           "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" 
           "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" 
@@ -28,7 +28,7 @@ jobs:
           else
             mihomo_exe="mihomo.exe"
           fi
-          wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          wget https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ -s error.log ]; then
               continue
           fi
