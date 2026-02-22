@@ -17,6 +17,7 @@ jobs:
         GREEN="\033[32m"
         PURPLE="\033[35m"
         RESET="\033[0m"
+        sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
         for ((minor=0; minor<=39; minor++)); do
