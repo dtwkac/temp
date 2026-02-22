@@ -50,8 +50,8 @@ jobs:
             echo -e "\033[35mzz-v2rayN-With-Core-SelfContained:\033[0m"
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:\033[0m"
             wine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/sing_box/sing_box.exe version:\033[0m"
-            wine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/sing_box/sing_box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version:\033[0m"
+            wine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version:\033[0m"
             wine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:\033[0m"
