@@ -41,4 +41,5 @@ jobs:
           fi
           unzip -q v2rayN${suffix}.zip
           ls ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin
+          rm -rf v2rayN${suffix} v2rayN${suffix}.zip
         done
