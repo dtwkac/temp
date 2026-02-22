@@ -45,8 +45,8 @@ jobs:
           echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version:\033[0m"
           wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ "$b" -gt 7 ]; then
-            wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/zz-v2rayN-With-Core-SelfContained.7z
-            7z x zz-v2rayN-With-Core-SelfContained.7z > /dev/null
+            wget https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/zz-v2rayN-With-Core-SelfContained.7z
+            7z x zz-v2rayN-With-Core-SelfContained.7z
             echo -e "\033[35mzz-v2rayN-With-Core-SelfContained:\033[0m"
             echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:\033[0m"
             wine ${GITHUB_WORKSPACE}/zz-v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
