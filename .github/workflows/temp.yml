@@ -14,8 +14,8 @@ jobs:
       run: |
         set -e
         date
-        sudo apt update
-        sudo apt install -y 7zip wine
+        sudo apt update &> /dev/null
+        sudo apt install -y 7zip wine &> /dev/null
         version_list=(
           "6" "7" "8" "9" "10" 
           "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" 
