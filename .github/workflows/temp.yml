@@ -23,6 +23,7 @@ jobs:
           "51" "52" "53" "54" "55" "56" "57" "58" "59" "60"
         )
         for version in "${version_list[@]}"; do
+          echo 6.${version}:
           if [ "$version" -ge 44 ]; then
             mihomo_exe="mihomo-windows-amd64-compatible.exe"
           else
