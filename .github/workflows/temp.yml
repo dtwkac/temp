@@ -31,7 +31,7 @@ jobs:
           fi
 
           wget https://github.com/2dust/v2rayN/releases/download/6.${version}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          if [ ! -s "$file" ]; then
+          if [ ! -s error.log ]; then
             unzip -q v2rayN-With-Core.zip
             if [ "$version" -gt 32 ]; then
               echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/mihomo/mihomo.exe -v:\033[0m"
@@ -48,7 +48,7 @@ jobs:
           fi
 
           wget https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          if [ ! -s "$file" ]; then
+          if [ ! -s error.log ]; then
             7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null
             echo -e "\033[35mzz_v2rayN-With-Core-SelfContained:\033[0m"
             if [ "$version" -gt 32 ]; then
