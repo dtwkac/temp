@@ -40,7 +40,7 @@ jobs:
             continue
           fi
           unzip -q v2rayN${suffix}.zip
-          echo -e "${PURPLEv2rayN${suffix}:${RESET}"
+          echo -e "${PURPLE}v2rayN${suffix}:${RESET}"
           if [ "${minor}" -ge 33 ]; then
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/mihomo/mihomo.exe -v:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
@@ -66,7 +66,7 @@ jobs:
               continue
             fi
             7z x ${prefix}v2rayN-With-Core-SelfContained.7z > /dev/null
-            echo -e "${PURPLE${prefix}v2rayN-With-Core-SelfContained:${RESET}"
+            echo -e "${PURPLE}${prefix}v2rayN-With-Core-SelfContained:${RESET}"
             if [ "${minor}" -gt 32 ]; then
               echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:${RESET}"
               wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
