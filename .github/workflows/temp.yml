@@ -17,7 +17,6 @@ jobs:
     steps:
     - name: temp
       run: |
-        set -e
         date
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
@@ -30,6 +29,6 @@ jobs:
           fi
           unzip -q -d ${GITHUB_WORKSPACE}/temp v2ray-windows-64.zip
           echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/temp/v2ray.exe -help:${RESET}"
-          wine ${GITHUB_WORKSPACE}/temp/v2ray.exe -help || true
+          wine ${GITHUB_WORKSPACE}/temp/v2ray.exe -help
           rm -rf v2ray-windows-64.zip temp
         done
