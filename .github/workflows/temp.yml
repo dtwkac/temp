@@ -13,11 +13,14 @@ jobs:
     - name: temp
       run: |
         set -e
+        GREEB="\032[35m"
+        PURPLE="\033[35m"
+        RESET="\033[0m"
         date
         sudo apt update &> /dev/null
         sudo apt install -y 7zip wine &> /dev/null
         for ((minor=0; minor<=60; minor++)); do
-          echo -e "\033[35m6.${minor}:\033[0m"
+          echo -e "${PURPLE}6.${minor}:${RESET}"
           if [ "${minor}" -lt 2 ]; then
             suffix=""
           elif [ "${minor}" -lt 6 ]; then
@@ -37,19 +40,19 @@ jobs:
             continue
           fi
           unzip -q v2rayN${suffix}.zip
-          echo -e "\033[35mv2rayN${suffix}:\033[0m"
+          echo -e "${PURPLEv2rayN${suffix}:${RESET}"
           if [ "${minor}" -ge 33 ]; then
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/mihomo/mihomo.exe -v:\033[0m"
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/mihomo/mihomo.exe -v:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           fi
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/sing_box/sing-box.exe version:\033[0m"
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/sing_box/sing-box.exe version:${RESET}"
           wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/v2fly_v5/v2ray.exe version:\033[0m"
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/v2fly_v5/v2ray.exe version:${RESET}"
           wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/Xray/xray.exe version:\033[0m"
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/Xray/xray.exe version:${RESET}"
           wine ${GITHUB_WORKSPACE}/v2rayN${suffix}/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           rm -rf v2rayN${suffix} v2rayN${suffix}.zip
-          echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+          echo -e "${GREEN}--------------------------------------------------------------------------------${RESET}"
 
           if [ "${minor}" -ge 7 ]; then
             if [ "${minor}" -eq 7 ] || [ "${minor}" -eq 8 ]; then
@@ -63,18 +66,18 @@ jobs:
               continue
             fi
             7z x ${prefix}v2rayN-With-Core-SelfContained.7z > /dev/null
-            echo -e "\033[35m${prefix}v2rayN-With-Core-SelfContained:\033[0m"
+            echo -e "${PURPLE${prefix}v2rayN-With-Core-SelfContained:${RESET}"
             if [ "${minor}" -gt 32 ]; then
-              echo -e "\033[32mwine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:\033[0m"
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:${RESET}"
               wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             fi
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version:\033[0m"
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version:\033[0m"
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:\033[0m"
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/${prefix}v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             rm -rf ${prefix}v2rayN-With-Core-SelfContained.7z ${prefix}v2rayN-With-Core-SelfContained
-            echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+            echo -e "${GREEN}--------------------------------------------------------------------------------${RESET}"
           fi
         done
