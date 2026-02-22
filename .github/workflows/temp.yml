@@ -12,18 +12,14 @@ jobs:
     steps:
     - name: temp
       run: |
+        set -e
         date
         version_list=("21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" "41" "42" "43" "44" "45" "46" "47" "48" "49" "50" "51" "52" "53" "54" "55" "56" "57" "58" "59" "60")
         for version in "${version_list[@]}"; do
-          wget -nv https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z
-          if [ $? -eq 0 ]; then
-            7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null
-            echo ${version}:
-            ls zz_v2rayN-With-Core-SelfContained/bin/mihomo || true
-            rm -rf zz_v2rayN-With-Core-SelfContained zz_v2rayN-With-Core-SelfContained.7z
-            echo "-----------------------------------------------------------------------------"
-          else
-            echo "版本 ${version} 下载失败，跳过。"
-            continue  # 继续下一个版本的处理
-          fi
+          echo ${version}:
+          wget -nv https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null || true
+          ls zz_v2rayN-With-Core-SelfContained/bin/mihomo || true
+          rm -rf zz_v2rayN-With-Core-SelfContained zz_v2rayN-With-Core-SelfContained.7z
+          echo "-----------------------------------------------------------------------------"
         done
