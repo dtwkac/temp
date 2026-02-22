@@ -17,7 +17,6 @@ jobs:
         GREEN="\033[32m"
         PURPLE="\033[35m"
         RESET="\033[0m"
-        sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
         for ((minor=0; minor<=36; minor++)); do
@@ -30,11 +29,9 @@ jobs:
           echo -e "${PURPLE}v2rayN-Core:${RESET}"
           echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
           wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          file ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe
           if [ "${minor}" -ge 9 ]; then
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            file ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe
           fi
           rm -rf v2rayN-Core v2rayN-Core.zip
         done
