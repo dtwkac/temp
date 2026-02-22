@@ -28,7 +28,7 @@ jobs:
           else
             mihomo_exe="mihomo.exe"
           fi
-          wget https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          wget https://github.com/2dust/v2rayN/releases/download/${version}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ -s error.log ]; then
               continue
           fi
