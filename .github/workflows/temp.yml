@@ -30,6 +30,6 @@ jobs:
           fi
           unzip -q -d ${GITHUB_WORKSPACE}/temp v2ray-windows-64.zip
           echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/temp/v2ray.exe -help:${RESET}"
-          wine ${GITHUB_WORKSPACE}/temp/v2ray.exe -help
+          wine ${GITHUB_WORKSPACE}/temp/v2ray.exe -help || true
           rm -rf v2ray-windows-64.zip temp
         done
