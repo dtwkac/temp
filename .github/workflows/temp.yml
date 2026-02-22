@@ -63,7 +63,7 @@ jobs:
             wine ${GITHUB_WORKSPACE}/v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf zz-v2rayN-With-Core-SelfContained.7z zz-v2rayN-With-Core-SelfContained
+            rm -rf zz-v2rayN-With-Core-SelfContained zz-v2rayN-With-Core-SelfContained.7z
           fi
 
           if [ "${minor}" -ge 9 ]; then
@@ -83,6 +83,6 @@ jobs:
             wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:${RESET}"
             wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf zz_v2rayN-With-Core-SelfContained.7z zz_v2rayN-With-Core-SelfContained
+            rm -rf zz_v2rayN-With-Core-SelfContained zz_v2rayN-With-Core-SelfContained.7z
           fi
         done
