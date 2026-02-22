@@ -16,10 +16,39 @@ jobs:
         date
         version_list=("21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" "41" "42" "43" "44" "45" "46" "47" "48" "49" "50" "51" "52" "53" "54" "55" "56" "57" "58" "59" "60")
         for version in "${version_list[@]}"; do
-          echo ${version}:
-          wget -nv https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null || true
-          ls zz_v2rayN-With-Core-SelfContained/bin/mihomo || true
-          rm -rf zz_v2rayN-With-Core-SelfContained zz_v2rayN-With-Core-SelfContained.7z
-          echo "-----------------------------------------------------------------------------"
+          if [ "$version" -ge 44 ]; then
+            mihomo_exe="mihomo-windows-amd64-compatible.exe"
+          else
+            mihomo_exe="mihomo.exe"
+          fi
+          wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-With-Core.zip 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          if [ -s error.log ]; then
+              continue
+          fi
+          unzip -q v2rayN-With-Core.zip
+          if [ "$b" -gt 32 ]; then
+            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/mihomo/mihomo.exe -v:\033[0m"
+            wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          fi
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/sing_box/sing-box.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/v2fly_v5/v2ray.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/v2rayN-With-Core/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
+          wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/zz_v2rayN-With-Core-SelfContained.7z
+          7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null
+          echo -e "\033[35mzz_v2rayN-With-Core-SelfContained:\033[0m"
+          if [ "$b" -gt 32 ]; then
+            echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/mihomo/mihomo.exe -v:\033[0m"
+            wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          fi
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/v2fly_v5/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32mwine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version:\033[0m"
+          wine ${GITHUB_WORKSPACE}/zz_v2rayN-With-Core-SelfContained/bin/Xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
         done
