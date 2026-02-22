@@ -6,6 +6,11 @@ on:
     paths:
       - '.github/workflows/temp.yml'
 
+env:
+  GREEN: "\033[32m"
+  PURPLE: "\033[35m"
+  RESET: "\033[0m"
+
 jobs:
   temp:
     runs-on: ubuntu-latest
@@ -14,10 +19,14 @@ jobs:
       run: |
         set -e
         date
-        GREEN="\033[32m"
-        PURPLE="\033[35m"
-        RESET="\033[0m"
-        #sudo dpkg --add-architecture i386
+
+  version-2:
+    runs-on: ubuntu-latest
+    steps:
+    - name: version-2
+      run: |
+        set -e
+        sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
         for ((minor=30; minor<=53; minor++)); do
@@ -30,5 +39,65 @@ jobs:
           echo -e "${PURPLE}v2rayN-Core:${RESET}"
           echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
           wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          rm -rf v2rayN-Core v2rayN-Core.zip
+        done
+
+  version-3:
+    runs-on: ubuntu-latest
+    steps:
+    - name: version-3
+      run: |
+        set -e
+        sudo dpkg --add-architecture i386
+        sudo apt update &> /dev/null
+        sudo apt install -y wine &> /dev/null
+        for ((minor=0; minor<=29; minor++)); do
+          echo -e "\033[35m-------------------------------- 3.${minor} --------------------------------\033[0m"
+          if [ "${minor}" -eq 15 ]; then
+            for ((patch=1; patch<=2; patch++)); do
+              echo -e "\033[35m-------------------------------- 3.${minor}.${patch} --------------------------------\033[0m"
+              wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.1/v2rayN-Core.zip 2> error.log
+              unzip -q v2rayN-Core.zip
+              echo -e "${PURPLE}v2rayN-Core:${RESET}"
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              rm -rf v2rayN-Core v2rayN-Core.zip
+            done
+            continue
+          fi
+          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}/v2rayN-Core.zip 2> error.log; then
+            perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            continue
+          fi
+          unzip -q v2rayN-Core.zip
+          echo -e "${PURPLE}v2rayN-Core:${RESET}"
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
+          wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          rm -rf v2rayN-Core v2rayN-Core.zip
+        done
+
+  version-4:
+    runs-on: ubuntu-latest
+    steps:
+    - name: version-4
+      run: |
+        set -e
+        sudo dpkg --add-architecture i386
+        sudo apt update &> /dev/null
+        sudo apt install -y wine &> /dev/null
+        for ((minor=0; minor<=36; minor++)); do
+          echo -e "\033[35m-------------------------------- 4.${minor} --------------------------------\033[0m"
+          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/4.${minor}/v2rayN-Core.zip 2> error.log; then
+            perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            continue
+          fi
+          unzip -q v2rayN-Core.zip
+          echo -e "${PURPLE}v2rayN-Core:${RESET}"
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
+          wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          if [ "${minor}" -ge 9 ]; then
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
+            wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          fi
           rm -rf v2rayN-Core v2rayN-Core.zip
         done
