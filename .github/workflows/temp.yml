@@ -20,19 +20,22 @@ jobs:
         sudo dpkg --add-architecture i386
         sudo apt update &> /dev/null
         sudo apt install -y wine &> /dev/null
-        for ((minor=0; minor<=36; minor++)); do
-          echo -e "\033[35m-------------------------------- 4.${minor} --------------------------------\033[0m"
-          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/4.${minor}/v2rayN-Core.zip 2> error.log; then
+        for ((minor=0; minor<=39; minor++)); do
+          echo -e "\033[35m-------------------------------- 5.${minor} --------------------------------\033[0m"
+          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/5.${minor}/v2rayN-Core.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
           fi
           unzip -q v2rayN-Core.zip
           echo -e "${PURPLE}v2rayN-Core:${RESET}"
-          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
-          wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          if [ "${minor}" -ge 9 ]; then
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
-            wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          if [ "${minor}" -lt 5 ]; then
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
+            wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+          else
+            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe version:${RESET}"
+            wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           fi
+          echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version:${RESET}"
+          wine ${GITHUB_WORKSPACE}/v2rayN-Core/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           rm -rf v2rayN-Core v2rayN-Core.zip
         done
