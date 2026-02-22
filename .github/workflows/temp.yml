@@ -16,21 +16,21 @@ jobs:
         date
         sudo apt update &> /dev/null
         sudo apt install -y 7zip wine &> /dev/null
-        version_list=(
-          "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" 
-          "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" 
-          "41" "42" "43" "44" "45" "46" "47" "48" "49" "50" 
-          "51" "52" "53" "54" "55" "56" "57" "58" "59" "60"
-        )
-        for version in "${version_list[@]}"; do
-          echo 6.${version}:
+        begin=0
+        end=60
+        minor_list=($(seq $begin $end))
+        for monor in "${minor_list[@]}"; do
+          echo 6.${minor}:
           if [ "$version" -ge 44 ]; then
             mihomo_exe="mihomo-windows-amd64-compatible.exe"
           else
             mihomo_exe="mihomo.exe"
           fi
 
-          wget -q https://github.com/2dust/v2rayN/releases/download/6.${version}/v2rayN-With-Core.zip || true
+          if ! wget -nv https://github.com/2dust/v2rayN/releases/download/6.${minor}/v2rayN-With-Core.zip 2> error.log; then
+            cat error.log
+            continue
+          fi
           unzip v2rayN-With-Core.zip > /dev/null 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ ! -s error.log ]; then
             if [ "$version" -gt 32 ]; then
@@ -47,7 +47,7 @@ jobs:
             echo -e "\033[32m--------------------------------------------------------------------------------\033[0m"
           fi
 
-          wget -q https://github.com/2dust/v2rayN/releases/download/6.${version}/zz_v2rayN-With-Core-SelfContained.7z || true
+          wget -q https://github.com/2dust/v2rayN/releases/download/6.${minor}/zz_v2rayN-With-Core-SelfContained.7z || true
           7z x zz_v2rayN-With-Core-SelfContained.7z > /dev/null 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           if [ ! -s error.log ]; then
             echo -e "\033[35mzz_v2rayN-With-Core-SelfContained:\033[0m"
