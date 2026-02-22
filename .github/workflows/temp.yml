@@ -21,4 +21,6 @@ jobs:
         wine v2rayN-Core/clash-windows-amd64.exe -v 2> /dev/null
         wine v2rayN-Core/xray.exe version 2> /dev/null
         wine v2rayN-Core/wxray.exe version 2> /dev/null
+        wine v2rayN-Core/v2ray.exe version 2> /dev/null
+        wine v2rayN-Core/wv2ray.exe version 2> /dev/null
         date
