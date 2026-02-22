@@ -111,7 +111,7 @@ jobs:
           fi
           unzip -q v2rayN-Core.zip
           echo -e "${PURPLE}v2rayN-Core:${RESET}"
-          if [ "${minor}" -le 40 ]; then
+          if [ "${minor}" -le 34 ]; then
             echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version:${RESET}"
             wine ${GITHUB_WORKSPACE}/v2rayN-Core/v2ray.exe -version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
           else
