@@ -227,7 +227,7 @@ jobs:
             mihomo_exe="mihomo-windows-amd64-compatible.exe"
           fi
           if [ "$minor" -lt 7 ]; then
-            wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-With-Core.zip 2> error.log; then
+            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-With-Core.zip
             unzip -q v2rayN-windows-64-With-Core.zip
             rm v2rayN-windows-64-With-Core.zip
             echo -e "${PURPLE}v2rayN-windows-64-With-Core:RESET"
@@ -239,11 +239,11 @@ jobs:
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             rm -rf v2rayN-windows-64-With-Core
             if [ "$minor" -lt 5 ]; then
-              wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained-With-Core.7z 2> error.log; then
+              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained-With-Core.7z
               7z x v2rayN-windows-64-SelfContained-With-Core.7z > /dev/null
               rm v2rayN-windows-64-SelfContained-With-Core.7z
             else
-              wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained-With-Core.zip 2> error.log; then
+              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained-With-Core.zip
               unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
               rm v2rayN-windows-64-SelfContained-With-Core.zip
             fi
@@ -256,7 +256,7 @@ jobs:
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             rm -rf v2rayN-windows-64-SelfContained-With-Core
           else
-            wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64.zip 2> error.log; then
+            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64.zip
             unzip -q v2rayN-windows-64.zip
             rm v2rayN-windows-64.zip
             echo -e "${PURPLE}v2rayN-windows-64:RESET"
@@ -268,7 +268,7 @@ jobs:
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             rm -rf v2rayN-windows-64
             if [ "$minor" -lt 18 ]; then
-              wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained.zip 2> error.log; then
+              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained.zip
               unzip -q v2rayN-windows-64-SelfContained.zip
               rm v2rayN-windows-64-SelfContained.zip
               echo -e "${PURPLE}v2rayN-windows-64-SelfContained:RESET"
@@ -282,7 +282,7 @@ jobs:
             fi
           fi
           if [ "$minor" -ge 9]; then
-            wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-desktop.zip 2> error.log; then
+            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-desktop.zip
             unzip -q v2rayN-windows-64-desktop.zip
             rm v2rayN-windows-64-desktop.zip
             mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
@@ -295,7 +295,7 @@ jobs:
             wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             rm -rf v2rayN-windows-64-desktop
           fi
-          wget -nv https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-linux-64.zip
+          wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-linux-64.zip
           unzip -q v2rayN-linux-64.zip
           rm v2rayN-linux-64.zip
           echo -e "${PURPLE}v2rayN-linux-64:RESET"
