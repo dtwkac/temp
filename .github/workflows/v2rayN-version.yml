@@ -220,7 +220,7 @@ jobs:
                            [10]=5 [11]=3 [12]=7 [13]=8 [14]=12 [15]=7 [16]=9 [17]=3 [18]=0
         )
         for minor in "${!patches[@]}"; do
-          for ((patch=0; patch<=${patches[$minor]; patch++)); do
+          for ((patch=0; patch<=patches[minor]; patch++)); do
             echo -e "${PURPLE}-------------------------------- v2rayN 7.${minor}.${patches[$minor]} --------------------------------${RESET}"
             if [ "$minor" -ge 14 ]; then
               mihomo_exe="mihomo.exe"
