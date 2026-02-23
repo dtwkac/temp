@@ -1,7 +1,7 @@
 name: v2rayN version
 
 on:
-  workflow_dispatch:
+  workflow_dispatches:
   push:
     paths:
       - '.github/workflows/v2rayN-version.yml'
@@ -47,9 +47,9 @@ jobs:
         for ((minor=0; minor<=29; minor++)); do
           echo -e "${PURPLE}-------------------------------- 3.${minor} --------------------------------${RESET}"
           if [ "${minor}" -eq 15 ]; then
-            for ((patch=1; patch<=2; patch++)); do
-              echo -e "${PURPLE}-------------------------------- 3.${minor}.${patch} --------------------------------${RESET}"
-              wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.${patch}/v2rayN-Core.zip 2> error.log
+            for ((patches=1; patches<=2; patches++)); do
+              echo -e "${PURPLE}-------------------------------- 3.${minor}.${patches} --------------------------------${RESET}"
+              wget -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.${patches}/v2rayN-Core.zip 2> error.log
               unzip -q v2rayN-Core.zip
               rm v2rayN-Core.zip
               echo -e "${PURPLE}v2rayN-Core:${RESET}"
@@ -216,97 +216,99 @@ jobs:
         set -e
         sudo apt-get update &> /dev/null
         sudo apt-get install -y wget unzip wine &> /dev/null
-        declare -a patch=([0]=9 [1]=3 [2]=3 [3]=2 [4]=2 [5]=6 [6]=2 [7]=1 [8]=3 [9]=3
+        declare -a patches=([0]=9 [1]=3 [2]=3 [3]=2 [4]=2 [5]=6 [6]=2 [7]=1 [8]=3 [9]=3
                            [10]=5 [11]=3 [12]=7 [13]=8 [14]=12 [15]=7 [16]=9 [17]=3 [18]=0
         )
-        for minor in "${!patch[@]}"; do
-          echo -e "${PURPLE}-------------------------------- v2rayN 7.${minor}.${patch[$minor]} --------------------------------${RESET}"
-          if [ "$minor" -ge 14 ]; then
-            mihomo_exe="mihomo.exe"
-          else
-            mihomo_exe="mihomo-windows-amd64-compatible.exe"
-          fi
-          if [ "$minor" -lt 7 ]; then
-            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-With-Core.zip
-            unzip -q v2rayN-windows-64-With-Core.zip
-            rm v2rayN-windows-64-With-Core.zip
-            echo -e "${PURPLE}v2rayN-windows-64-With-Core:RESET"
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/${mihomo_exe} -v:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/sing_box/sing-box.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf v2rayN-windows-64-With-Core
-            if [ "$minor" -lt 5 ]; then
-              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained-With-Core.7z
-              7z x v2rayN-windows-64-SelfContained-With-Core.7z > /dev/null
-              rm v2rayN-windows-64-SelfContained-With-Core.7z
+        for minor in "${!patches[@]}"; do
+          for ((patch=0; patch<=${patches[$minor]; patch++)); do
+            echo -e "${PURPLE}-------------------------------- v2rayN 7.${minor}.${patches[$minor]} --------------------------------${RESET}"
+            if [ "$minor" -ge 14 ]; then
+              mihomo_exe="mihomo.exe"
             else
-              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained-With-Core.zip
-              unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
-              rm v2rayN-windows-64-SelfContained-With-Core.zip
+              mihomo_exe="mihomo-windows-amd64-compatible.exe"
             fi
-            echo -e "${PURPLE}v2rayN-windows-64-SelfContained-With-Core:RESET"
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/${mihomo_exe} -v:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/sing_box/sing-box.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/xray/xray.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf v2rayN-windows-64-SelfContained-With-Core
-          else
-            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64.zip
-            unzip -q v2rayN-windows-64.zip
-            rm v2rayN-windows-64.zip
-            echo -e "${PURPLE}v2rayN-windows-64:RESET"
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/${mihomo_exe} -v:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf v2rayN-windows-64
-            if [ "$minor" -lt 18 ]; then
-              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-SelfContained.zip
-              unzip -q v2rayN-windows-64-SelfContained.zip
-              rm v2rayN-windows-64-SelfContained.zip
-              echo -e "${PURPLE}v2rayN-windows-64-SelfContained:RESET"
-              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/${mihomo_exe} -v:RESET"
-              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version:RESET"
-              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/xray/xray.exe version:RESET"
-              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-              rm -rf v2rayN-windows-64-SelfContained
+            if [ "$minor" -lt 7 ]; then
+              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-windows-64-With-Core.zip
+              unzip -q v2rayN-windows-64-With-Core.zip
+              rm v2rayN-windows-64-With-Core.zip
+              echo -e "${PURPLE}v2rayN-windows-64-With-Core:${RESET}"
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/${mihomo_exe} -v:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/sing_box/sing-box.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              rm -rf v2rayN-windows-64-With-Core
+              if [ "$minor" -lt 5 ]; then
+                wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-windows-64-SelfContained-With-Core.7z
+                7z x v2rayN-windows-64-SelfContained-With-Core.7z > /dev/null
+                rm v2rayN-windows-64-SelfContained-With-Core.7z
+              else
+                wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-windows-64-SelfContained-With-Core.zip
+                unzip -q v2rayN-windows-64-SelfContained-With-Core.zip
+                rm v2rayN-windows-64-SelfContained-With-Core.zip
+              fi
+              echo -e "${PURPLE}v2rayN-windows-64-SelfContained-With-Core:${RESET}"
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/${mihomo_exe} -v:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/sing_box/sing-box.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/xray/xray.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained-With-Core/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              rm -rf v2rayN-windows-64-SelfContained-With-Core
+            else
+              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-windows-64.zip
+              unzip -q v2rayN-windows-64.zip
+              rm v2rayN-windows-64.zip
+              echo -e "${PURPLE}v2rayN-windows-64:${RESET}"
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/${mihomo_exe} -v:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              rm -rf v2rayN-windows-64
+              if [ "$minor" -lt 18 ]; then
+                wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-windows-64-SelfContained.zip
+                unzip -q v2rayN-windows-64-SelfContained.zip
+                rm v2rayN-windows-64-SelfContained.zip
+                echo -e "${PURPLE}v2rayN-windows-64-SelfContained:${RESET}"
+                echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/${mihomo_exe} -v:${RESET}"
+                wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+                echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version:${RESET}"
+                wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+                echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/xray/xray.exe version:${RESET}"
+                wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-SelfContained/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+                rm -rf v2rayN-windows-64-SelfContained
+              fi
             fi
-          fi
-          if [ "$minor" -ge 9]; then
-            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-windows-64-desktop.zip
-            unzip -q v2rayN-windows-64-desktop.zip
-            rm v2rayN-windows-64-desktop.zip
-            mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
-            echo -e "${PURPLE}v2rayN-windows-64-desktop:RESET"
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/${mihomo_exe} -v:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version:RESET"
-            wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-            rm -rf v2rayN-windows-64-desktop
-          fi
-          wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patch[$minor]}/v2rayN-linux-64.zip
-          unzip -q v2rayN-linux-64.zip
-          rm v2rayN-linux-64.zip
-          echo -e "${PURPLE}v2rayN-linux-64:RESET"
-          chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo
-          echo -e "${GREEN}${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v:RESET"
-          ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box
-          echo -e "${GREEN}${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box version:RESET"
-          ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray
-          echo -e "${GREEN}${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray version:RESET"
-          ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
-          rm -rf v2rayN-linux-64
+            if [ "$minor" -ge 9 ]; then
+              wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-windows-64-desktop.zip
+              unzip -q v2rayN-windows-64-desktop.zip
+              rm v2rayN-windows-64-desktop.zip
+              mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
+              echo -e "${PURPLE}v2rayN-windows-64-desktop:${RESET}"
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/${mihomo_exe} -v:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/${mihomo_exe} -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              echo -e "${GREEN}wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version:${RESET}"
+              wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/xray/xray.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+              rm -rf v2rayN-windows-64-desktop
+            fi
+            wget -q https://github.com/2dust/v2rayN/releases/download/7.${minor}.${patches[$minor]}/v2rayN-linux-64.zip
+            unzip -q v2rayN-linux-64.zip
+            rm v2rayN-linux-64.zip
+            echo -e "${PURPLE}v2rayN-linux-64:${RESET}"
+            chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo
+            echo -e "${GREEN}${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v:${RESET}"
+            ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/mihomo/mihomo -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box
+            echo -e "${GREEN}${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box version:${RESET}"
+            ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/sing_box/sing-box version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            chmod +x ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray
+            echo -e "${GREEN}${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray version:${RESET}"
+            ${GITHUB_WORKSPACE}/v2rayN-linux-64/bin/xray/xray version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
+            rm -rf v2rayN-linux-64
+          done
         done
