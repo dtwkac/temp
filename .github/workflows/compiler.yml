@@ -354,7 +354,7 @@ jobs:
           name: ${{ env.NAME }}
           path: ${{ github.workspace }}/${{ env.LOG_FILE }}
 
-  merge-logs:
+  merge-gcc-logs:
     needs:
       # - gcc-master-make
       - gcc-master-make-j
@@ -366,7 +366,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
 
-      - name: merge logs
+      - name: merge gcc logs
         run: |
           set -e
           # cat gcc-master-make/gcc-master-make.log > gcc-build-log.txt
@@ -1011,7 +1011,7 @@ jobs:
           name: ${{ env.NAME }}
           path: ${{ github.workspace }}/${{ env.LOG_FILE }}
 
-  merge-logs:
+  merge-clang-logs:
     needs:
       - ubuntu-clang-main-make
       - ubuntu-clang-main-make-j
@@ -1029,7 +1029,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
 
-      - name: merge logs
+      - name: merge clang logs
         run: |
           set -e
           cat ubuntu-clang-main-make/ubuntu-clang-main-make.log > clang-build-log.txt
