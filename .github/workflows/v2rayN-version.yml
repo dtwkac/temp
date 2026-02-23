@@ -49,7 +49,7 @@ jobs:
           if [ "${minor}" -eq 15 ]; then
             for ((patches=1; patches<=2; patches++)); do
               echo -e "${PURPLE}-------------------------------- 3.${minor}.${patches} --------------------------------${RESET}"
-              if ! wget -nv -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.${patches}/v2rayN-Core.zip 2> error.log
+              if ! wget -nv -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.${patches}/v2rayN-Core.zip 2> error.log; then
                 perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
                 continue
               fi
@@ -177,7 +177,7 @@ jobs:
 
           if [ "${minor}" -eq 7 ] || [ "${minor}" -eq 8 ]; then
             echo -e "${PURPLE}v2rayN-With-Core-SelfContained:${RESET}"
-            if ! wget -nv https://github.com/2dust/v2rayN/releases/download/6.${minor}/zz-v2rayN-With-Core-SelfContained.7z 2> error.log
+            if ! wget -nv https://github.com/2dust/v2rayN/releases/download/6.${minor}/zz-v2rayN-With-Core-SelfContained.7z 2> error.log; then
               perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
               continue
             fi
