@@ -22,7 +22,7 @@ jobs:
         sudo apt update &> /dev/null
         sudo apt install -y wget unzip wine &> /dev/null
         for ((minor=30; minor<=53; minor++)); do
-          echo -e "${PURPLE}-------------------------------- 2.${minor} --------------------------------${RESET}"
+          echo -e "${PURPLE}-------------------------------- v2rayN 2.${minor} --------------------------------${RESET}"
           if ! wget -nv https://github.com/2dust/v2rayN/releases/download/2.${minor}/v2rayN-Core.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
@@ -45,10 +45,10 @@ jobs:
         sudo apt update &> /dev/null
         sudo apt install -y wget unzip wine &> /dev/null
         for ((minor=0; minor<=29; minor++)); do
-          echo -e "${PURPLE}-------------------------------- 3.${minor} --------------------------------${RESET}"
+          echo -e "${PURPLE}-------------------------------- v2rayN 3.${minor} --------------------------------${RESET}"
           if [ "${minor}" -eq 15 ]; then
             for ((patches=1; patches<=2; patches++)); do
-              echo -e "${PURPLE}-------------------------------- 3.${minor}.${patches} --------------------------------${RESET}"
+              echo -e "${PURPLE}-------------------------------- v2rayN 3.${minor}.${patches} --------------------------------${RESET}"
               if ! wget -nv -nv https://github.com/2dust/v2rayN/releases/download/3.${minor}.${patches}/v2rayN-Core.zip 2> error.log; then
                 perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
                 continue
@@ -84,7 +84,7 @@ jobs:
         sudo apt update &> /dev/null
         sudo apt install -y wget unzip wine &> /dev/null
         for ((minor=0; minor<=36; minor++)); do
-          echo -e "${PURPLE}-------------------------------- 4.${minor} --------------------------------${RESET}"
+          echo -e "${PURPLE}-------------------------------- v2rayN 4.${minor} --------------------------------${RESET}"
           if ! wget -nv https://github.com/2dust/v2rayN/releases/download/4.${minor}/v2rayN-Core.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
@@ -111,7 +111,7 @@ jobs:
         sudo apt update &> /dev/null
         sudo apt install -y wget unzip wine &> /dev/null
         for ((minor=0; minor<=39; minor++)); do
-          echo -e "${PURPLE}-------------------------------- 5.${minor} --------------------------------${RESET}"
+          echo -e "${PURPLE}-------------------------------- v2rayN 5.${minor} --------------------------------${RESET}"
           if ! wget -nv https://github.com/2dust/v2rayN/releases/download/5.${minor}/v2rayN-Core.zip 2> error.log; then
             perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
             continue
@@ -141,7 +141,7 @@ jobs:
         sudo apt update &> /dev/null
         sudo apt install -y wget unzip 7zip wine &> /dev/null
         for ((minor=0; minor<=60; minor++)); do
-          echo -e "${PURPLE}-------------------------------- 6.${minor} --------------------------------${RESET}"
+          echo -e "${PURPLE}-------------------------------- v2rayN 6.${minor} --------------------------------${RESET}"
           if [ "${minor}" -lt 2 ]; then
             suffix=""
           elif [ "${minor}" -lt 6 ]; then
