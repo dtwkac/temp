@@ -1,0 +1,17 @@
+name: temp
+
+on:
+  push:
+    paths:
+      - '.github/workflows/temp.yml'
+  workflow_dispatch:
+
+jobs:
+  temp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: temp
+        run: |
+          set -e
+          date
