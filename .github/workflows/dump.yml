@@ -5,8 +5,8 @@ on:
   push:
     paths:
       - '.github/workflows/dump.yml'
-      - 'sort-gcc.cpp'
-      - 'sort-general.cpp'
+      - 'test/sort-gcc.cpp'
+      - 'test/sort-general.cpp'
 
 env:
   GCC_VERSION: 15.2.0
@@ -36,8 +36,8 @@ jobs:
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu \
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/libstdc++-v3/libsupc++ \
             -L${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs \
-            ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+            ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
           rm a.out
           ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ \
             -B${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc \
@@ -45,8 +45,9 @@ jobs:
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include \
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/libstdc++-v3/libsupc++ \
             -L${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs \
-            ${GITHUB_WORKSPACE}/sort-gcc.cpp
-          ./a.out > /dev/null
+            ${GITHUB_WORKSPACE}/test/sort-gcc.cpp
+          ./a.out
+          rm a.out
           echo -e "\033[32m------------------------------ single output ------------------------------\033[0m"
           echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version:\033[0m"
           ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version
@@ -90,8 +91,8 @@ jobs:
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu \
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/libstdc++-v3/libsupc++ \
             -L${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs \
-            ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+            ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
           rm a.out
           ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ \
             -B${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc \
@@ -99,8 +100,9 @@ jobs:
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/include \
             -I${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/libstdc++-v3/libsupc++ \
             -L${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs \
-            ${GITHUB_WORKSPACE}/sort-gcc.cpp
-          ./a.out > /dev/null
+            ${GITHUB_WORKSPACE}/test/sort-gcc.cpp
+          ./a.out
+          rm a.out
           echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version:\033[0m" > log1
           ${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ --version >> log1
           echo -e "\033[32m${GITHUB_WORKSPACE}/gcc-releases-gcc-${GCC_VERSION}/build/gcc/xg++ -v:\033[0m" >> log1
@@ -176,11 +178,12 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="clang" \
             -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" &> /dev/null
           ninja &> /dev/null
-          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
           rm a.out
-          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/sort-gcc.cpp
-          ./a.out > /dev/null
+          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/test/sort-gcc.cpp
+          ./a.out
+          rm a.out
           echo -e "\033[32m------------------------------ single output ------------------------------\033[0m"
           echo -e "\033[32m${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version:\033[0m"
           ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version
@@ -219,11 +222,12 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="clang" \
             -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" &> /dev/null
           ninja &> /dev/null
-          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
           rm a.out
-          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/sort-gcc.cpp
-          ./a.out > /dev/null
+          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ ${GITHUB_WORKSPACE}/test/sort-gcc.cpp
+          ./a.out
+          rm a.out
           echo -e "\033[32m${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version:\033[0m" > log1
           ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version >> log1
           echo -e "\033[32m${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang -v:\033[0m" >> log1
@@ -289,11 +293,11 @@ jobs:
         run: |
           set -e
           which g++-15
-          g++-15 ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+          g++-15 ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
           rm a.out
-          g++-15 ${GITHUB_WORKSPACE}/sort-gcc.cpp
-          ./a.out > /dev/null
+          g++-15 ${GITHUB_WORKSPACE}/test/sort-gcc.cpp
+          ./a.out
           rm a.out
           echo -e "\033[32m------------------------------ single output ------------------------------\033[0m"
           echo -e "\033[32mg++-15 --version:\033[0m"
@@ -323,11 +327,11 @@ jobs:
         run: |
           set -e
           which g++-15
-          g++-15 ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+          g++-15 ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
           rm a.out
-          g++-15 ${GITHUB_WORKSPACE}/sort-gcc.cpp
-          ./a.out > /dev/null
+          g++-15 ${GITHUB_WORKSPACE}/test/sort-gcc.cpp
+          ./a.out
           rm a.out
           echo -e "\033[32mg++-15 --version:\033[0m" > log1
           g++-15 --version >> log1
@@ -396,8 +400,9 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="clang" \
             -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" > /dev/null 2>&1
           ninja > /dev/null 2>&1
-          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ --sysroot=$(xcrun --sdk macosx --show-sdk-path) ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ --sysroot=$(xcrun --sdk macosx --show-sdk-path) ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
+          rm a.out
           echo -e "\033[32m------------------------------ single output ------------------------------\033[0m"
           echo -e "\033[32m${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version:\033[0m"
           ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version
@@ -434,8 +439,9 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="clang" \
             -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" > /dev/null 2>&1
           ninja > /dev/null 2>&1
-          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ --sysroot=$(xcrun --sdk macosx --show-sdk-path) ${GITHUB_WORKSPACE}/sort-general.cpp
-          ./a.out > /dev/null
+          ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang++ --sysroot=$(xcrun --sdk macosx --show-sdk-path) ${GITHUB_WORKSPACE}/test/sort-general.cpp
+          ./a.out
+          rm a.out
           echo -e "\033[32m${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version:\033[0m" > log1
           ${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang --version >> log1
           echo -e "\033[32m${GITHUB_WORKSPACE}/llvm-project-${CLANG_VERSION}.src/build/bin/clang -v:\033[0m" >> log1
