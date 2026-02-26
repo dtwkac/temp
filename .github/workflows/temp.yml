@@ -15,4 +15,4 @@ jobs:
         run: |
           set -e
           date
-          sudo apt-get install -y vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop docker.io language-pack-zh-hans
+          sudo apt-get install -y vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop language-pack-zh-hans
