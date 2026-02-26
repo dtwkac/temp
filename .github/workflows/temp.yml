@@ -6,6 +6,11 @@ on:
       - '.github/workflows/temp.yml'
   workflow_dispatch:
 
+env:
+  GREEN: \033[32m
+  PURPLE: \033[35m
+  RESET: \033[0m
+
 jobs:
   Temp:
     runs-on: ubuntu-latest
@@ -15,4 +20,4 @@ jobs:
         run: |
           set -e
           date
-          sudo apt-get install -y vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop language-pack-zh-hans
+          echo -e "${GREEN}green${RESET}${PURPLE}purple${RESET}${RED}red${RESET}"
