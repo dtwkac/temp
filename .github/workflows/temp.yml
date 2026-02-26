@@ -15,5 +15,9 @@ jobs:
         run: |
           set -e
           date
+          echo $DEBIAN_FRONTEND
+          which curl
           sudo apt update
           sudo apt install curl
+          which curl
+          whereis curl
