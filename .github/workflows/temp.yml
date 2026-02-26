@@ -6,12 +6,6 @@ on:
       - '.github/workflows/temp.yml'
   workflow_dispatch:
 
-env:
-  RED: "\033[31m"
-  GREEN: "\033[32m"
-  PURPLE: "\033[35m"
-  RESET: "\033[0m"
-
 jobs:
   Temp:
     runs-on: ubuntu-latest
@@ -21,5 +15,3 @@ jobs:
         run: |
           set -e
           date
-          ls
-          echo -e "${RED}red${RESET}${GREEN}green${RESET}${PURPLE}purple${RESET}"
