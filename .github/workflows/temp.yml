@@ -21,4 +21,5 @@ jobs:
         run: |
           set -e
           date
+          ls
           echo -e "${RED}red${RESET}${GREEN}green${RESET}${PURPLE}purple${RESET}"
