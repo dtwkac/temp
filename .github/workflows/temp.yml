@@ -15,10 +15,4 @@ jobs:
         run: |
           set -e
           date
-          echo $DEBIAN_FRONTEND
-          ls -alhF $(which curl)
-          curl --version
-          sudo apt update
-          sudo apt install curl
-          which curl
-          curl --version
+          sudo apt-get install -y vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop docker.io language-pack-zh-hans
