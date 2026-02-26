@@ -7,17 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  temp:
+  Temp:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: temp
+      - name: Temp
         run: |
           set -e
           date
           echo $DEBIAN_FRONTEND
-          which curl
+          ls -alhF $(which curl)
+          curl --version
           sudo apt update
           sudo apt install curl
           which curl
-          whereis curl
+          curl --version
