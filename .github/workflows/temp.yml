@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
 
 env:
-  RED: '\033[31m'
-  GREEN: '\033[32m'
-  PURPLE: '\033[35m'
-  RESET: '\033[0m'
+  RED: "\033[31m"
+  GREEN: "\033[32m"
+  PURPLE: "\033[35m"
+  RESET: "\033[0m"
 
 jobs:
   Temp:
