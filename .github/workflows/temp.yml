@@ -36,7 +36,7 @@ jobs:
           echo "==================== [4. 网络 1GB 下载带宽测试] ===================="
           echo "正在拉取 1GB 测试文件..."
           # -w 参数用于格式化输出下载统计信息，更直观
-          curl -L -o /dev/null http://speedtest.tele2.net/1GB.zip \
+          curl -L -o /dev/null https://releases.ubuntu.com/24.04/ubuntu-24.04.1-desktop-amd64.iso \
             -w "\n下载完成！\n平均速度: %{speed_download} B/s\n总耗时: %{time_total} s\n"
           echo ""
           
