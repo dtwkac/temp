@@ -45,10 +45,10 @@ jobs:
           # 依赖
           # ======================
           log "安装依赖工具"
-          sudo apt update -y
+          sudo apt update -y &> /dev/null
           sudo apt install -y \
             sysbench fio iperf3 speedtest-cli curl jq \
-            stress-ng psmisc procps dnsutils lmbench
+            stress-ng psmisc procps dnsutils lmbench &> /dev/null
           
           # ======================
           # CPU
