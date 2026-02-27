@@ -389,6 +389,5 @@ jobs:
               return 0;
           }
           EOF
-          ls -alhF $(which g++)
-          g++ c.cpp
+          g++-15 c.cpp
           ./a.out
