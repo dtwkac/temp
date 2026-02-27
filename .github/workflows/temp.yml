@@ -15,4 +15,29 @@ jobs:
         run: |
           set -e
           date
-          uname -a
+          echo "==================== [1. 系统与内核信息] ===================="
+          echo "当前内核: $(uname -a)"
+          echo "发行版本: $(lsb_release -ds)"
+          echo ""
+
+          echo "==================== [2. CPU 规格与算力] ===================="
+          lscpu | grep -E "Model name|CPU\(s\)|Thread"
+          echo -n "计算圆周率 2000 位耗时: "
+          time (echo "scale=2000; 4*a(1)" | bc -l)
+          echo ""
+
+          echo "==================== [3. 磁盘 4GB 写入极限测试] ===================="
+          echo "正在执行 4GB 连续写入 (避开内存缓存)..."
+          # 使用 dd 写入 4GB，bs=1M 确保大块吞吐，fdatasync 确保落盘
+          dd if=/dev/zero of=perf_test_file bs=1M count=4096 conv=fdatasync 2>&1
+          rm perf_test_file
+          echo ""
+
+          echo "==================== [4. 网络 1GB 下载带宽测试] ===================="
+          echo "正在拉取 1GB 测试文件..."
+          # -w 参数用于格式化输出下载统计信息，更直观
+          curl -L -o /dev/null http://speedtest.tele2.net/1GB.zip \
+            -w "\n下载完成！\n平均速度: %{speed_download} B/s\n总耗时: %{time_total} s\n"
+          echo ""
+          
+          echo "==================== [测试完成] ===================="
