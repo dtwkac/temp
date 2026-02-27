@@ -81,7 +81,8 @@ jobs:
           sysbench memory --memory-block-size=4K --memory-access-mode=rnd --memory-total-size=10G run
           
           echo "--- memcpy 性能 ---"
-          stress-ng --vm 1 --vm-bytes 80% --vm-method memcpy --timeout 30s --metrics-brief
+          stress-ng --vm 1 --vm-bytes 80% --vm-method move-inv --timeout 30s --metrics-brief
+
           
           # ======================
           # 磁盘 IO
