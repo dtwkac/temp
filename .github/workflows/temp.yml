@@ -8,12 +8,10 @@ on:
 
 jobs:
   Temp:
-    runs-on: macos-latest
+    runs-on: ubuntuos-latest
     steps:
       - uses: actions/checkout@v6
       - name: Temp
         run: |
           set -e
           date
-          g++ --version
-          clang++ --version
