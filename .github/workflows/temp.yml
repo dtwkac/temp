@@ -389,5 +389,5 @@ jobs:
               return 0;
           }
           EOF
-          g++-15 c.cpp
+          clang++ c.cpp
           ./a.out
