@@ -15,5 +15,4 @@ jobs:
         run: |
           set -e
           date
-          lsb_release -a
-          git --version
+          uname -a
