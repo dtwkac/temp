@@ -389,5 +389,6 @@ jobs:
               return 0;
           }
           EOF
+          which g++
           g++ c.cpp
           ./a.out
