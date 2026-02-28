@@ -20,7 +20,7 @@ jobs:
           RESET="\033[0m"
           avail=$(df -h / | awk 'NR==2{print ($4~/T$/?1000:(sub(/G$/,"",$4)?int($4):0))}')
           if [ "$avail" -lt 500 ]; then
-            echo -e "${RED}Not enough space:${RESET}"
+            echo -e "${RED}Not enough space:"
             df -h
             exit 0
           fi
