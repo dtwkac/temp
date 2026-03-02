@@ -15,5 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          sudo apt install abcde
-          man abcde
