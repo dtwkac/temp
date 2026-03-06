@@ -9,7 +9,7 @@ on:
       - '.github/workflows/docker.yml'
 
 jobs:
-  Temp:
+  docker:
     runs-on: ubuntu-latest
     steps:
       - name: docker
