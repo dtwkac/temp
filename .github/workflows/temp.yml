@@ -17,7 +17,4 @@ jobs:
           TZ='Asia/Shanghai' date
           docker run hello-world &> /dev/null
           docker run -dit ubuntu bash &> /dev/null
-          echo docker images:
           docker images
-          echo docker info:
-          docker info
