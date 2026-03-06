@@ -15,4 +15,13 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          df -h
+          docker run hello-world
+          docker run -dit ubuntu bash
+          echo docker ps:
+          docker ps
+          echo docker ps -a:
+          docker ps -a
+          echo docker images:
+          docker images
+          echo docker info:
+          docker info
