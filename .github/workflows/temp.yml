@@ -15,6 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker run hello-world &> /dev/null
-          docker run -dit ubuntu bash &> /dev/null
-          docker images
