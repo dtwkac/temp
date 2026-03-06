@@ -1,10 +1,12 @@
 name: docker
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 22 * * *'
   push:
     paths:
       - '.github/workflows/docker.yml'
-  workflow_dispatch:
 
 jobs:
   Temp:
@@ -14,5 +16,6 @@ jobs:
         run: |
           set -e
           docker run hello-world &> /dev/null
-          docker run -dit ubuntu bash &> /dev/null
+          docker run -dit --rm ubuntu bash &> /dev/null
           docker images
+          docker ps
