@@ -19,7 +19,7 @@ jobs:
           FROM ubuntu:26.04
           RUN apt-get update &> /dev/null && \
               apt-get upgrade -y &> /dev/null && \
-              apt-get install -y tzdata || true && \
+              DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata || true && \
               DEBIAN_FRONTEND=noninteractive TZ="Asia/Shanghai" dpkg-reconfigure tzdata || true
           EOF
           docker build -t del .
