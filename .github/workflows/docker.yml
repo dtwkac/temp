@@ -23,6 +23,7 @@ jobs:
           apt upgrade -y &> /dev/null
           apt install -y &> neovim g++ python3
           nvim --version
+          find / -name "*nvim*"
           echo
           g++ --version
           echo
