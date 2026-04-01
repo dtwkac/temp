@@ -21,9 +21,10 @@ jobs:
           cat << 'EOF' | docker run -i --rm ubuntu:26.04 bash
           apt update &> /dev/null
           apt upgrade -y &> /dev/null
-          apt install neovim -y
           apt install -y &> neovim g++ python3
-          neovim --version
+          nvim --version
+          echo
           g++ --version
+          echo
           python3 --version
           EOF
