@@ -21,11 +21,8 @@ jobs:
           cat << 'EOF' | docker run -i --rm ubuntu:26.04 bash
           apt-get update &> /dev/null
           apt-get upgrade -y &> /dev/null
-          echo "tzdata tzdata/Areas select Asia" | debconf-set-selections && \
-          echo "tzdata tzdata/Zones/Asia select Shanghai" | debconf-set-selections && \
-          apt-get install -y tzdata && \
-          echo "tzdata tzdata/Areas seen false" | debconf-set-selections && \
-          echo "tzdata tzdata/Zones/Asia seen false" | debconf-set-selections && \
+          apt-get install tzdata
+          DEBIAN_FRONTEND=noninteractive TZ="Asia/Shanghai" dpkg-reconfigure tzdata && \
           apt-get install -y neovim g++ python3 &> /dev/null
           nvim --version
           g++ --version
