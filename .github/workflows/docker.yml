@@ -24,8 +24,9 @@ jobs:
           echo "tzdata tzdata/Areas select Asia" | debconf-set-selections && \
           echo "tzdata tzdata/Zones/Asia select Shanghai" | debconf-set-selections && \
           apt-get install -y tzdata && \
-          echo "PURGE tzdata" | debconf-communicate
-          apt install -y &> neovim g++ python3
+          echo "tzdata tzdata/Areas seen false" | debconf-set-selections && \
+          echo "tzdata tzdata/Zones/Asia seen false" | debconf-set-selections && \
+          apt-get install -y neovim g++ python3 &> /dev/null
           nvim --version
           g++ --version
           python3 --version
