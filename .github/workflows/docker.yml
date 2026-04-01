@@ -21,11 +21,9 @@ jobs:
           cat << 'EOF' | docker run -i --rm ubuntu:26.04 bash
           apt update &> /dev/null
           apt upgrade -y &> /dev/null
+          echo -e "\n5\n68" | apt-get install -y tzdata 2> /dev/null && \
           apt install -y &> neovim g++ python3
           nvim --version
-          find / -name "*nvim*"
-          echo
           g++ --version
-          echo
           python3 --version
           EOF
