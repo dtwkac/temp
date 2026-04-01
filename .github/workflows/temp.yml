@@ -25,3 +25,4 @@ jobs:
               g++ --version && \
               python3 --version
           EOF
+          docker build -t del .
