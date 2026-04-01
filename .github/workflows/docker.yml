@@ -19,9 +19,12 @@ jobs:
           docker run -dit --rm ubuntu bash &> /dev/null
           docker images
           cat << 'EOF' | docker run -i --rm ubuntu:26.04 bash
-          apt update &> /dev/null
-          apt upgrade -y &> /dev/null
-          echo -e "\n5\n68" | apt-get install -y tzdata 2> /dev/null && \
+          apt-get update &> /dev/null
+          apt-get upgrade -y &> /dev/null
+          echo "tzdata tzdata/Areas select Asia" | debconf-set-selections && \
+          echo "tzdata tzdata/Zones/Asia select Shanghai" | debconf-set-selections && \
+          apt-get install -y tzdata && \
+          echo "PURGE tzdata" | debconf-communicate
           apt install -y &> neovim g++ python3
           nvim --version
           g++ --version
