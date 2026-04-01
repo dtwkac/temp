@@ -15,12 +15,13 @@ jobs:
       - name: docker
         run: |
           set -e
-          docker run hello-world
-          docker run -dit --rm ubuntu bash
+          docker run hello-world &> /dev/null
+          docker run -dit --rm ubuntu bash &> /dev/null
           docker images
           cat << 'EOF' | docker run -i --rm ubuntu:26.04 bash
-          apt update
+          apt update &> /dev/null
           apt upgrade -y &> /dev/null
+          apt install neovim -y
           apt install -y &> neovim g++ python3
           neovim --version
           g++ --version
