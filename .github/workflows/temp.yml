@@ -15,14 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' > Dockerfile
-          FROM ubuntu:26.04
-          RUN apt update &> /dev/null && \
-              apt upgrade -y &> /dev/null && \
-              echo -e "\n5\n68" | apt-get install -y tzdata && \
-              apt install -y &> neovim g++ python3 && \
-              nvim --version && \
-              g++ --version && \
-              python3 --version
-          EOF
-          docker build -t del .
