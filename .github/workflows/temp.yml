@@ -17,9 +17,10 @@ jobs:
           TZ='Asia/Shanghai' date
           cat << 'EOF' > Dockerfile
           FROM ubuntu:26.04
-          RUN apt-get update &> /dev/null && \
-              apt-get upgrade -y &> /dev/null && \
-              DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata || true && \
-              DEBIAN_FRONTEND=noninteractive TZ="Asia/Shanghai" dpkg-reconfigure tzdata || true
+          RUN echo "tzdata tzdata/Areas select Asia" | debconf-set-selections && \
+              echo "tzdata tzdata/Zones/Asia select Shanghai" | debconf-set-selections && \
+              apt-get install -y tzdata && \
+              echo "tzdata tzdata/Areas seen false" | debconf-set-selections && \
+              echo "tzdata tzdata/Zones/Asia seen false" | debconf-set-selections
           EOF
           docker build -t del .
