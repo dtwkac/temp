@@ -24,6 +24,7 @@ jobs:
           RUN apt-get update && \
               apt-get upgrade -y && \
               apt-get autoremove -y && \
+              apt-get install -y unminimize && \
               echo 'y' | unminimize && \
               echo '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
               apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
