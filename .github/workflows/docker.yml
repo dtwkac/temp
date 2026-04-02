@@ -21,13 +21,13 @@ jobs:
           cat << 'EOF' > Dockerfile
           FROM ubuntu:26.04
           WORKDIR /root
-          RUN apt-get update > /dev/null 2>&1 && \
-              apt-get upgrade > /dev/null 2>&1 && \
-              apt-get autoremove > /dev/null 2>&1 && \
-              apt-get install -y unminimize > /dev/null 2>&1 && \
-              echo 'y' | unminimize > /dev/null 2>&1 && \
-              echo '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
-              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server > /dev/null 2>&1 && \
+          RUN apt-get update && \
+              apt-get upgrade && \
+              apt-get autoremove && \
+              apt-get install -y unminimize && \
+              echo 'y' | unminimize && \
+              printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
+              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
               apt-get update > /dev/null 2>&1 && \
               echo >> ~/.bashrc && \
               echo 'if ! shopt -oq posix; then' >> ~/.bashrc && \
