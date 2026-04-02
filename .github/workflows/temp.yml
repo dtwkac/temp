@@ -15,14 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' > Dockerfile
-          FROM ubuntu:26.04
-          RUN apt-get update && \
-              apt-get upgrade -y && \
-              echo "tzdata tzdata/Areas select Asia" | debconf-set-selections && \
-              echo "tzdata tzdata/Zones/Asia select Shanghai" | debconf-set-selections && \
-              apt-get install -y tzdata && \
-              echo "tzdata tzdata/Areas seen false" | debconf-set-selections && \
-              echo "tzdata tzdata/Zones/Asia seen false" | debconf-set-selections
-          EOF
-          docker build -t del .
