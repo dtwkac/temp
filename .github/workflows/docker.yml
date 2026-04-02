@@ -31,5 +31,4 @@ jobs:
               echo "--------------------------------------------------------------------" && \
               python3 --version
           EOF
-          cat Dockerfile
           docker build -t temp .
