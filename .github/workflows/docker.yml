@@ -20,10 +20,10 @@ jobs:
           docker images
           cat << 'EOF' > Dockerfile
           FROM ubuntu:26.04
-          RUN apt-get update &> /dev/null && \
-              apt-get upgrade -y &> /dev/null && \
+          RUN apt-get update > /dev/null 2>&1 && \
+              apt-get upgrade -y > /dev/null 2>&1 && \
               printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
-              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
+              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server > /dev/null 2>&1 && \
               nvim --version && \
               g++ --version && \
               python3 --version
