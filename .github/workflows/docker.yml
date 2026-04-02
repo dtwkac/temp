@@ -19,13 +19,14 @@ jobs:
           docker run -dit --rm ubuntu bash &> /dev/null
           docker images
           cat << 'EOF' > Dockerfile
-          apt-get update &> /dev/null && \
-          apt-get upgrade -y &> /dev/null && \
-          printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
-          apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
-          nvim --version && \
-          g++ --version && \
-          python3 --version
+          FROM ubuntu:26.04
+          RUN apt-get update &> /dev/null && \
+              apt-get upgrade -y &> /dev/null && \
+              printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
+              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
+              nvim --version && \
+              g++ --version && \
+              python3 --version
           EOF
           cat Dockerfile
           docker build -t temp .
