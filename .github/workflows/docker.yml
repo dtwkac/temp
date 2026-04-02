@@ -18,13 +18,13 @@ jobs:
           docker run hello-world &> /dev/null
           docker run -dit --rm ubuntu bash &> /dev/null
           docker images
-          cat << 'EOF' | docker run -i --rm ubuntu:26.04 bash
+          cat << 'EOF' > Dockerfile
           apt-get update &> /dev/null
           apt-get upgrade -y &> /dev/null
-          apt-get install tzdata
-          DEBIAN_FRONTEND=noninteractive TZ="Asia/Shanghai" dpkg-reconfigure tzdata && \
-          apt-get install -y neovim g++ python3 &> /dev/null
+          printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
+          apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
           nvim --version
           g++ --version
           python3 --version
           EOF
+          docker build -t temp .
