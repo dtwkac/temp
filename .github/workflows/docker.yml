@@ -27,4 +27,5 @@ jobs:
           g++ --version && \
           python3 --version
           EOF
+          cat Dockerfile
           docker build -t temp .
