@@ -24,8 +24,11 @@ jobs:
               apt-get upgrade -y > /dev/null 2>&1 && \
               printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
               apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server > /dev/null 2>&1 && \
+              echo "--------------------------------------------------------------------"
               nvim --version && \
+              echo "--------------------------------------------------------------------"
               g++ --version && \
+              echo "--------------------------------------------------------------------"
               python3 --version
           EOF
           cat Dockerfile
