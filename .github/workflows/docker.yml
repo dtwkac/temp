@@ -17,7 +17,6 @@ jobs:
           set -e
           docker run hello-world &> /dev/null
           docker run -dit --rm ubuntu bash &> /dev/null
-          docker images
           cat << 'EOF' > Dockerfile
           FROM ubuntu:26.04
           WORKDIR /root
@@ -68,3 +67,4 @@ jobs:
               python3 --version
           EOF
           docker build -t temp .
+          docker images
