@@ -25,7 +25,7 @@ jobs:
               apt-get autoremove -y && \
               apt-get install -y unminimize && \
               printf 'y\n' | unminimize && \
-              printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
+              printf '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
               apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
               apt-get update && \
               echo >> ${HOME}/.bashrc && \
@@ -55,6 +55,7 @@ jobs:
               miniforge_version='26.1.1-3' && \
               curl -L -O https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Miniforge3-Linux-x86_64.sh && \
               bash Miniforge3-Linux-x86_64.sh -b -p ${HOME}/tools/miniforge3 && \
+              rm Miniforge3-Linux-x86_64.sh && \
               . ${HOME}/tools/miniforge3/bin/activate && \
               conda create -y -n dev python=3 && \
               conda deactivate && \
