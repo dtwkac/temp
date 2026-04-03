@@ -19,7 +19,7 @@ jobs:
           FROM ubuntu:26.04
           WORKDIR /root
           RUN apt-get update && \
-              printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
+              echo '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
               mkdir ${HOME}/tools && \
               cd ${HOME}/tools && \
               apt install -y curl && \
