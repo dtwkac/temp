@@ -27,7 +27,7 @@ jobs:
               printf 'y\n' | unminimize && \
               printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
               apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
-              apt-get update > /dev/null 2>&1 && \
+              apt-get update && \
               echo >> ${HOME}/.bashrc && \
               echo 'if ! shopt -oq posix; then' >> ${HOME}/.bashrc && \
               echo '  if [ -f /usr/share/bash-completion/bash_completion ]; then' >> ${HOME}/.bashrc && \
