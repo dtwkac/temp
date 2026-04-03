@@ -58,6 +58,7 @@ jobs:
               rm Miniforge3-Linux-x86_64.sh && \
               . ${HOME}/tools/miniforge3/bin/activate && \
               conda create -y -n dev python=3 && \
+              conda deactivate && \
               echo "--------------------------------------------------------------------" && \
               nvim --version && \
               echo "--------------------------------------------------------------------" && \
