@@ -22,6 +22,7 @@ jobs:
               printf '5\n68\n' | script -q -c "apt-get install -y tzdata" /dev/null && \
               mkdir ${HOME}/tools && \
               cd ${HOME}/tools && \
+              apt install -y curl && \
               miniforge_version='26.1.1-3' && \
               curl -L -O https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Miniforge3-Linux-x86_64.sh && \
               bash Miniforge3-Linux-x86_64.sh -b && \
