@@ -52,11 +52,9 @@ jobs:
               service ssh start && \
               mkdir ~/tools && \
               cd ~/tools && \
-              anaconda_version='2025.12-2' && \
-              curl -L -O https://repo.anaconda.com/archive/Anaconda3-${anaconda_version}-Linux-x86_64.sh && \
-              bash Anaconda3-${anaconda_version}-Linux-x86_64.sh -b -p ~/tools/anaconda3 && \
-              rm Anaconda3-${anaconda_version}-Linux-x86_64.sh && \
-              . ~/tools/anaconda3/bin/activate && \
+              curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" && \
+              bash Miniforge3-$(uname)-$(uname -m).sh -b -p ${HOME}/tools/miniforge3 && \
+              . ~/tools/miniforge3/bin/activate && \
               conda create -y -n dev python=3 && \
               conda deactivate && \
               echo "--------------------------------------------------------------------" && \
