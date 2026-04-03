@@ -42,7 +42,7 @@ jobs:
               echo 'set expandtab' >> ${HOME}/.vimrc && \
               echo 'set shiftwidth=4' >> ${HOME}/.vimrc && \
               echo 'let loaded_matchparen = 1' >> ${HOME}/.vimrc && \
-              echo "au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\") | exe \"normal! g\`\\\"\" | endif" >> ${HOME}/.vimrc && \
+              echo "au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"\$\") | exe \"normal! g\`\\\"\" | endif" >> ${HOME}/.vimrc && \
               ssh-keygen -f ${HOME}/.ssh/id_ed25519 -N '' && \
               cp ${HOME}/.ssh/id_ed25519.pub ${HOME}/.ssh/authorized_keys && \
               echo >> /etc/ssh/sshd_config && \
@@ -58,7 +58,6 @@ jobs:
               rm Miniforge3-Linux-x86_64.sh && \
               . ${HOME}/tools/miniforge3/bin/activate && \
               conda create -y -n dev python=3 && \
-              conda deactivate && \
               echo "--------------------------------------------------------------------" && \
               nvim --version && \
               echo "--------------------------------------------------------------------" && \
