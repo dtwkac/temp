@@ -41,6 +41,7 @@ jobs:
               echo 'filetype plugin indent on' >> ${HOME}/.vimrc && \
               echo 'set expandtab' >> ${HOME}/.vimrc && \
               echo 'set shiftwidth=4' >> ${HOME}/.vimrc && \
+              echo 'set tabstop=4' >> ${HOME}/.vimrc && \
               echo 'let loaded_matchparen = 1' >> ${HOME}/.vimrc && \
               echo "au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"\$\") | exe \"normal! g\`\\\"\" | endif" >> ${HOME}/.vimrc && \
               ssh-keygen -f ${HOME}/.ssh/id_ed25519 -N '' && \
