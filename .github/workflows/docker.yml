@@ -65,10 +65,10 @@ jobs:
               echo "--------------------------------------------------------------------" && \
               g++ --version && \
               echo "--------------------------------------------------------------------" && \
-              python3 --version && \
+              $(which python3) --version && \
               echo "--------------------------------------------------------------------" && \
               conda activate dev && \
-              python3 --version
+              $(which python3) --version
           EOF
           docker build -t temp .
           docker images
