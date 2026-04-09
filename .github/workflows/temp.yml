@@ -39,6 +39,6 @@ jobs:
           APT_SOURCE
           } && \
           mv /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.bak && \
-          sudo apt update && \
-          sudo apt install -y npm
+          apt update && \
+          apt install -y npm
           EOF
