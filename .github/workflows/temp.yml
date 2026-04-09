@@ -18,6 +18,7 @@ jobs:
           echo "____________________"
           cat /etc/apt/sources.list || true
           echo "--------------------"
+          docker run -dit --rm ubuntu bash
           cat << 'EOF' | docker exec -i ubuntu bash
           {
           cat << 'APT_SOURCE' >> /etc/apt/sources.list
