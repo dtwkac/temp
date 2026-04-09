@@ -18,8 +18,8 @@ jobs:
           echo "____________________"
           cat /etc/apt/sources.list || true
           echo "--------------------"
-          docker run -dit --rm ubuntu bash
-          cat << 'EOF' | docker exec -i ubuntu bash
+          docker run --name temp -dit --rm ubuntu bash
+          cat << 'EOF' | docker exec -i temp bash
           {
           cat << 'APT_SOURCE' >> /etc/apt/sources.list
           deb http://mirrors.ivolces.com/ubuntu/ noble main restricted universe multiverse
