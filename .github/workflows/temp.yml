@@ -15,4 +15,5 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          sudo bash -c "printf '%s\n' 'Environment=\"HTTPS_PROXY=http://127.0.0.1:10808\"' >> /etc/systemd/system/docker.service.d/http-proxy.conf"
+          sudo bash -c "printf '%s\n' 'Environment=\"HTTPS_PROXY=http://127.0.0.1:10808\"' > a"
+          cat a
