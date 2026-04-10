@@ -24,8 +24,8 @@ jobs:
               apt-get upgrade -y > /dev/null 2>&1 && \
               apt-get autoremove -y > /dev/null 2>&1 && \
               apt-get install -y unminimize > /dev/null 2>&1 && \
-              printf 'y\n' | unminimize > /dev/null 2>&1 && \
-              printf '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+              printf '%b' 'y\n' | unminimize > /dev/null 2>&1 && \
+              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
               apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server > /dev/null 2>&1 && \
               apt-get update > /dev/null 2>&1 && \
               echo >> ${HOME}/.bashrc && \
