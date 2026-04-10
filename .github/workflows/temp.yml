@@ -22,7 +22,7 @@ jobs:
               apt-get upgrade -y > /dev/null 2>&1 && \
               apt-get autoremove -y > /dev/null 2>&1 && \
               apt-get install -y unminimize > /dev/null 2>&1 && \
-              printf 'y\n' | unminimize && \
-              printf '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null
+              printf '%b' 'y\n' | unminimize && \
+              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null
           EOF
           docker build -t temp .
