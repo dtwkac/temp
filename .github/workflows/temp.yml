@@ -23,6 +23,6 @@ jobs:
               apt-get autoremove -y > /dev/null 2>&1 && \
               apt-get install -y unminimize > /dev/null 2>&1 && \
               printf '%b' 'y\n' | unminimize > /dev/null 2>&1 && \
-              printf '%b' '5\n68\n' | apt-get install -y tzdata /dev/null
+              printf '%b' '5\n68\n' | apt-get install -y tzdata
           EOF
           docker build -t temp .
