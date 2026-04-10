@@ -16,4 +16,4 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           docker -v
-          printf '%b' "apt update && apt install -y docker && docker.io -v" | docker run -i --rm ubuntu bash
+          printf '%b' "apt update && apt install -y docker.io && docker -v" | docker run -i --rm ubuntu bash
