@@ -15,5 +15,5 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker -v
-          printf '%b' "apt update && apt install -y docker.io && docker -v" | docker run -i --rm ubuntu bash
+          brew install fastfetch
+          fastfetch
