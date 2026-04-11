@@ -1,6 +1,0 @@
-xray_path="${HOME}/tools/xray" && \
-sed -i '151s/198.181.46.68/c5s801.portablesubmarines.com/' ${HOME}/tools/xray/config.json && \
-tmux new -c ~ -d -s xray && \
-sleep 1 && \
-tmux send -t xray "${xray_path}/xray" Enter && \
-x
