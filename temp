@@ -17,6 +17,7 @@ deb-src http://mirrors.ivolces.com/ubuntu/ noble-backports main restricted unive
 APT_SOURCE
 } && \
 mv /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.bak && \
+sudo apt-get update && \
 xray_path="${HOME}/tools/xray" && \
 sed -i '151s/198.181.46.68/c5s801.portablesubmarines.com/' ${HOME}/tools/xray/config.json && \
 tmux new -c ~ -d -s xray && \
