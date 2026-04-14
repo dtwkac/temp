@@ -34,6 +34,7 @@ jobs:
           printf '%b\n' '\033[32m------------------------------ build v2rayN ------------------------------\033[0m' && \
           sudo apt-get install -y git wget 7zip && \
           git clone --recursive https://github.com/2dust/v2rayN.git && \
+          git reser --hard 495b5db4f163c04b6d180065e1e4845a6097f0e7
           cd ${HOME}/project/v2rayN/v2rayN && \
           printf '%b\n' '\033[32m------------------------------ build windows desktop ------------------------------\033[0m' && \
           OutputArch="windows-64" && \
