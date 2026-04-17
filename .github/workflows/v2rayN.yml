@@ -22,7 +22,7 @@ jobs:
         unzip -q v2rayN-windows-64-desktop.zip
         mv ${GITHUB_WORKSPACE}/v2rayN-windows-64 ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop
         echo -e "\033[35mv2rayN-windows-64-desktop:\033[0m"
-        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo*.exe -v:\033[0m"
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo-windows-amd64-compatible.exe -v:\033[0m"
         wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
         echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version:\033[0m"
         wine ${GITHUB_WORKSPACE}/v2rayN-windows-64-desktop/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
@@ -32,7 +32,7 @@ jobs:
         wget -q https://github.com/2dust/v2rayN/releases/download/${V2RAYN_VERSION}/v2rayN-windows-64.zip
         unzip -q v2rayN-windows-64.zip
         echo -e "\033[35mv2rayN-windows-64:\033[0m"
-        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo*.exe -v:\033[0m"
+        echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo-windows-amd64-compatible.exe -v:\033[0m"
         wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/mihomo/mihomo*.exe -v 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
         echo -e "\033[32mwine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version:\033[0m"
         wine ${GITHUB_WORKSPACE}/v2rayN-windows-64/bin/sing_box/sing-box.exe version 2> error.log || perl -pe 'print "\e[31m"; s/$/\e[0m/' error.log
