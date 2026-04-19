@@ -32,29 +32,6 @@ jobs:
               printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
               apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server > /dev/null 2>&1 && \
               apt-get update > /dev/null 2>&1 && \
-              echo >> ${HOME}/.bashrc && \
-              echo 'if ! shopt -oq posix; then' >> ${HOME}/.bashrc && \
-              echo '  if [ -f /usr/share/bash-completion/bash_completion ]; then' >> ${HOME}/.bashrc && \
-              echo '    . /usr/share/bash-completion/bash_completion' >> ${HOME}/.bashrc && \
-              echo '  elif [ -f /etc/bash_completion ]; then' >> ${HOME}/.bashrc && \
-              echo '    . /etc/bash_completion' >> ${HOME}/.bashrc && \
-              echo '  fi' >> ${HOME}/.bashrc && \
-              echo 'fi' >> ${HOME}/.bashrc && \
-              echo >> ${HOME}/.bashrc && \
-              echo "export LANG='zh_CN.UTF-8'" >> ${HOME}/.bashrc && \
-              echo 'source $VIMRUNTIME/defaults.vim' >> ${HOME}/.vimrc && \
-              echo >> ${HOME}/.vimrc && \
-              echo 'set expandtab' >> ${HOME}/.vimrc && \
-              echo 'set shiftwidth=4' >> ${HOME}/.vimrc && \
-              echo 'set tabstop=4' >> ${HOME}/.vimrc && \
-              echo 'let loaded_matchparen = 1' >> ${HOME}/.vimrc && \
-              ssh-keygen -f ${HOME}/.ssh/id_ed25519 -N '' > /dev/null 2>&1 && \
-              cp ${HOME}/.ssh/id_ed25519.pub ${HOME}/.ssh/authorized_keys && \
-              echo >> /etc/ssh/sshd_config && \
-              echo 'PermitRootLogin prohibit-password' >> /etc/ssh/sshd_config && \
-              echo 'ClientAliveInterval 60' >> /etc/ssh/sshd_config && \
-              echo 'ClientAliveCountMax 3' >> /etc/ssh/sshd_config && \
-              service ssh start > /dev/null 2>&1 && \
               mkdir ${HOME}/tools && \
               cd ${HOME}/tools && \
               miniforge_version='26.1.1-3' && \
