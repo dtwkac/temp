@@ -15,4 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker info | grep "Registry Mirrors" || true
