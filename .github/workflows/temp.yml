@@ -15,9 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker -v
-          sudo apt-get update &> /dev/null
-          sudo apt-get remove -y containerd.io &> /dev/null
-          sudo apt-get autoremove -y
-          sudo apt-get install -y docker.io
-          docker -v
