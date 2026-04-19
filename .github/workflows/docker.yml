@@ -78,3 +78,5 @@ jobs:
           EOF
           docker build -t temp .
           docker images
+          echo "--------------------------------------------------------------------"
+          docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}"
