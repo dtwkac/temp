@@ -15,4 +15,9 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}"
+          anaconda_version='2025.12-2' && \
+          curl -fLO "https://repo.anaconda.com/archive/Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
+          bash "Anaconda3-${anaconda_version}-Linux-x86_64.sh" -b -p "$HOME/tools/anaconda3" && \
+          rm "Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
+          . "$HOME/tools/anaconda3/bin/activate" && \
+          conda create -y -n dev python=3
