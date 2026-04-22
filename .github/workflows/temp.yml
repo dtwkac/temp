@@ -15,13 +15,6 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          apt-get update && \
-              apt-get upgrade -y && \
-              apt-get autoremove -y && \
-              printf '%b' 'y\n' | unminimize && \
-              printf '%b' '5\n69\n' | apt-get install -y tzdata && \
-              apt-get install -y sudo man-db command-not-found bash-completion vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
-              apt-get update && \
               update-locale LANG=zh_CN.UTF-8 && \
               mkdir "$HOME/tools" && \
               cd "$HOME/tools" && \
