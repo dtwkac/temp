@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker run --name -dit ubuntu bash
+          docker run --name temp -dit ubuntu bash
           cat << 'EOF' | docker exec -i temp bash
           apt-get update && \
               apt-get upgrade -y && \
