@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker run -dit --name temp bash
+          docker run -d --name temp ububtu
           cat << 'EOF' | docker exec -i temp bash
           apt-get update && \
               apt-get upgrade -y && \
