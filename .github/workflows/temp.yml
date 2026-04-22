@@ -35,5 +35,5 @@ jobs:
               rm "Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
               . "$HOME/tools/anaconda3/bin/activate" && \
               conda create -y -n dev python=3
-          EOF
-          docker build -t temp -f ./Dockerfile build
+            EOF
+            docker build -t temp .
