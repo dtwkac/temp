@@ -15,7 +15,15 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          mkdir build
+          mkdir "$HOME/tools" && \
+          cd "$HOME/tools" && \
+          anaconda_version='2025.12-2' && \
+          curl -fLO "https://repo.anaconda.com/archive/Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
+          bash "Anaconda3-${anaconda_version}-Linux-x86_64.sh" -b -p "$HOME/tools/anaconda3" && \
+          rm "Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
+          . "$HOME/tools/anaconda3/bin/activate" && \
+          conda create -y -n dev python=3
+          cd
           cat << 'EOF' > Dockerfile
           FROM ubuntu
           WORKDIR /root
@@ -35,5 +43,5 @@ jobs:
               rm "Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
               . "$HOME/tools/anaconda3/bin/activate" && \
               conda create -y -n dev python=3
-          EOF
-          docker build -t temp .
+            EOF
+            docker build -t temp .
