@@ -17,9 +17,7 @@ jobs:
           TZ='Asia/Shanghai' date
           docker run -d --name temp bash
           cat << 'EOF' | docker exec -i temp bash
-          FROM ubuntu
-          WORKDIR /root
-          RUN apt-get update && \
+          apt-get update && \
               apt-get upgrade -y && \
               apt-get autoremove -y && \
               printf '%b' 'y\n' | unminimize && \
