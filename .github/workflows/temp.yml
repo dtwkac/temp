@@ -15,7 +15,6 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-              update-locale LANG=zh_CN.UTF-8 && \
               mkdir "$HOME/tools" && \
               cd "$HOME/tools" && \
               anaconda_version='2025.12-2' && \
