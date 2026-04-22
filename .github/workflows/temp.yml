@@ -15,7 +15,8 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' > Dockerfile
+          docker run -d --name temp bash
+          cat << 'EOF' | docker exec -i temp bash
           FROM ubuntu
           WORKDIR /root
           RUN apt-get update && \
@@ -35,4 +36,3 @@ jobs:
               . "$HOME/tools/anaconda3/bin/activate" && \
               conda create -y -n dev python=3
           EOF
-          docker build -t temp .
