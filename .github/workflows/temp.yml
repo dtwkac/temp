@@ -15,9 +15,9 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker build -t temp - << 'EOF'
-          FROM ubuntu
-          RUN apt-get update && \
+          docker run --name -dit ubuntu bash
+          cat << 'EOF' | docker exec -i temp bash
+          apt-get update && \
               apt-get upgrade -y && \
               apt-get autoremove -y && \
               printf '%b' 'y\n' | unminimize && \
