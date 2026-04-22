@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker run -d --name temp ububtu sleep infinity
+          docker run -d --name temp ubuntu sleep infinity
           cat << 'EOF' | docker exec -i temp bash
           apt-get update && \
               apt-get upgrade -y && \
