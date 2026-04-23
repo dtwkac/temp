@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'APT_SOURCE' >> /etc/apt/sources.list
+          cat << 'APT_SOURCE' | sudo tee -a /etc/apt/sources.list
           deb http://mirrors.ivolces.com/ubuntu/ noble main restricted universe multiverse
           deb-src http://mirrors.ivolces.com/ubuntu/ noble main restricted universe multiverse
           
