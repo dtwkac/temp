@@ -37,4 +37,4 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-venv
           EOF
-          cat a.sh
+          cat a.sh | docker exec -i temp bash
