@@ -25,36 +25,37 @@ jobs:
           cat << 'EOF' > Dockerfile
           FROM ubuntu:26.04
           WORKDIR /root
-          RUN apt-get update > /dev/null 2>&1 && \
-              apt-get upgrade -y > /dev/null 2>&1 && \
-              apt-get autoremove -y > /dev/null 2>&1 && \
-              apt-get install -y unminimize > /dev/null 2>&1 && \
-              printf '%b' 'y\n' | unminimize > /dev/null 2>&1 && \
-              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null &> log && \
-              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server > /dev/null 2>&1 && \
-              apt-get update > /dev/null 2>&1 && \
+          RUN apt-get update &> /dev/null && \
+              apt-get upgrade -y &> /dev/null && \
+              apt-get autoremove -y &> /dev/null && \
+              apt-get install -y unminimize &> /dev/null && \
+              printf '%b' 'y\n' | unminimize &> /dev/null && \
+              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+              apt-get install -y sudo man-db command-not-found bash-completion vim neovim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server &> /dev/null && \
+              apt-get update &> /dev/null && \
               mkdir ${HOME}/tools && \
               cd ${HOME}/tools && \
               miniforge_version='26.1.1-3' && \
-              curl -fLO https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Miniforge3-Linux-x86_64.sh > /dev/null 2>&1 && \
-              bash Miniforge3-Linux-x86_64.sh -b -p ${HOME}/tools/miniforge3 > /dev/null 2>&1 && \
+              curl -fLO https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Miniforge3-Linux-x86_64.sh &> /dev/null && \
+              bash Miniforge3-Linux-x86_64.sh -b -p ${HOME}/tools/miniforge3 &> /dev/null && \
               rm Miniforge3-Linux-x86_64.sh && \
-              . ${HOME}/tools/miniforge3/bin/activate > /dev/null 2>&1 && \
-              conda create -y -n dev python=3 > /dev/null 2>&1 && \
-              conda deactivate && \
-              cat log | grep 'Current default time zone' && \
-              echo "--------------------------------------------------------------------" && \
-              nvim --version && \
-              echo "--------------------------------------------------------------------" && \
-              g++ --version && \
-              echo "--------------------------------------------------------------------" && \
-              which python3 && \
-              $(which python3) --version && \
-              echo "--------------------------------------------------------------------" && \
-              conda activate dev && \
-              which python3 && \
-              $(which python3) --version
+              . ${HOME}/tools/miniforge3/bin/activate &> /dev/null && \
+              conda create -y -n dev python=3 &> /dev/null
           EOF
-          docker build -t temp .
+          docker build -t temp . &> log
+          cat log | grep 'Current default time zone'
+          cat << 'CMD' >> docker run -i --rm temp bash
+          echo "--------------------------------------------------------------------" && \
+          nvim --version && \
+          echo "--------------------------------------------------------------------" && \
+          g++ --version && \
+          echo "--------------------------------------------------------------------" && \
+          which python3 && \
+          $(which python3) --version && \
+          . ${HOME}/tools/miniforge3/bin/activate dev && \
+          echo "--------------------------------------------------------------------" && \
+          which python3 && \
+          $(which python3) --version
+          EOF
           docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}"
           cat log | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}'
