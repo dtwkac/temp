@@ -15,8 +15,11 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          docker rmi $(docker images -q)
+          sudo apt-get update &> /dev/null
+          sudo apt-get remove -y containerd.io &> /dev/null
+          sudo apt-get install docker.io &> /dev/null
+          sudo apt-get autoremove -y &> /dev/null
+          docker rmi $(docker images -q) &> /dev/null
           docker run hello-world
           docker run -dit --rm ubuntu bash
-          docker ps -a
           docker images -a
