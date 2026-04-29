@@ -22,5 +22,5 @@ jobs:
           docker rmi $(docker images -q) &> /dev/null
           docker run hello-world &> log
           docker run -dit --rm ubuntu bash &>> log
-          cat log | grep 'Digest'
+          cat log | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}'
           docker images -a
