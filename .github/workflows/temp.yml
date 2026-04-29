@@ -15,12 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          sudo apt-get update &> /dev/null
-          sudo apt-get remove -y containerd.io &> /dev/null
-          sudo apt-get install docker.io &> /dev/null
-          sudo apt-get autoremove -y &> /dev/null
-          docker rmi $(docker images -q) &> /dev/null
-          docker run hello-world &> log
-          docker run -dit --rm ubuntu bash &>> log
-          cat log | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}'
-          docker images -a
