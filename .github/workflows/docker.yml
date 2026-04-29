@@ -44,7 +44,7 @@ jobs:
           EOF
           docker build -t temp . &>> log
           cat log | grep 'Current default time zone'
-          cat << 'CMD' >> docker run -i --rm temp bash
+          cat << 'CMD' | docker run -i --rm temp bash
           echo "--------------------------------------------------------------------" && \
           nvim --version && \
           echo "--------------------------------------------------------------------" && \
