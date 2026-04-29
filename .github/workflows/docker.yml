@@ -19,9 +19,9 @@ jobs:
           sudo apt-get remove -y containerd.io &> /dev/null
           sudo apt-get autoremove -y &> /dev/null
           sudo apt-get install -y docker.io &> /dev/null
-          docker run hello-world &> /dev/null
-          docker run -dit --rm ubuntu bash &> /dev/null
-          docker run -dit --rm ubuntu:26.04 bash &> /dev/null
+          docker run hello-world &> log
+          docker run -dit --rm ubuntu bash &>> log
+          docker run -dit --rm ubuntu:26.04 bash &>> log
           cat << 'EOF' > Dockerfile
           FROM ubuntu:26.04
           WORKDIR /root
@@ -56,3 +56,4 @@ jobs:
           EOF
           docker build -t temp .
           docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}"
+          cat log | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}'
