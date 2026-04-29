@@ -56,6 +56,6 @@ jobs:
           echo "--------------------------------------------------------------------" && \
           which python3 && \
           $(which python3) --version
-          EOF
+          CMD
           docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}"
           cat log | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}'
