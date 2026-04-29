@@ -20,6 +20,6 @@ jobs:
           sudo apt-get install docker.io &> /dev/null
           sudo apt-get autoremove -y &> /dev/null
           docker rmi $(docker images -q) &> /dev/null
-          docker run hello-world | grep 'Digest'
-          docker run -dit --rm ubuntu bash | grep 'Digest'
+          docker run hello-world &> /dev/null
+          docker run -dit --rm ubuntu bash &> /dev/null
           docker images -a
