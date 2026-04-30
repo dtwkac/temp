@@ -15,8 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          # 查看详细的驱动类型
-          docker info -f '{{ .DriverStatus }}'
-          
-          # 或者直接查看存储驱动
-          docker info | grep -i "Storage Driver"
