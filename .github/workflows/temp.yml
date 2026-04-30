@@ -15,15 +15,3 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' > Dockerfile
-          FROM ubuntu:26.04
-          WORKDIR /root
-          RUN apt-get update > /dev/null 2>&1 && \
-              apt-get upgrade -y > /dev/null 2>&1 && \
-              apt-get autoremove -y > /dev/null 2>&1 && \
-              apt-get install -y unminimize > /dev/null 2>&1 && \
-              printf '%b' 'y\n' | unminimize > /dev/null 2>&1 && \
-              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null
-              # printf '%b' '5\n68\n' | apt-get install -y tzdata
-          EOF
-          docker build -t temp .
