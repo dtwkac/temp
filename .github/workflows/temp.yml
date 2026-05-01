@@ -17,4 +17,4 @@ jobs:
           TZ='Asia/Shanghai' date
           sudo apt update &> /dev/null
           sudo apt install zsh &> /dev/null
-          chsh -s $(which zsh)
+          sudo chsh -s $(which zsh)
