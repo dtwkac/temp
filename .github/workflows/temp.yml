@@ -17,3 +17,8 @@ jobs:
           TZ='Asia/Shanghai' date
           sudo apt-get update
           sudo apt-get upgrade -y
+          cat << 'EOF' > a.sh
+          sudo apt-get update
+          sudo apt-get upgrade -y
+          EOF
+          bash a.sh
