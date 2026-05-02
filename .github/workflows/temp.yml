@@ -15,6 +15,12 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          sudo apt update &> /dev/null
-          sudo apt install zsh &> /dev/null
-          sudo chsh -s $(which zsh)
+            sudo apt-get update
+            sudo apt-get remove -y containerd.io
+            sudo apt-get autoremove -y
+            sudo apt-get update && \
+            sudo apt-get upgrade -y && \
+            sudo apt-get autoremove -y && \
+            sudo apt-get install -y vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop docker.io language-pack-zh-hans && \
+            sudo update-locale LANG=zh_CN.UTF-8
+
