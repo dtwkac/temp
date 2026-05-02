@@ -22,5 +22,5 @@ jobs:
           sudo apt-get update && \
           sudo apt-get upgrade -y
           EOF
-          bash a.sh
+          # bash a.sh
 
