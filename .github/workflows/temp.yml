@@ -16,4 +16,4 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           sudo apt-get install -y language-pack-zh-hans && \
-          update-locale LANG=zh_CN.UTF-8
+          sudo update-locale LANG=zh_CN.UTF-8
