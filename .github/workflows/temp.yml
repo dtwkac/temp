@@ -37,7 +37,7 @@ jobs:
           sudo bash -c "printf '%s\n' 'ClientAliveCountMax 3' >> /etc/ssh/sshd_config.d/custom.conf" && \
           ssh-keygen -f "$HOME/.ssh/id_ed25519" -N '' && \
           cp "$HOME/.ssh/id_ed25519.pub" "$HOME/.ssh/authorized_keys" && \
-          service ssh start && \
+          sudo service ssh start && \
           mkdir "$HOME/tools" && \
           cd "$HOME/tools" && \
           anaconda_version='2024.10-1' && \
@@ -45,5 +45,4 @@ jobs:
           bash "Anaconda3-${anaconda_version}-Linux-x86_64.sh" -b -p "$HOME/tools/anaconda3" && \
           rm "Anaconda3-${anaconda_version}-Linux-x86_64.sh" && \
           . "$HOME/tools/anaconda3/bin/activate" && \
-          conda create -y -n dev python=3 && \
-          conda deactivate
+          conda create -y -n dev python=3
