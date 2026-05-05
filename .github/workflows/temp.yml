@@ -16,6 +16,7 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           sudo apt-get update && \
+          sudo apt-get install -y sudo man-db command-not-found bash-completion vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
           sudo update-locale LANG=zh_CN.UTF-8 && \
           printf '\n' >> "$HOME/.bashrc" && \
           printf '%s\n' 'if ! shopt -oq posix; then' >> "$HOME/.bashrc" && \
