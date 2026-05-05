@@ -15,5 +15,5 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          sudo apt-get install -y language-pack-zh-hans && \
-          sudo update-locale LANG=zh_CN.UTF-8
+          sudo apt-get install -y openssh-server
+          printf '%s\n' 'PermitRootLogin prohibit-password' > /etc/ssh/sshd_config.d/custom.conf
