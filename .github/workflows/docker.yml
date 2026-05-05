@@ -16,9 +16,6 @@ jobs:
         run: |
           set -e
           sudo apt-get update &> /dev/null
-          sudo apt-get remove -y containerd.io &> /dev/null
-          sudo apt-get autoremove -y &> /dev/null
-          sudo apt-get install -y docker.io &> /dev/null
           docker run hello-world &> log
           docker run -dit --rm ubuntu bash &>> log
           docker run -dit --rm ubuntu:26.04 bash &>> log
