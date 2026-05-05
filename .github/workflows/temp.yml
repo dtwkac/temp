@@ -16,7 +16,7 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           sudo apt-get install -y openssh-server
-          sudo bash -c "printf '%s\n' 'PermitRootLogin prohibit-password'" > /etc/ssh/sshd_config.d/custom.conf && \
-          sudo bash -c "printf '%s\n' 'ClientAliveInterval 60'" >> /etc/ssh/sshd_config.d/custom.conf && \
-          sudo bash -c "printf '%s\n' 'ClientAliveCountMax 3'" >> /etc/ssh/sshd_config.d/custom.conf
+          sudo bash -c "printf '%s\n' 'PermitRootLogin prohibit-password' > /etc/ssh/sshd_config.d/custom.conf" && \
+          sudo bash -c "printf '%s\n' 'ClientAliveInterval 60' >> /etc/ssh/sshd_config.d/custom.conf" && \
+          sudo bash -c "printf '%s\n' 'ClientAliveCountMax 3' >> /etc/ssh/sshd_config.d/custom.conf"
           cat /etc/ssh/sshd_config.d/custom.conf
