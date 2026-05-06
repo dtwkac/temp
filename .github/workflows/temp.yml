@@ -78,3 +78,10 @@ jobs:
           # ssh -p 50022 root@{host_ip}
           EOF
           docker build -t del .
+          docker run --name -dit del bash
+          cat << 'EOF' | docker exec -i container bash
+          c && \
+          x && \
+          ux && \
+          conda deactivate
+          EOF
