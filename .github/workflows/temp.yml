@@ -17,8 +17,8 @@ jobs:
           TZ='Asia/Shanghai' date
           cat << 'EOF' > Dockerfile
           FROM ubuntu
-          RUN apt update
-              apt install -y tree-sitter
+          RUN apt update && \
+              apt install -y tree-sitter && \
               tree-sitter --version
           EOF
           docker build -t del .
