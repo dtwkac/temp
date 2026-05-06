@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat < 'EOF' > Dockerfile
+          cat << 'EOF' > Dockerfile
           FROM ubuntu
           WORKDIR /root
           RUN apt-get update && \
