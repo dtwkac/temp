@@ -80,9 +80,5 @@ jobs:
           docker build -t del .
           docker run --name temp -dit del bash
           cat << 'EOF' | docker exec -i temp bash
-          . $HOME/.bash_aliases && \
-          c && \
-          x && \
-          ux && \
-          conda deactivate
+          . $HOME/.bash_aliases;c && x && ux && conda deactivate
           EOF
