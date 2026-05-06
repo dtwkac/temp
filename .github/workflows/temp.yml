@@ -79,7 +79,7 @@ jobs:
           EOF
           docker build -t del .
           docker run --name temp -dit del bash
-          cat << 'EOF' | docker exec -i container bash
+          cat << 'EOF' | docker exec -i temp bash
           c && \
           x && \
           ux && \
