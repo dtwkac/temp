@@ -57,3 +57,4 @@ jobs:
           echo "--------------------------------------------------------------------" && \
           docker images
           cat log | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}'
+          lsb_release -a
