@@ -20,7 +20,7 @@ jobs:
           docker run -dit --rm ubuntu bash &>> log
           docker run -dit --rm ubuntu:26.04 bash &>> log
           cat << 'EOF' > Dockerfile
-          FROM ubuntu:26.04
+          FROM ubuntu
           WORKDIR /root
           RUN apt-get update > /dev/null 2>&1 && \
               apt-get upgrade -y > /dev/null 2>&1 && \
