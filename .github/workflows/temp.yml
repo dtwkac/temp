@@ -37,3 +37,4 @@ jobs:
               . "$HOME/tools/anaconda3/bin/activate" && \
               conda create -y -n dev python=3
           EOF
+          docker build -t del .
