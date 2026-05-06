@@ -23,10 +23,58 @@ jobs:
               apt-get autoremove -y && \
               apt-get install -y unminimize && \
               printf '%b' 'y\n' | unminimize && \
-              printf '%b' '5\n69\n' | apt-get install -y tzdata && \
+              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
               apt-get install -y sudo && \
               sudo apt-get install -y man-db command-not-found bash-completion file vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server && \
               sudo apt-get update && \
-              sudo update-locale LANG=zh_CN.UTF-8
+              sudo update-locale LANG=zh_CN.UTF-8 && \
+              printf '\n' >> "$HOME/.bashrc" && \
+              printf '%s\n' 'if ! shopt -oq posix; then' >> "$HOME/.bashrc" && \
+              printf '%s\n' '  if [ -f /usr/share/bash-completion/bash_completion ]; then' >> "$HOME/.bashrc" && \
+              printf '%s\n' '    . /usr/share/bash-completion/bash_completion' >> "$HOME/.bashrc" && \
+              printf '%s\n' '  elif [ -f /etc/bash_completion ]; then' >> "$HOME/.bashrc" && \
+              printf '%s\n' '    . /etc/bash_completion' >> "$HOME/.bashrc" && \
+              printf '%s\n' '  fi' >> "$HOME/.bashrc" && \
+              printf '%s\n' 'fi' >> "$HOME/.bashrc" && \
+              printf '%s\n' 'source $VIMRUNTIME/defaults.vim' > "$HOME/.vimrc" && \
+              printf '\n' >> "$HOME/.vimrc" && \
+              printf '%s\n' 'set expandtab' >> "$HOME/.vimrc" && \
+              printf '%s\n' 'set shiftwidth=4' >> "$HOME/.vimrc" && \
+              printf '%s\n' 'set tabstop=4' >> "$HOME/.vimrc" && \
+              printf '%s\n' 'let loaded_matchparen = 1' >> "$HOME/.vimrc" && \
+              sudo bash -c "printf '%s\n' 'PermitRootLogin prohibit-password' > /etc/ssh/sshd_config.d/custom.conf" && \
+              sudo bash -c "printf '%s\n' 'ClientAliveInterval 60' >> /etc/ssh/sshd_config.d/custom.conf" && \
+              sudo bash -c "printf '%s\n' 'ClientAliveCountMax 3' >> /etc/ssh/sshd_config.d/custom.conf" && \
+              ssh-keygen -f "$HOME/.ssh/id_ed25519" -N '' && \
+              cp "$HOME/.ssh/id_ed25519.pub" "$HOME/.ssh/authorized_keys" && \
+              sudo service ssh start && \
+              mkdir "$HOME/tools" && \
+              cd "$HOME/tools" && \
+              miniforge_version='26.3.2-0' && \
+              curl -fLO https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Miniforge3-Linux-x86_64.sh && \
+              bash Miniforge3-Linux-x86_64.sh -b -p ${HOME}/tools/miniforge3 && \
+              rm Miniforge3-Linux-x86_64.sh && \
+              . ${HOME}/tools/miniforge3/bin/activate && \
+              conda create -y -n dev python=3 && \
+              conda deactivate && \
+              printf '%s\n' "alias p='python3'" > "$HOME/.bash_aliases" && \
+              printf '%s\n' "alias c='source ~/tools/miniforge3/bin/activate && conda activate dev'" >> "$HOME/.bash_aliases" && \
+              printf '%s\n' "alias x='export http_proxy=\"http://127.0.0.1:10808\" https_proxy=\"http://127.0.0.1:10808\"'" >> "$HOME/.bash_aliases" && \
+              printf '%s\n' "alias ux='unset http_proxy https_proxy'" >> "$HOME/.bash_aliases"
+          
+          # sudo mkdir -p /etc/systemd/system/docker.service.d && \
+          # sudo bash -c "printf '%s\n' '[Service]' > /etc/systemd/system/docker.service.d/http-proxy.conf" && \
+          # sudo bash -c "printf '%s\n' 'Environment=\"HTTP_PROXY=http://127.0.0.1:10808\"' >> /etc/systemd/system/docker.service.d/http-proxy.conf" && \
+          # sudo bash -c "printf '%s\n' 'Environment=\"HTTPS_PROXY=http://127.0.0.1:10808\"' >> /etc/systemd/system/docker.service.d/http-proxy.conf" && \
+          # sudo systemctl daemon-reload && \
+          # sudo systemctl restart docker && \
+          # sudo usermod -aG docker $USER
+          
+          # mkdir build
+          # docker build -t playground -f Dockerfile build
+          # docker run --name temp --network host -e DISPLAY -v "$HOME/.Xauthority:/root/.Xauthority:ro" --rm -it playground bash
+          # docker run --name container -h container -v /host/path:/container/path -dit playground bash
+          # docker run --name container -h container -p 50022:22 -v /host/path:/container/path --shm-size 8g -d playground /usr/sbin/sshd -D
+          # ssh -p 50022 root@{host_ip}
           EOF
           docker build -t del .
