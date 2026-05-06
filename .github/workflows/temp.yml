@@ -18,16 +18,16 @@ jobs:
           cat << 'EOF' > Dockerfile
           FROM ubuntu
           WORKDIR /root
-          RUN apt-get update &> /dev/null && \
-              apt-get upgrade -y &> /dev/null && \
-              apt-get autoremove -y &> /dev/null && \
-              apt-get install -y unminimize &> /dev/null && \
-              printf '%b' 'y\n' | unminimize &> /dev/null && \
-              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null &> /dev/null && \
+          RUN apt-get update && \
+              apt-get upgrade -y && \
+              apt-get autoremove -y && \
+              apt-get install -y unminimize && \
+              printf '%b' 'y\n' | unminimize && \
+              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
               apt-get install -y sudo && \
-              sudo apt-get install -y man-db command-not-found bash-completion file vim g++ cmake cgdb git wget curl zip unzip 7zip tree tmux htop calc language-pack-zh-hans openssh-server &> /dev/null && \
-              sudo apt-get update &> /dev/null && \
-              sudo update-locale LANG=zh_CN.UTF-8 &> /dev/null && \
+              sudo apt-get install -y man-db command-not-found bash-completion file git wget curl language-pack-zh-hans && \
+              sudo apt-get update && \
+              sudo update-locale LANG=zh_CN.UTF-8 && \
               mkdir "$HOME/tools" && \
               cd "$HOME/tools" && \
               anaconda_version='2025.12-2' && \
