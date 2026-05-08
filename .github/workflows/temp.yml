@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' | docker run -it ubuntu:24.04 bash
+          cat << 'EOF' | docker run -i ubuntu:24.04 bash
           apt-get update && \
           apt-get upgrade -y && \
           printf '%b' '5\n69\n' | apt-get install -y tzdata && \
