@@ -18,7 +18,7 @@ jobs:
           cat << 'EOF' | docker run -i ubuntu bash
           apt-get update && \
           apt-get upgrade -y && \
-          printf '%b' '5\n69\n' | apt-get install -y tzdata && \
+          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
           apt-get install -y sudo && \
           mkdir "$HOME/project" && \
           cd "$HOME/project" && \
@@ -26,6 +26,8 @@ jobs:
           sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
           git clone https://github.com/cgdb/cgdb.git && \
           cd cgdb && \
+          sed -i '89s/main()/int main()/' config/readline_check_version.m4 && \
+          git diff && \
           ./autogen.sh && \
           mkdir build && \
           cd build && \
