@@ -21,6 +21,7 @@ jobs:
           RUN apt-get update && \
               apt-get upgrade -y && \
               apt-get autoremove -y && \
+              apt install -y unminimize && \
               printf '%b' 'y\n' | unminimize && \
               printf '%b' '5\n69\n' | apt-get install -y tzdata && \
               apt-get install -y sudo
