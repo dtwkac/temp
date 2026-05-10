@@ -16,7 +16,7 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           cat << 'EOF' > Dockerfile
-          FROM ubuntu:24.04
+          FROM ubuntu
           WORKDIR /root
           RUN apt-get update && \
               apt-get upgrade -y && \
