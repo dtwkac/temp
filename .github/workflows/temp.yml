@@ -25,4 +25,4 @@ jobs:
               printf '%b' '5\n69\n' | apt-get install -y tzdata && \
               apt-get install -y sudo
           EOF
-          docker build -t del .
+          docker build -t temp .
