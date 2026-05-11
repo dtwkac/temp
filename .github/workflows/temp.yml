@@ -60,7 +60,7 @@ jobs:
           cd LearnOpenGL && \
           mkdir build && \
           cd build && \
-          cmake .. && \
+          cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .. && \
           cmake --build . && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ download go ------------------------------\033[0m' && \
