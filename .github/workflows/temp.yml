@@ -26,6 +26,43 @@ jobs:
           sudo apt-get install -y git unzip python3 tmux && \
           mkdir "$HOME/project" && \
           cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build gcc ------------------------------\033[0m' && \
+          sudo apt-get install -y git g++ libmpc-dev make flex && \
+          git clone https://github.com/gcc-mirror/gcc.git && \
+          cd gcc && \
+          mkdir build && \
+          cd build && \
+          ../configure --disable-multilib && \
+          make -j$(nproc) && \
+          printf '%b\n' "\033[32m$HOME/project/gcc/build/gcc/xg++ --version:\033[0m" && \
+          "$HOME/project/gcc/build/gcc/xg++" --version && \
+          printf '%b\n' '#include <bits/stdc++.h>\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    return 0;\n}' > "$HOME/project/main.cpp" && \
+          "$HOME/project/gcc/build/gcc/xg++" \
+            -B"$HOME/project/gcc/build/gcc" \
+            -I"$HOME/project/gcc/build/x86_64-pc-linux-gnu/libstdc++-v3/include" \
+            -I"$HOME/project/gcc/build/x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu" \
+            -I"$HOME/project/gcc/libstdc++-v3/libsupc++" \
+            -L"$HOME/project/gcc/build/x86_64-pc-linux-gnu/libstdc++-v3/src/.libs" \
+            -o "$HOME/project/a.out" \
+            "$HOME/project/main.cpp" && \
+          "$HOME/project/a.out" && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build clang ------------------------------\033[0m' && \
+          sudo apt-get install -y git g++ cmake ninja-build python3 && \
+          git clone https://github.com/llvm/llvm-project.git && \
+          cd llvm-project && \
+          mkdir build && \
+          cd build && \
+          cmake -G Ninja ../llvm -DCMAKE_BUILD_TYPE=Release \
+            -DLLVM_ENABLE_PROJECTS="clang" \
+            -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" && \
+          ninja && \
+          printf '%b\n' "\033[32m$HOME/project/llvm-project/build/bin/clang --version:\033[0m" && \
+          "$HOME/project/llvm-project/build/bin/clang" --version && \
+          printf '%b\n' '#include <bits/stdc++.h>\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    return 0;\n}' > "$HOME/project/main.cpp" && \
+          "$HOME/project/llvm-project/build/bin/clang++" -o "$HOME/project/a.out" "$HOME/project/main.cpp" && \
+          "$HOME/project/a.out" && \
+          cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ build cgdb ------------------------------\033[0m' && \
           sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
           git clone https://github.com/cgdb/cgdb.git && \
