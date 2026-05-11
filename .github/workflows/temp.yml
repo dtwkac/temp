@@ -16,10 +16,14 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           cat << 'EOF' > script
+          { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
+          { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
+          printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
           apt-get update && \
           apt-get upgrade -y && \
-          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+          printf '%b' '5\n69\n' | apt-get install -y tzdata && \
           apt-get install -y sudo && \
+          sudo apt-get install -y git unzip python3 tmux && \
           mkdir "$HOME/project" && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ build cgdb ------------------------------\033[0m' && \
@@ -144,7 +148,8 @@ jobs:
           dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r osx-arm64 -p:SelfContained=true -p:PublishTrimmed=true -o $OutputPathArm64 && \
           cd "$HOME/project" && \
           printf '%b\n' "\033[32mdu -sh $HOME/project:\033[0m" && \
-          du -sh "$HOME/project"
+          du -sh "$HOME/project" && \
+          unset http_proxy https_proxy
           EOF
           docker run --name temp -dit ubuntu bash
           cat script | docker exec -i temp bash
