@@ -95,7 +95,7 @@ jobs:
           aapt dump badging apk | grep versionName && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ download dotnet ------------------------------\033[0m' && \
-          sudo apt-get install -y curl libicu74 && \
+          sudo apt-get install -y curl && \
           dotnet_sdk_version='10.0.102' && \
           curl -fLO "https://builds.dotnet.microsoft.com/dotnet/Sdk/${dotnet_sdk_version}/dotnet-sdk-${dotnet_sdk_version}-linux-x64.tar.gz" && \
           DOTNET_FILE="dotnet-sdk-${dotnet_sdk_version}-linux-x64.tar.gz" && \
