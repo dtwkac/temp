@@ -15,14 +15,136 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' > Dockerfile
-          FROM ubuntu
-          WORKDIR /root
-          RUN apt-get update && \
-              apt-get upgrade -y && \
-              apt-get autoremove -y && \
-              apt install -y unminimize && \
-              printf '%b' 'y\n' | unminimize && \
-              printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null
+          cat << 'EOF' > script
+          apt-get update && \
+          apt-get upgrade -y && \
+          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+          apt-get install -y sudo && \
+          mkdir "$HOME/project" && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build cgdb ------------------------------\033[0m' && \
+          sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
+          git clone https://github.com/cgdb/cgdb.git && \
+          cd cgdb && \
+          ./autogen.sh && \
+          mkdir build && \
+          cd build && \
+          ../configure && \
+          make -j$(nproc) && \
+          printf '%b\n' "\033[32m$HOME/project/cgdb/build/cgdb/cgdb --version:\033[0m" && \
+          "$HOME/project/cgdb/build/cgdb/cgdb" --version && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build cpython ------------------------------\033[0m' && \
+          sudo apt-get install -y git build-essential gdb lcov pkg-config \
+                libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
+                libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
+                lzma lzma-dev tk-dev uuid-dev zlib1g-dev libzstd-dev \
+                inetutils-inetd && \
+          git clone https://github.com/python/cpython.git && \
+          cd cpython && \
+          mkdir build && \
+          cd build && \
+          ../configure --with-pydebug && \
+          make -j$(nproc) && \
+          printf '%b\n' "\033[32m$HOME/project/cpython/build/python --version:\033[0m" && \
+          "$HOME/project/cpython/build/python" --version && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build LearnOpenGL ------------------------------\033[0m' && \
+          sudo apt-get install -y git g++ cmake libsoil-dev libglm-dev libassimp-dev libglew-dev libglfw3-dev libxinerama-dev libxcursor-dev  libxi-dev libfreetype-dev libgl1-mesa-dev xorg-dev && \
+          git clone https://github.com/JoeyDeVries/LearnOpenGL.git && \
+          cd LearnOpenGL && \
+          mkdir build && \
+          cd build && \
+          cmake .. && \
+          cmake --build . && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ download go ------------------------------\033[0m' && \
+          sudo apt-get install -y curl && \
+          go_version='1.23.1' && \
+          curl -fLO "https://go.dev/dl/go${go_version}.linux-amd64.tar.gz" && \
+          tar -zxf "go${go_version}.linux-amd64.tar.gz" && \
+          rm "go${go_version}.linux-amd64.tar.gz" && \
+          export PATH="$PATH:$HOME/project/go/bin" && \
+          printf '%b\n' '\033[32mgo version:\033[0m' && \
+          go version && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build xray ------------------------------\033[0m' && \
+          sudo apt-get install -y git && \
+          git clone https://github.com/XTLS/Xray-core.git && \
+          cd Xray-core && \
+          go mod download && \
+          CGO_ENABLED=0 go build -o xray -trimpath -ldflags "-s -w -buildid=" ./main && \
+          printf '%b\n' "\033[32m$HOME/project/Xray-core/xray version:\033[0m" && \
+          "$HOME/project/Xray-core/xray" version && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ download c-plus-plus-primer ------------------------------\033[0m' && \
+          sudo apt-get install -y curl unzip && \
+          curl -fLO https://www.informit.com/content/images/9780321714114/downloads/GCC_pre_C11.zip && \
+          unzip -q GCC_pre_C11.zip -d c-plus-plus-primer && \
+          rm GCC_pre_C11.zip && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ download telegram ------------------------------\033[0m' && \
+          sudo apt-get install -y curl aapt && \
+          curl -fLO https://telegram.org/dl/android/apk && \
+          printf '%b\n' '\033[32maapt dump badging apk | grep versionName:\033[0m' && \
+          aapt dump badging apk | grep versionName && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ download dotnet ------------------------------\033[0m' && \
+          sudo apt-get install -y curl libicu74 && \
+          dotnet_sdk_version='10.0.102' && \
+          curl -fLO "https://builds.dotnet.microsoft.com/dotnet/Sdk/${dotnet_sdk_version}/dotnet-sdk-${dotnet_sdk_version}-linux-x64.tar.gz" && \
+          DOTNET_FILE="dotnet-sdk-${dotnet_sdk_version}-linux-x64.tar.gz" && \
+          export DOTNET_ROOT=$(pwd)/.dotnet && \
+          mkdir -p "$DOTNET_ROOT" && \
+          tar zxf "$DOTNET_FILE" -C "$DOTNET_ROOT" && \
+          rm "$DOTNET_FILE" && \
+          export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools && \
+          printf '%b\n' '\033[32mdotnet --version:\033[0m' && \
+          dotnet --version && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build v2rayN ------------------------------\033[0m' && \
+          sudo apt-get install -y git wget 7zip && \
+          git clone --recursive https://github.com/2dust/v2rayN.git && \
+          cd "$HOME/project/v2rayN/v2rayN" && \
+          printf '%b\n' '\033[32m------------------------------ build windows desktop ------------------------------\033[0m' && \
+          OutputArch="windows-64" && \
+          OutputArchArm="windows-arm64" && \
+          OutputPath64="$HOME/project/v2rayN/Release/windows-desktop-64" && \
+          OutputPathArm64="$HOME/project/v2rayN/Release/windows-desktop-arm64" && \
+          dotnet publish ./v2rayN.Desktop/v2rayN.Desktop.csproj -c Release -r win-x64   -p:SelfContained=true -p:EnableWindowsTargeting=true -o $OutputPath64 && \
+          dotnet publish ./v2rayN.Desktop/v2rayN.Desktop.csproj -c Release -r win-arm64 -p:SelfContained=true -p:EnableWindowsTargeting=true -o $OutputPathArm64 && \
+          dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r win-x64   -p:SelfContained=true -p:EnableWindowsTargeting=true -p:PublishTrimmed=true -o $OutputPath64 && \
+          dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r win-arm64 -p:SelfContained=true -p:EnableWindowsTargeting=true -p:PublishTrimmed=true -o $OutputPathArm64 && \
+          printf '%b\n' '\033[32m------------------------------ build windows ------------------------------\033[0m' && \
+          OutputArch="windows-64" && \
+          OutputArchArm="windows-arm64" && \
+          OutputPath64="$HOME/project/v2rayN/Release/windows-64" && \
+          OutputPathArm64="$HOME/project/v2rayN/Release/windows-arm64" && \
+          dotnet publish ./v2rayN/v2rayN.csproj     -c Release -r win-x64   -p:SelfContained=true -p:EnableWindowsTargeting=true -o $OutputPath64 && \
+          dotnet publish ./v2rayN/v2rayN.csproj     -c Release -r win-arm64 -p:SelfContained=true -p:EnableWindowsTargeting=true -o $OutputPathArm64 && \
+          dotnet publish ./AmazTool/AmazTool.csproj -c Release -r win-x64   -p:SelfContained=true -p:EnableWindowsTargeting=true -p:PublishTrimmed=true -o $OutputPath64 && \
+          dotnet publish ./AmazTool/AmazTool.csproj -c Release -r win-arm64 -p:SelfContained=true -p:EnableWindowsTargeting=true -p:PublishTrimmed=true -o $OutputPathArm64 && \
+          printf '%b\n' '\033[32m------------------------------ build linux ------------------------------\033[0m' && \
+          OutputArch="linux-64" && \
+          OutputArchArm="linux-arm64" && \
+          OutputPath64="$HOME/project/v2rayN/Release/linux-64" && \
+          OutputPathArm64="$HOME/project/v2rayN/Release/linux-arm64" && \
+          dotnet publish ./v2rayN.Desktop/v2rayN.Desktop.csproj -c Release -r linux-x64   -p:SelfContained=true -o "$OutputPath64" && \
+          dotnet publish ./v2rayN.Desktop/v2rayN.Desktop.csproj -c Release -r linux-arm64 -p:SelfContained=true -o "$OutputPathArm64" && \
+          dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r linux-x64   -p:SelfContained=true -p:PublishTrimmed=true -o "$OutputPath64" && \
+          dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r linux-arm64 -p:SelfContained=true -p:PublishTrimmed=true -o "$OutputPathArm64" && \
+          printf '%b\n' '\033[32m------------------------------ build osx ------------------------------\033[0m' && \
+          OutputArch="macos-64" && \
+          OutputArchArm="macos-arm64" && \
+          OutputPath64="$HOME/project/v2rayN/Release/macos-64" && \
+          OutputPathArm64="$HOME/project/v2rayN/Release/macos-arm64" && \
+          dotnet publish ./v2rayN.Desktop/v2rayN.Desktop.csproj -c Release -r osx-x64   -p:SelfContained=true -o $OutputPath64 && \
+          dotnet publish ./v2rayN.Desktop/v2rayN.Desktop.csproj -c Release -r osx-arm64 -p:SelfContained=true -o $OutputPathArm64 && \
+          dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r osx-x64   -p:SelfContained=true -p:PublishTrimmed=true -o $OutputPath64 && \
+          dotnet publish ./AmazTool/AmazTool.csproj             -c Release -r osx-arm64 -p:SelfContained=true -p:PublishTrimmed=true -o $OutputPathArm64 && \
+          cd "$HOME/project" && \
+          printf '%b\n' "\033[32mdu -sh $HOME/project:\033[0m" && \
+          du -sh "$HOME/project"
           EOF
-          docker build -t temp .
+          docker run --name temp -dit ubuntu bash
+          cat script | docker exec -i temp bash
