@@ -21,9 +21,8 @@ jobs:
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
           apt-get update && \
           apt-get upgrade -y && \
-          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+          printf '%b' '5\n69\n' | apt-get install -y tzdata && \
           apt-get install -y sudo && \
-          sudo apt-get install -y git unzip python3 tmux && \
           mkdir "$HOME/project" && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ build gcc ------------------------------\033[0m' && \
@@ -67,7 +66,6 @@ jobs:
           sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
           git clone https://github.com/cgdb/cgdb.git && \
           cd cgdb && \
-          sed -i '89s/main/int main/' config/readline_check_version.m4 && \
           ./autogen.sh && \
           mkdir build && \
           cd build && \
@@ -80,7 +78,7 @@ jobs:
           sudo apt-get install -y git build-essential gdb lcov pkg-config \
                 libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
                 libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
-                lzma tk-dev uuid-dev zlib1g-dev libmpdec-dev libzstd-dev \
+                lzma lzma-dev tk-dev uuid-dev zlib1g-dev libzstd-dev \
                 inetutils-inetd && \
           git clone https://github.com/python/cpython.git && \
           cd cpython && \
@@ -97,7 +95,7 @@ jobs:
           cd LearnOpenGL && \
           mkdir build && \
           cd build && \
-          cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .. && \
+          cmake .. && \
           cmake --build . && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ download go ------------------------------\033[0m' && \
@@ -132,7 +130,7 @@ jobs:
           aapt dump badging apk | grep versionName && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ download dotnet ------------------------------\033[0m' && \
-          sudo apt-get install -y curl libicu78 && \
+          sudo apt-get install -y curl libicu74 && \
           dotnet_sdk_version='10.0.102' && \
           curl -fLO "https://builds.dotnet.microsoft.com/dotnet/Sdk/${dotnet_sdk_version}/dotnet-sdk-${dotnet_sdk_version}-linux-x64.tar.gz" && \
           DOTNET_FILE="dotnet-sdk-${dotnet_sdk_version}-linux-x64.tar.gz" && \
