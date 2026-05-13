@@ -66,6 +66,7 @@ jobs:
           sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
           git clone https://github.com/cgdb/cgdb.git && \
           cd cgdb && \
+          sed -i '89s/main/int main/' config/readline_check_version.m4 && \
           ./autogen.sh && \
           mkdir build && \
           cd build && \
