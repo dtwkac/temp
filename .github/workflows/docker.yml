@@ -32,7 +32,7 @@ jobs:
               apt-get update > /dev/null 2>&1
           EOF
           docker build -t temp . &>> log
-          grep log 'Current default time zone'
+          grep 'Current default time zone' log
           cat << 'CMD' | docker run -i --rm temp bash
           echo "--------------------------------------------------------------------" && \
           nvim --version && \
