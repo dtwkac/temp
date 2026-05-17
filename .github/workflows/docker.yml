@@ -32,7 +32,7 @@ jobs:
               apt-get update > /dev/null 2>&1
           EOF
           docker build -t temp . &>> log
-          cat log | grep 'Current default time zone'
+          grep log 'Current default time zone'
           cat << 'CMD' | docker run -i --rm temp bash
           echo "--------------------------------------------------------------------" && \
           nvim --version && \
@@ -45,4 +45,4 @@ jobs:
           echo "--------------------------------------------------------------------" && \
           docker images
           grep 'Digest' log | awk -F'sha256:' '{print substr($2,1,12)}' | tee sum
-          grep '4' sum
+          grep -q '4' sum
