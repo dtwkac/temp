@@ -16,9 +16,9 @@ jobs:
         run: |
           set -e
           sudo apt-get update &> /dev/null
-          docker run hello-world | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}' > log
-          docker run -dit --rm ubuntu bash | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}' >> log
-          docker run -dit --rm ubuntu:26.04 bash | grep 'Digest' | awk -F'sha256:' '{print substr($2,1,12)}' >> log
+          docker run hello-world &> log
+          docker run -dit --rm ubuntu bash &>> log
+          docker run -dit --rm ubuntu:26.04 bash &>> log
           cat << 'EOF' > Dockerfile
           FROM ubuntu
           WORKDIR /root
@@ -44,6 +44,5 @@ jobs:
           CMD
           echo "--------------------------------------------------------------------" && \
           docker images
-          cat log
-          lsb_release -a
-          grep -q '4' log
+          grep 'Digest' log | awk -F'sha256:' '{print substr($2,1,12)}' | tee sum
+          grep '4' sum
