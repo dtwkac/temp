@@ -15,3 +15,10 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
+          cat << 'EOF' | docker run -i ubuntu:24.04 bash
+          apt-get update && \
+          apt-get upgrade -y && \
+          apt-get autoremove -y && \
+          printf '%b' 'y\n' | unminimize && \
+          printf '%b' '5\n69\n' | apt-get install -y tzdata
+          EOF
