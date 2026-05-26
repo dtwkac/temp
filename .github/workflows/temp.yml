@@ -15,10 +15,15 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' | docker run -i ubuntu:24.04 bash
-          apt-get update && \
-          apt-get upgrade -y && \
-          apt-get autoremove -y && \
-          printf '%b' 'y\n' | unminimize && \
-          printf '%b' '5\n69\n' | apt-get install -y tzdata
-          EOF
+          sudo apt-get update && \
+          sudo apt-get upgrade -y && \
+          sudo apt-get install -y curl g++ libmpc-dev make flex && \
+          gcc_version='12.3.0' && \
+          curl -fLO "https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${gcc_version}.tar.gz" && \
+          tar -zxvf "gcc-${gcc_version}.tar.gz" && \
+          rm "gcc-${gcc_version}.tar.gz" && \
+          cd "gcc-releases-gcc-${gcc_version}" && \
+          mkdir build && \
+          cd build && \
+          ../configure --disable-multilib && \
+          time make -j$(nproc)
