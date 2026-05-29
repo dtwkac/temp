@@ -36,6 +36,11 @@ jobs:
           unset http_proxy https_proxy
           EOF
 
+          cat << 'EOF' | docker run -i ubuntu bash
+          apt-get update && \
+          apt-get upgrade -y && \
+          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+          apt-get install -y sudo && \
           sudo apt-get update && \
           sudo apt-get upgrade -y && \
           sudo apt-get install -y curl g++ libmpc-dev make flex && \
@@ -48,7 +53,13 @@ jobs:
           cd build && \
           ../configure --disable-multilib && \
           time make -j$(nproc)
+          EOF
 
+          cat << 'EOF' | docker run -i ubuntu bash
+          apt-get update && \
+          apt-get upgrade -y && \
+          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
+          apt-get install -y sudo && \
           sudo apt-get update && \
           sudo apt-get upgrade -y && \
           sudo apt-get install -y curl cmake ninja-build g++ python3 && \
@@ -62,3 +73,4 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="clang" \
             -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" && \
           time ninja
+          EOF
