@@ -15,6 +15,18 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
+
+          sudo apt-get install -y curl g++ libmpc-dev make flex && \
+          gcc_version='12.3.0' && \
+          curl -fLO "https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${gcc_version}.tar.gz" && \
+          tar -zxvf "gcc-${gcc_version}.tar.gz" && \
+          rm "gcc-${gcc_version}.tar.gz" && \
+          cd "gcc-releases-gcc-${gcc_version}" && \
+          mkdir build && \
+          cd build && \
+          ../configure --disable-multilib && \
+          time make -j$(nproc)
+
           cat << 'EOF' | docker run -i ubuntu bash
           { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
           { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
