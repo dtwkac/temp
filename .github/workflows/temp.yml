@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' | docker run -i ubuntu:24.04 bash
+          cat << 'EOF' | docker run -i ubuntu bash
           { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
           { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
@@ -37,7 +37,7 @@ jobs:
           unset http_proxy https_proxy
           EOF
 
-          cat << 'EOF' | docker run -i ubuntu:24.04 bash
+          cat << 'EOF' | docker run -i ubuntu bash
           apt-get update && \
           apt-get upgrade -y && \
           printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
@@ -56,7 +56,7 @@ jobs:
           time make -j$(nproc)
           EOF
 
-          cat << 'EOF' | docker run -i ubuntu:24.04 bash
+          cat << 'EOF' | docker run -i ubuntu bash
           apt-get update && \
           apt-get upgrade -y && \
           printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
