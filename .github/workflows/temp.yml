@@ -15,19 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-
-          sudo apt-get install -y curl g++ libmpc-dev make flex && \
-          gcc_version='12.3.0' && \
-          curl -fLO "https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${gcc_version}.tar.gz" && \
-          tar -zxvf "gcc-${gcc_version}.tar.gz" && \
-          rm "gcc-${gcc_version}.tar.gz" && \
-          cd "gcc-releases-gcc-${gcc_version}" && \
-          mkdir build && \
-          cd build && \
-          ../configure --disable-multilib && \
-          time make -j$(nproc)
-
-          cat << 'EOF' | docker run -i ubuntu bash
+          cat << 'EOF' | docker run -it --rm ubuntu bash
           { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
           { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
@@ -45,15 +33,10 @@ jobs:
           cd build && \
           ../configure --disable-multilib && \
           # time make -j$(nproc) && \
-          make -j$(nproc) > dev/null
+          make -j$(nproc) || true
           unset http_proxy https_proxy
           EOF
 
-          cat << 'EOF' | docker run -i ubuntu bash
-          apt-get update && \
-          apt-get upgrade -y && \
-          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
-          apt-get install -y sudo && \
           sudo apt-get update && \
           sudo apt-get upgrade -y && \
           sudo apt-get install -y curl g++ libmpc-dev make flex && \
@@ -66,13 +49,7 @@ jobs:
           cd build && \
           ../configure --disable-multilib && \
           time make -j$(nproc)
-          EOF
 
-          cat << 'EOF' | docker run -i ubuntu bash
-          apt-get update && \
-          apt-get upgrade -y && \
-          printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
-          apt-get install -y sudo && \
           sudo apt-get update && \
           sudo apt-get upgrade -y && \
           sudo apt-get install -y curl cmake ninja-build g++ python3 && \
@@ -86,4 +63,3 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="clang" \
             -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" && \
           time ninja
-          EOF
