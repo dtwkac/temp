@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' | docker run -i --rm ubuntu bash
+          cat << 'EOF' | docker run -i -v "$GITHUB_WORKSPACE":/root--rm ubuntu bash
           { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
           { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
@@ -25,6 +25,7 @@ jobs:
           apt-get install -y sudo && \
           sudo apt-get install -y curl g++ libmpc-dev make flex && \
           gcc_version='12.3.0' && \
+          cd && \
           curl -fLO "https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${gcc_version}.tar.gz" && \
           tar -zxvf "gcc-${gcc_version}.tar.gz" && \
           rm "gcc-${gcc_version}.tar.gz" && \
@@ -33,6 +34,12 @@ jobs:
           cd build && \
           ../configure --disable-multilib && \
           # time make -j$(nproc) && \
-          make -j$(nproc)
+          make -j$(nproc) &> ~/log
           unset http_proxy https_proxy
           EOF
+
+      - name: Upload log
+        uses: actions/upload-artifact@v7
+        with:
+          name: log
+          path: ${{ github.workspace }}/log
