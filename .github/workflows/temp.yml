@@ -21,7 +21,7 @@ jobs:
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
           apt-get update && \
           apt-get upgrade -y && \
-          printf '%b' '6\n70\n' | apt-get install -y tzdata && \
+          printf '%b' '5\n69\n' | apt-get install -y tzdata && \
           apt-get install -y sudo && \
           sudo apt-get install -y curl g++ libmpc-dev make flex && \
           gcc_version='12.3.0' && \
