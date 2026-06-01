@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' | docker run -i --rm ubuntu:24.04 bash
+          cat << 'EOF' | docker run -i --rm ubuntu bash
           { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
           { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
