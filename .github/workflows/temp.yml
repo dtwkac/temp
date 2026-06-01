@@ -15,7 +15,7 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          cat << 'EOF' | docker run -i --rm ubuntu:22.04 bash
+          cat << 'EOF' | docker run -i --rm ubuntu:20.04 bash
           { [ -f /.dockerenv ] || { printf '\033[31m%s\033[0m\n' 'Docker environment required. Aborting...' >&2; false; }; } && \
           { ! tmux ls > /dev/null 2>&1 || { printf '\033[31m%s\033[0m\n' 'Tmux session(s) detected. Aborting...' >&2; false; }; } && \
           printf '\033[32m%s\033[0m\n' 'Setting up the environment...' && \
@@ -35,7 +35,7 @@ jobs:
           time make -j$(nproc) && \
           make install && \
           {
-          cat << 'EOF' > c.cpp
+          cat << 'SRC' > c.cpp
           #include <iostream>
           using namespace std;
           int main()
@@ -43,7 +43,7 @@ jobs:
               cout << "Hello World!" << endl;
               return 0;
           }
-          EOF
+          SRC
           } && \
           /usr/local/bin/g++ c.cpp && \
           ./a.out
