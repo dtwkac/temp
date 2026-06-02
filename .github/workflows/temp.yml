@@ -23,7 +23,7 @@ jobs:
           apt-get upgrade -y && \
           printf '%b' '5\n68\n' | script -q -c 'apt-get install -y tzdata' /dev/null && \
           apt-get install -y sudo && \
-          sudo apt-get install -y curl g++ libmpc-dev make flex && \
+          sudo apt-get install -y curl g++ libmpc-dev make flex libcrypt-dev && \
           gcc_version='12.3.0' && \
           curl -fLO "https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-${gcc_version}.tar.gz" && \
           tar -zxvf "gcc-${gcc_version}.tar.gz" && \
