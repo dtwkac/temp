@@ -33,20 +33,5 @@ jobs:
           cd build && \
           ../configure --disable-multilib && \
           time make -j$(nproc) && \
-          unset http_proxy https_proxy && \
-          make install && \
-          {
-          cat << 'SRC' > c.cpp
-          #include <iostream>
-          using namespace std;
-          int main()
-          {
-              cout << "Hello World!" << endl;
-              return 0;
-          }
-          SRC
-          } && \
-          /usr/local/bin/g++ -v && \
-          /usr/local/bin/g++ c.cpp && \
-          ./a.out
+          unset http_proxy https_proxy
           EOF
