@@ -15,4 +15,25 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
-          lsb_release -a
+          mkdir "$HOME/project" && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build cgdb ------------------------------\033[0m' && \
+          sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
+          git clone https://github.com/cgdb/cgdb.git && \
+          cd cgdb && \
+          ./autogen.sh && \
+          mkdir build && \
+          cd build && \
+          ../configure && \
+          make -j$(nproc) && \
+          printf '%b\n' "\033[32m$HOME/project/cgdb/build/cgdb/cgdb --version:\033[0m" && \
+          "$HOME/project/cgdb/build/cgdb/cgdb" --version && \
+          cd "$HOME/project" && \
+          printf '%b\n' '\033[32m------------------------------ build LearnOpenGL ------------------------------\033[0m' && \
+          sudo apt-get install -y git g++ cmake libsoil-dev libglm-dev libassimp-dev libglew-dev libglfw3-dev libxinerama-dev libxcursor-dev  libxi-dev libfreetype-dev libgl1-mesa-dev xorg-dev && \
+          git clone https://github.com/JoeyDeVries/LearnOpenGL.git && \
+          cd LearnOpenGL && \
+          mkdir build && \
+          cd build && \
+          cmake .. && \
+          cmake --build .
