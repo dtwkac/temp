@@ -10,36 +10,38 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    # 1. 克隆源码
+    # 1. 克隆源码到当前目录
     - name: Clone Cheat Engine Repository
       run: |
         git clone --depth=1 https://github.com/cheat-engine/cheat-engine.git .
 
-    # 2. 安装 Lazarus/FPC
+    # 2. 安装 Lazarus/FPC 编译环境 (使用维护中的替代方案)
     - name: Install Lazarus & FPC
-      uses: gloriaeduardo/setup-lazarus@v1
+      uses: golderweb/setup-lazarus@v1
       with:
         lazarus-version: stable
 
-    # 3. 编译
+    # 3. 使用 CMD 终端编译带有空格路径的工程文件
     - name: Build Cheat Engine Binary
       shell: cmd
       run: |
         lazbuild --build-mode=Release "Cheat Engine\cheatengine.lpi"
 
-    # 4. 整理产物
+    # 4. 整理产物（使用 bash 兼容语法处理空格路径）
     - name: Organize Output Files
       shell: bash
       run: |
         mkdir -p build_output/bin
-
+        
+        # 复制主程序
         cp "Cheat Engine/cheatengine.exe" build_output/bin/
-
+        
+        # 复制运行所需的 bin 依赖目录
         if [ -d "Cheat Engine/bin" ]; then
           cp -r "Cheat Engine/bin/"* build_output/bin/
         fi
 
-    # 5. 上传
+    # 5. 打包并上传
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       with:
