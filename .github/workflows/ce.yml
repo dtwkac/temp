@@ -1,0 +1,48 @@
+name: Build Cheat Engine
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # 1. 克隆源码
+    - name: Clone Cheat Engine Repository
+      run: |
+        git clone --depth=1 https://github.com/cheat-engine/cheat-engine.git .
+
+    # 2. 安装 Lazarus/FPC
+    - name: Install Lazarus & FPC
+      uses: gloriaeduardo/setup-lazarus@v1
+      with:
+        lazarus-version: stable
+
+    # 3. 编译
+    - name: Build Cheat Engine Binary
+      shell: cmd
+      run: |
+        lazbuild --build-mode=Release "Cheat Engine\cheatengine.lpi"
+
+    # 4. 整理产物
+    - name: Organize Output Files
+      shell: bash
+      run: |
+        mkdir -p build_output/bin
+
+        cp "Cheat Engine/cheatengine.exe" build_output/bin/
+
+        if [ -d "Cheat Engine/bin" ]; then
+          cp -r "Cheat Engine/bin/"* build_output/bin/
+        fi
+
+    # 5. 上传
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Cheat-Engine-Clean-Build
+        path: build_output/bin/
+        retention-days: 7
