@@ -1,4 +1,4 @@
-name: Build Cheat Engine Full Suite
+name: Build Cheat Engine Full Suite (Choco Fallback)
 
 on:
   workflow_dispatch:
@@ -15,29 +15,23 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/cheat-engine/cheat-engine.git .
 
-    # 2. 安装并配置 MSBuild (用于编译 .sln 依赖项目)
+    # 2. 安装并配置 MSBuild
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    # 3. 安装官方指定的 Lazarus 2.2.2 及其 32位交叉编译器
-    - name: Install Lazarus 2.2.2 & FPC 3.2.2
-      uses: golderweb/setup-lazarus@v1
-      with:
-        lazarus-version: '2.2.2' # 严格采用官方推荐版本以防编译宏报错
-        with-cross-pack: true    # 启用 32 位交叉编译支持，用于编译 32 位 DLL/EXE
+    # 3. 使用 Chocolatey 直接在系统内安装 Lazarus 编译器
+    # 这一步会自动配置好系统的环境变量
+    - name: Install Lazarus via Chocolatey
+      run: |
+        choco install lazarus --version=2.2.2 -y
 
     # 4. 使用 MSBuild 编译周边核心 .sln 插件项目
     - name: Build C++/.NET Dependency Projects (.sln)
       run: |
-        # A. 编译 Mono 数据收集器 (32位 & 64位) - 用于 Unity/Mono 游戏
         msbuild "Cheat Engine\monodatacollector\monodatacollector.sln" /p:Configuration=Release /p:Platform=Win32
         msbuild "Cheat Engine\monodatacollector\monodatacollector.sln" /p:Configuration=Release /p:Platform=x64
-
-        # B. 编译 .NET 符号数据收集器 (32位 & 64位) - 用于 .NET 游戏
         msbuild "Cheat Engine\dotnetdatacollector\dotnetdatacollector.sln" /p:Configuration=Release /p:Platform=x32
         msbuild "Cheat Engine\dotnetdatacollector\dotnetdatacollector.sln" /p:Configuration=Release /p:Platform=x64
-
-        # C. 编译 Java 虚拟机工具接口 (cejvmti) - 用于 Java 游戏
         msbuild "Cheat Engine\cejvmti\cejvmti.sln" /p:Configuration=Release /p:Platform=Win32
         msbuild "Cheat Engine\cejvmti\cejvmti.sln" /p:Configuration=Release /p:Platform=x64
 
@@ -45,11 +39,9 @@ jobs:
     - name: Build Cheat Engine & Pascal DLLs
       shell: cmd
       run: |
-        :: 编译 64 位和 32 位的主程序与必要 DLL (Speedhack, Lua 客户端, VEH 调试器)
-        
         :: A. 主程序 (64位)
         lazbuild --build-mode=Release "Cheat Engine\cheatengine.lpi"
-        :: 主程序 (32位) 如果需要
+        :: 主程序 (32位)
         lazbuild --build-mode="Release 32" "Cheat Engine\cheatengine.lpi"
 
         :: B. 变速齿轮 (Speedhack - 64位 & 32位)
@@ -65,44 +57,26 @@ jobs:
         lazbuild --build-all --cpu=i386 "Cheat Engine\vehdebug\vehdebug.lpi"
 
     # 6. 归档与整理产物
-    # 这一步非常关键：它将编译好的 32/64 位 DLL 分门别类地放进 CE 运行目录中，保证程序可以正确加载它们。
     - name: Organize Output Files
       shell: bash
       run: |
-        # 创建一个干净的打包目录
         mkdir -p build_output/bin
-        
-        # 1. 复制原仓库存放静态依赖（如 tcc 编译器文件、各类支持库）的官方 bin 目录
         if [ -d "Cheat Engine/bin" ]; then
           cp -r "Cheat Engine/bin/"* build_output/bin/
         fi
-
-        # 2. 复制刚刚编译出来的主程序
         cp "Cheat Engine/cheatengine.exe" build_output/bin/
-        # 如果你编译了 32 位主程序，它通常会被输出为 cheatengine32.exe
         if [ -f "Cheat Engine/cheatengine32.exe" ]; then
           cp "Cheat Engine/cheatengine32.exe" build_output/bin/
         fi
-
-        # 3. 复制编译好的 32/64 位核心 DLL 到 bin 目录下
-        # Speedhack DLL
         cp "Cheat Engine/speedhack/speedhack-x86_64.dll" build_output/bin/ 2>/dev/null || true
         cp "Cheat Engine/speedhack/speedhack-i386.dll" build_output/bin/ 2>/dev/null || true
-
-        # VEH Debugger DLL
         cp "Cheat Engine/vehdebug/vehdebug-x86_64.dll" build_output/bin/ 2>/dev/null || true
         cp "Cheat Engine/vehdebug/vehdebug-i386.dll" build_output/bin/ 2>/dev/null || true
-
-        # Lua Client DLL
         cp "Cheat Engine/luaclient/luaclient-x86_64.dll" build_output/bin/ 2>/dev/null || true
         cp "Cheat Engine/luaclient/luaclient-i386.dll" build_output/bin/ 2>/dev/null || true
-
-        # 4. 复制编译好的 .NET 和 Mono 相关动态库 (从各个 Release 目录中收集)
         cp "Cheat Engine/monodatacollector/bin/Win32/Release/"* build_output/bin/ 2>/dev/null || true
         cp "Cheat Engine/monodatacollector/bin/x64/Release/"* build_output/bin/ 2>/dev/null || true
-        
         cp "Cheat Engine/dotnetdatacollector/bin/Release/"* build_output/bin/ 2>/dev/null || true
-        
         cp "Cheat Engine/cejvmti/Release/"* build_output/bin/ 2>/dev/null || true
 
     # 7. 上传最终编译产物
