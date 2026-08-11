@@ -15,3 +15,8 @@ jobs:
         run: |
           set -e
           TZ='Asia/Shanghai' date
+          lsb_release -a
+          lscpu
+          free -h
+          df -h
+          ifconfig
