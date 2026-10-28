@@ -16,3 +16,4 @@ jobs:
           set -e
           TZ='Asia/Shanghai' date
           lsb_release -a
+          df -h
