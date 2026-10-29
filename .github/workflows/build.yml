@@ -36,22 +36,22 @@ jobs:
             -o "$HOME/project/a.out" \
             "$HOME/project/main.cpp" && \
           "$HOME/project/a.out" && \
-          cd "$HOME/project" && \
-          printf '%b\n' '\033[32m------------------------------ build clang ------------------------------\033[0m' && \
-          sudo apt-get install -y git g++ cmake ninja-build python3 && \
-          git clone https://github.com/llvm/llvm-project.git && \
-          cd llvm-project && \
-          mkdir build && \
-          cd build && \
-          cmake -G Ninja ../llvm -DCMAKE_BUILD_TYPE=Release \
-            -DLLVM_ENABLE_PROJECTS="clang" \
-            -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" && \
-          ninja && \
-          printf '%b\n' "\033[32m$HOME/project/llvm-project/build/bin/clang --version:\033[0m" && \
-          "$HOME/project/llvm-project/build/bin/clang" --version && \
-          printf '%b\n' '#include <bits/stdc++.h>\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    return 0;\n}' > "$HOME/project/main.cpp" && \
-          "$HOME/project/llvm-project/build/bin/clang++" -o "$HOME/project/a.out" "$HOME/project/main.cpp" && \
-          "$HOME/project/a.out" && \
+          # cd "$HOME/project" && \
+          # printf '%b\n' '\033[32m------------------------------ build clang ------------------------------\033[0m' && \
+          # sudo apt-get install -y git g++ cmake ninja-build python3 && \
+          # git clone https://github.com/llvm/llvm-project.git && \
+          # cd llvm-project && \
+          # mkdir build && \
+          # cd build && \
+          # cmake -G Ninja ../llvm -DCMAKE_BUILD_TYPE=Release \
+          #   -DLLVM_ENABLE_PROJECTS="clang" \
+          #   -DLLVM_ENABLE_RUNTIMES="compiler-rt;libunwind;libcxxabi;libcxx" && \
+          # ninja && \
+          # printf '%b\n' "\033[32m$HOME/project/llvm-project/build/bin/clang --version:\033[0m" && \
+          # "$HOME/project/llvm-project/build/bin/clang" --version && \
+          # printf '%b\n' '#include <bits/stdc++.h>\nint main() {\n    std::cout << "Hello World!" << std::endl;\n    return 0;\n}' > "$HOME/project/main.cpp" && \
+          # "$HOME/project/llvm-project/build/bin/clang++" -o "$HOME/project/a.out" "$HOME/project/main.cpp" && \
+          # "$HOME/project/a.out" && \
           cd "$HOME/project" && \
           printf '%b\n' '\033[32m------------------------------ build cgdb ------------------------------\033[0m' && \
           sudo apt-get install -y git g++ automake make flex texinfo libreadline-dev gdb && \
