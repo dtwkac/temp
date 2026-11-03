@@ -167,11 +167,3 @@ jobs:
           cd "$HOME/project" && \
           printf '%b\n' "\033[32mdu -sh $HOME/project:\033[0m" && \
           du -sh "$HOME/project"
-          printf '%b\n' "\033[32mdu -sh $$HOME/project/gcc:\033[0m" && \
-          du -sh "$HOME/project/gcc"
-          printf '%b\n' "\033[32mdu -sh $HOME/project/llvm-project:\033[0m" && \
-          du -sh "$HOME/project/llvm-project"
-          printf '%b\n' "\033[32mrm -rf $HOME/project/gcc $HOME/project/llvm-project:\033[0m" && \
-          rm -rf "$HOME/project/gcc" "$HOME/project/llvm-project"
-          printf '%b\n' "\033[32mdu -sh $HOME/project:\033[0m" && \
-          du -sh "$HOME/project"
